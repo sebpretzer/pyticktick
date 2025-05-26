@@ -64,9 +64,7 @@ def check(pyproject_path: Path) -> None:
 
     if parsed.is_prerelease or parsed.is_postrelease:
         msg = f"Version should not be a pre/post-release version: {version}"
-        # TODO: Remove this line when ready to release  # noqa: FIX002, TD002, TD003
-        # raise ValueError(msg)  # noqa: ERA001
-        print(msg)  # noqa: T201
+        raise ValueError(msg)
 
 
 if __name__ == "__main__":
