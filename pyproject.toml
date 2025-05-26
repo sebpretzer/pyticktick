@@ -1,7 +1,7 @@
 
 [project]
 name = "pyticktick"
-version = "0.0.1"
+version = "0.0.2"
 description = "The modern library to interact with the TickTick API."
 authors = [{ name = "Seb Pretzer", email = "quick.creek3304@fastmail.com" }]
 license = { file = "LICENSE" }
