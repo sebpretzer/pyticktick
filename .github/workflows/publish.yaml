@@ -1,0 +1,42 @@
+name: publish
+on: workflow_dispatch
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: 3.13
+      - name: install uv
+        run: make install-uv
+      - name: Install dependencies
+        run: make install
+      - name: Build wheel
+        run: make build
+      - name: Test Publish
+        run: make publish-dev
+      - name: Get version
+        run: echo "PKG_VERSION=$(uv version --short)" >> $GITHUB_ENV
+      # - name: gh release create
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   # https://github.com/cli/cli/issues/2067#issuecomment-704224994
+      #   run: |
+      #     sed -n '/^## ${{ env.PKG_VERSION }}/,/^## /p' CHANGELOG.md | sed '1d;$d' | \
+      #     gh release create ${{ env.PKG_VERSION }} \
+      #       -t ${{ env.PKG_VERSION }} \
+      #       -F - \
+      #       dist/*
+      # - name: Publish to PyPI
+      #   run: make publish
+      # - name: Test Published Package
+      #   run: make publish-test

@@ -1,0 +1,182 @@
+nav:
+  - Home: index.md
+  - Guides:
+      - Installation: guides/installation.md
+      - Settings:
+          - Overriding Models That Forbid Extra Fields: guides/settings/overriding_models_that_forbid_extra_fields.md
+      - The TickTick API:
+          - Register a V1 App: guides/ticktick_api/register_v1_app.md
+          - Generate a V1 Token: guides/ticktick_api/generate_v1_token.md
+      - Cookbook:
+          - Tasks:
+              - Create a Basic Task: guides/cookbook/tasks/create_a_basic_task.md
+              - Update a Basic Task: guides/cookbook/tasks/update_a_basic_task.md
+              - Delete a Task: guides/cookbook/tasks/delete_a_task.md
+              - Get All Tasks: guides/cookbook/tasks/get_all_tasks.md
+              - Get a Task by ID: guides/cookbook/tasks/get_a_task_by_id.md
+              - Get a Task by Name: guides/cookbook/tasks/get_a_task_by_name.md
+          - Projects:
+              - Create a Project: guides/cookbook/projects/create_a_project.md
+              - Update a Project: guides/cookbook/projects/update_a_project.md
+              - Delete a Project: guides/cookbook/projects/delete_a_project.md
+              - Get All Projects: guides/cookbook/projects/get_all_projects.md
+              - Get a Project by ID: guides/cookbook/projects/get_a_project_by_id.md
+              - Get a Project by Name: guides/cookbook/projects/get_a_project_by_name.md
+          - Project Groups (Folders):
+              - Create a Project Group: guides/cookbook/project_groups/create_a_project_group.md
+              - Update a Project Group: guides/cookbook/project_groups/update_a_project_group.md
+              - Delete a Project Group: guides/cookbook/project_groups/delete_a_project_group.md
+              - Get All Project Groups: guides/cookbook/project_groups/get_all_project_groups.md
+              - Get a Project Group by ID: guides/cookbook/project_groups/get_a_project_group_by_id.md
+              - Get a Project Group by Name: guides/cookbook/project_groups/get_a_project_group_by_name.md
+              - Add a New Project to a Project Group: guides/cookbook/project_groups/add_a_new_project_to_a_project_group.md
+              - Add an Existing Project to a Project Group: guides/cookbook/project_groups/add_an_existing_project_to_a_project_group.md
+              - Remove a Project from a Project Group: guides/cookbook/project_groups/remove_a_project_from_a_project_group.md
+          - Tags:
+              - Create a Tag: guides/cookbook/tags/create_a_tag.md
+              - Update a Tag: guides/cookbook/tags/update_a_tag.md
+              - Rename a Tag: guides/cookbook/tags/rename_a_tag.md
+              - Delete a Tag: guides/cookbook/tags/delete_a_tag.md
+              - Add a Parent Tag to a New Tag: guides/cookbook/tags/add_a_parent_tag_to_a_new_tag.md
+              - Add a Parent Tag to an Existing Tag: guides/cookbook/tags/add_a_parent_tag_to_an_existing_tag.md
+              - Remove a Parent Tag: guides/cookbook/tags/remove_a_parent_tag.md
+              - Get All Tags: guides/cookbook/tags/get_all_tags.md
+              - Get a Tag by Name: guides/cookbook/tags/get_a_tag_by_name.md
+      - Development:
+          - Code of Conduct: CODE_OF_CONDUCT.md
+          - Contributing: CONTRIBUTING.md
+          - Changelog: CHANGELOG.md
+          - Setting Up the Local Environment: guides/development/setup_local_environment.md
+          - Running Tests Locally: guides/development/running_tests_locally.md
+          - Running Docs Locally: guides/development/running_the_documentation_server_locally.md
+          - Release Process: guides/development/release_process.md
+  - Reference:
+      - Client:
+          - V1: reference/client/v1.md
+          - V2: reference/client/v2.md
+      - Settings: reference/settings.md
+      - Models:
+          - V1:
+              - Parameters:
+                  - Project: reference/models/v1/parameters/project.md
+                  - Task: reference/models/v1/parameters/task.md
+                  - OAuth: reference/models/v1/parameters/oauth.md
+              - Responses:
+                  - Project: reference/models/v1/responses/project.md
+                  - Task: reference/models/v1/responses/task.md
+                  - OAuth: reference/models/v1/responses/oauth.md
+              - Class Diagrams: reference/models/v1/class_diagrams.md
+          - V2:
+              - Parameters:
+                  - Closed: reference/models/v2/parameters/closed.md
+                  - Project: reference/models/v2/parameters/project.md
+                  - Project Group: reference/models/v2/parameters/project_group.md
+                  - Tag: reference/models/v2/parameters/tag.md
+                  - Task: reference/models/v2/parameters/task.md
+                  - Task Parent: reference/models/v2/parameters/task_parent.md
+              - Responses:
+                  - Batch: reference/models/v2/responses/batch.md
+                  - Closed: reference/models/v2/responses/closed.md
+                  - Tag: reference/models/v2/responses/tag.md
+                  - Task Parent: reference/models/v2/responses/task_parent.md
+                  - User: reference/models/v2/responses/user.md
+              - Models: reference/models/v2/models.md
+              - Types: reference/models/v2/types.md
+              - Class Diagrams: reference/models/v2/class_diagrams.md
+      - Retry: reference/retry.md
+      - Pydantic: reference/pydantic.md
+      - Logger: reference/logger.md
+  - Explanations:
+      - The TickTick API:
+          - The Two TickTick APIs: explanations/ticktick_api/two_apis.md
+          - Kinds of Tasks: explanations/ticktick_api/kinds_of_tasks.md
+          - Checklists vs Subtasks: explanations/ticktick_api/checklists_vs_subtasks.md
+      - Comparison of Similar Libraries: explanations/comparison_of_similar_libraries.md
+      - Forbidding Extra Fields in API Models: explanations/forbidding_extra_fields_in_api_models.md
+      - Code Conventions: explanations/code_conventions.md
+
+site_name: pyticktick
+
+repo_name: sebpretzer/pyticktick
+repo_url: https://github.com/sebpretzer/pyticktick
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  icon:
+    repo: material/github
+  logo: _images/logos/color.svg
+  favicon: _images/logos/color.svg
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      primary: black
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      primary: black
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - def_list
+  - md_in_html
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.mark
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - tables
+  - toc:
+      permalink: "#"
+
+plugins:
+  - autorefs:
+      resolve_closest: true
+  - git-revision-date-localized
+  - mkdocstrings:
+      handlers:
+        python:
+          inventories:
+            - https://docs.pydantic.dev/latest/objects.inv
+          options:
+            show_root_heading: true
+            merge_init_into_class: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_signature_annotations: true
+            separate_signature: true
+            inherited_members: true
+            summary: true
+            extensions:
+              - griffe_pydantic:
+                  schema: true
+  - search
+
+watch:
+  - docs
+  - src/pyticktick

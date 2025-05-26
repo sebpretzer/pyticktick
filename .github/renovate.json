@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    "customManagers:githubActionsVersions",
+    ":automergeDigest",
+    ":automergePatch",
+    ":automergePr",
+    ":automergeRequireAllStatusChecks",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone",
+    ":rebaseStalePrs"
+  ],
+  "assignees": ["sebpretzer"],
+  "labels": ["renovate"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "pep621": {
+    "enabled": true,
+    "automerge": true
+  },
+  "github-actions": {
+    "enabled": true,
+    "automerge": true
+  },
+  "pre-commit": {
+    "enabled": true,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "description": "Only allow major standard upgrades for renovatebot/pre-commit-hooks",
+      "matchDepNames": ["renovatebot/pre-commit-hooks"],
+      "matchUpdateTypes": ["minor", "patch", "pin"],
+      "enabled": false
+    }
+  ]
+}

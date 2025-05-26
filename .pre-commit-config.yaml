@@ -1,0 +1,77 @@
+repos:
+  # basic checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+        args: [--unsafe]
+      - id: check-toml
+      - id: name-tests-test
+        args: [--pytest-test-first]
+
+  # docs checks
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.22
+    hooks:
+      - id: mdformat
+        args: [--exclude, docs/reference/**, --exclude, docs/CODE_OF_CONDUCT.md]
+        additional_dependencies:
+          - mdformat-mkdocs==4.0.0
+          - mdformat-footnote==0.1.1
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.45.0
+    hooks:
+      - id: markdownlint-fix
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.32.0
+    hooks:
+      - id: typos
+        args: [--force-exclude]
+
+  # python checks
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.24.1
+    hooks:
+      - id: validate-pyproject
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.7.8
+    hooks:
+      - id: uv-lock
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.11
+    hooks:
+      - id: ruff
+        name: ruff-lint
+        args: [--fix]
+      - id: ruff-format
+        name: ruff-format
+  # Remove this after rules are added to ruff
+  # https://github.com/astral-sh/ruff/issues/12434
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.2.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - Flake8-pyproject==1.2.3
+          - pydoclint==0.6.6
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.401
+    hooks:
+      - id: pyright
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: uv run --no-active mypy
+        language: system
+        types: [python]
+        args: [--config-file, pyproject.toml, .]
+        require_serial: true
+        pass_filenames: false
+      - id: scripts/pypi_version_check.py
+        name: scripts/pypi_version_check.py
+        entry: ./scripts/pypi_version_check.py
+        language: system
+        files: ^pyproject.toml$

@@ -1,0 +1,204 @@
+name: checks
+on: [pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      lint: ${{ steps.filter.outputs.lint }}
+      test: ${{ steps.filter.outputs.test }}
+    steps:
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3
+        id: filter
+        with:
+          filters: |
+            lint:
+              - 'docs/**'
+              - 'src/pyticktick/**'
+              - 'scripts/**'
+              - 'tests/**'
+              - '.pre-commit-config.yaml'
+              - 'Makefile'
+              - 'README.md'
+              - 'mkdocs.yaml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+            test:
+              - 'src/pyticktick/**'
+              - 'tests/**'
+              - 'Makefile'
+              - 'pyproject.toml'
+              - 'uv.lock'
+
+  lint:
+    needs: changes
+    if: ${{ needs.changes.outputs.lint == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: 3.13
+      - name: install uv
+        run: |
+          make install-uv
+      - name: Install dependencies
+        run: make install
+
+      - name: Run linting via pre-commit
+        run: make lint
+        id: lint
+      - name: commit lint auto-fixes
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
+        if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor != 'renovate[bot]'}}
+        with:
+          commit_message: "lint auto-fixes"
+      - name: commit lint auto-fixes for renovate[bot]
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
+        if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor == 'renovate[bot]'}}
+        with:
+          commit_message: "lint auto-fixes"
+          commit_user_name: "renovate[bot]"
+          commit_user_email: "29139614+renovate[bot]@users.noreply.github.com"
+          commit_author: "renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>"
+
+  unit-test:
+    needs: [changes, lint]
+    if: ${{ needs.changes.outputs.test == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: install uv
+        run: make install-uv
+      - name: Install dependencies
+        run: make install
+
+      - name: Run unit tests
+        run: make test-unit
+        env:
+          COVERAGE_FILE: coverage/.coverage.unit-${{ matrix.python-version }}
+      - name: Store coverage files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-unit-${{ matrix.python-version }}
+          path: coverage
+          include-hidden-files: true
+
+  integration-test:
+    needs: [changes, lint, unit-test]
+    if: ${{ needs.changes.outputs.test == 'true' }}
+    runs-on: ubuntu-latest
+    concurrency:
+      # Currently, we can only run one integration test job at a time
+      # See https://github.com/orgs/community/discussions/12835 for more information
+      group: integration-test
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: 3.13
+      - name: install uv
+        run: |
+          make install-uv
+      - name: Install dependencies
+        run: make install
+
+      - name: Run integration tests
+        run: make test-integration
+        env:
+          COVERAGE_FILE: coverage/.coverage.integration-3.13
+          TICKTICK_API_V1_CLIENT_ID: ${{ secrets.TICKTICK_API_V1_CLIENT_ID }}
+          TICKTICK_API_V1_CLIENT_SECRET: ${{ secrets.TICKTICK_API_V1_CLIENT_SECRET }}
+          TICKTICK_API_V1_TOKEN_VALUE: ${{ secrets.TICKTICK_API_V1_TOKEN_VALUE }}
+          TICKTICK_API_V1_TOKEN_EXPIRATION: ${{ secrets.TICKTICK_API_V1_TOKEN_EXPIRATION }}
+          TICKTICK_API_V2_USERNAME: ${{ secrets.TICKTICK_API_V2_USERNAME }}
+          TICKTICK_API_V2_PASSWORD: ${{ secrets.TICKTICK_API_V2_PASSWORD }}
+      - name: Store coverage files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-integration-3.13
+          path: coverage
+          include-hidden-files: true
+
+  # https://github.com/pydantic/pydantic/blob/980d2763eb24d972221c847bda61f1049fdbeeb1/.github/workflows/ci.yml#L249
+  coverage-combine:
+    runs-on: ubuntu-latest
+    needs: [unit-test, integration-test]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: 3.13
+      - name: install uv
+        run: |
+          make install-uv
+      - name: Install dependencies
+        run: make install
+
+      - name: Download coverage files
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          merge-multiple: true
+          pattern: coverage-*
+          path: coverage
+      - run: uvx coverage combine coverage/
+      - run: uvx coverage report
+      - run: uvx coverage html --show-contexts --title "Coverage report for ${{ github.sha }}"
+
+      - name: Store coverage data
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-data
+          path: .coverage
+          include-hidden-files: true
+      - name: Store coverage HTML
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-html
+          path: htmlcov
+
+  # https://github.com/pydantic/pydantic/blob/980d2763eb24d972221c847bda61f1049fdbeeb1/.github/workflows/ci.yml#L287
+  coverage-pr-comment:
+    runs-on: ubuntu-latest
+    needs: coverage-combine
+    permissions:
+      contents: write
+      pull-requests: write
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: 3.13
+      - name: install uv
+        run: |
+          make install-uv
+      - name: Install dependencies
+        run: make install
+
+      - name: Download coverage data
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: coverage-data
+
+      - name: Generate coverage comment
+        id: coverage-comment
+        uses: py-cov-action/python-coverage-comment-action@1d7560e23b43db38707b3c2a955a124f3a9e68e0 # v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

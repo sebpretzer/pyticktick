@@ -1,0 +1,119 @@
+"""Parameters for creating and updating projects via the V2 API.
+
+!!! warning "Unofficial API"
+    These models are part of the unofficial TickTick API. They were created by reverse
+    engineering the API. They may be incomplete or inaccurate.
+"""
+
+from __future__ import annotations
+
+from typing import Literal, Optional, Union
+
+from pydantic import BaseModel, ConfigDict, Field
+
+from pyticktick.models.v2.types import Color, ObjectId
+
+
+class CreateProjectV2(BaseModel):
+    """Model for creating a project via the V2 API.
+
+    This model is used to create a project via the V2 API. It mostly maps to the
+    [create project](https://developer.ticktick.com/docs#/openapi?id=create-project)
+    documentation in the API docs. The main differences are the addition of the `id`
+    and `group_id` fields. This is used in the `PostBatchProjectV2` model.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    # required fields
+    name: str = Field(description="name of the project")
+
+    # optional fields
+    color: Optional[Color] = Field(
+        default=None,
+        description="color of project, eg. '#F18181'",
+    )
+    group_id: Optional[ObjectId] = Field(
+        default=None,
+        description="ID of the project group to add the project to",
+        serialization_alias="groupId",
+    )
+    id: Optional[ObjectId] = Field(
+        default=None,
+        description="ID of the project to create",
+    )
+    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+        default=None,
+        description='"TASK" or "NOTE"',
+    )
+    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+        default=None,
+        serialization_alias="viewMode",
+        description='view mode, "list", "kanban", "timeline"',
+    )
+
+    # unknown fields
+    sort_order: Optional[int] = Field(default=None, serialization_alias="sortOrder")
+
+
+class UpdateProjectV2(BaseModel):
+    """Model for updating a project via the V2 API.
+
+    This model is used to update a project via the V2 API. It mostly maps to the
+    [update project](https://developer.ticktick.com/docs#/openapi?id=update-project)
+    documentation in the API docs. The main differences are the addition of the `id`
+    and `group_id` fields. This is used in the `PostBatchProjectV2` model.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    # required fields
+    id: ObjectId = Field(description="ID of the project to update")
+    name: str = Field(description="name of the project, must be set even on update")
+
+    # optional fields
+    color: Optional[Color] = Field(
+        default=None,
+        description="color of project, eg. '#F18181'",
+    )
+    group_id: Union[Literal["NONE"], None, ObjectId] = Field(
+        default=None,
+        description='ID of the project group to move the project to, `"NONE"` to actively be ungrouped, `None` to be set to the group it was in before',
+        serialization_alias="groupId",
+    )
+    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+        default=None,
+        description='"TASK" or "NOTE"',
+    )
+    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+        default=None,
+        serialization_alias="viewMode",
+        description='view mode, "list", "kanban", "timeline"',
+    )
+
+    # unknown fields
+    sort_order: Optional[int] = Field(default=None, serialization_alias="sortOrder")
+
+
+class PostBatchProjectV2(BaseModel):
+    """Model for batch project operations via the V2 API.
+
+    This model is used to create, update, and delete projects in bulk against the V2 API
+    endpoint `POST /batch/project`.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    # optional fields
+    add: list[CreateProjectV2] = Field(
+        default=[],
+        description="List of projects to add",
+    )
+    delete: list[ObjectId] = Field(
+        default=[],
+        description="List of project IDs to delete",
+    )
+    update: list[UpdateProjectV2] = Field(
+        default=[],
+        description="List of projects to update",
+    )

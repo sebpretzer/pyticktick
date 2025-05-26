@@ -1,0 +1,23 @@
+name: Question
+description: Ask a question about pyticktick.
+labels: [question]
+
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I have checked that this question has not already been asked.
+          required: true
+        - label: This is not a bug report, feature request, or documentation issue.
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: >
+        Describe your question in detail.
+    validations:
+      required: true

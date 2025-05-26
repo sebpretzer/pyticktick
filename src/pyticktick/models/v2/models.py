@@ -1,0 +1,383 @@
+"""Pydantic models for the general TickTick objects of the V2 API.
+
+!!! warning "Unofficial API"
+    These models are part of the unofficial TickTick API. They were created by reverse
+    engineering the API. They may be incomplete or inaccurate.
+"""
+
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Any, Literal, Optional, Union
+
+from pydantic import BaseModel, ConfigDict, Field
+
+from pyticktick.models.v2.types import (
+    Color,
+    ETag,
+    ICalTrigger,
+    InboxId,
+    Kind,
+    ObjectId,
+    Priority,
+    Progress,
+    RepeatFrom,
+    SortOptions,
+    Status,
+    TagLabel,
+    TagName,
+    TimeZoneName,
+    TTRRule,
+)
+
+
+class SortOptionV2(BaseModel):
+    """Model for the sort options of tasks within a project in the V2 API."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    # known fields
+    group_by: SortOptions = Field(
+        validation_alias="groupBy",
+        description="How tasks are grouped within a project",
+    )
+    order_by: SortOptions = Field(
+        validation_alias="orderBy",
+        description="How tasks are ordered within a project",
+    )
+
+
+class ProjectTimelineV2(BaseModel):
+    """Unknown model for the V2 API."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    # unknown fields
+    range: Optional[str]
+    sort_type: Optional[str] = Field(validation_alias="sortType")
+    sort_option: SortOptionV2 = Field(validation_alias="sortOption")
+
+
+class ProjectV2(BaseModel):
+    """Model for all the details of a project taken from the V2 API.
+
+    This model is used to represent a single project in TickTick. It contains all the
+    relevant details, such as name, color, sort order, etc. that you see in the web app.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    # known fields
+    color: Optional[Color] = Field(
+        default=None,
+        description="Color of the project profile, eg. '#F18181'",
+    )
+    etag: ETag = Field(description="ETag of the project object")
+    group_id: Optional[ObjectId] = Field(
+        validation_alias="groupId",
+        description="ID of the project group the project is in",
+    )
+    id: Union[InboxId, ObjectId] = Field(description="ID of the project")
+    in_all: bool = Field(
+        validation_alias="inAll",
+        description="Whether or not to show in Smart Lists. If False, tasks within this list won't be shown in 'All', 'Today', 'Tomorrow', 'Next 7 Days', or other smart lists, but you will still receive reminders.",
+    )
+    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+        default=None,
+        description='"TASK" or "NOTE"',
+    )
+    modified_time: datetime = Field(
+        validation_alias="modifiedTime",
+        description="Last modified time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
+    )
+    name: str = Field(description="Name of the project")
+    sort_option: Optional[SortOptionV2] = Field(
+        validation_alias="sortOption",
+        description="How to sort the tasks in the project",
+    )
+    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+        default=None,
+        validation_alias="viewMode",
+        description='view mode, "list", "kanban", "timeline"',
+    )
+
+    # unknown fields
+    barcode_need_audit: bool = Field(validation_alias="barcodeNeedAudit")
+    is_owner: bool = Field(validation_alias="isOwner")
+    sort_order: int = Field(validation_alias="sortOrder")
+    sort_type: Optional[str] = Field(validation_alias="sortType")
+    user_count: int = Field(validation_alias="userCount")
+    closed: Any
+    muted: bool
+    transferred: Any
+    notification_options: Any = Field(validation_alias="notificationOptions")
+    team_id: Any = Field(validation_alias="teamId")
+    permission: Any
+    timeline: Optional[ProjectTimelineV2]
+    need_audit: bool = Field(validation_alias="needAudit")
+    open_to_team: Optional[bool] = Field(validation_alias="openToTeam")
+    team_member_permission: Any = Field(validation_alias="teamMemberPermission")
+    source: int
+    show_type: Optional[str] = Field(validation_alias="showType")
+    reminder_type: Optional[str] = Field(validation_alias="reminderType")
+
+
+class ProjectGroupV2(BaseModel):
+    """Model for a project group in the V2 API.
+
+    This model is used to represent a group of projects in TickTick. It contains all the
+    relevant details, such as name, color, sort order, etc. that you see in the web app.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    # known fields
+    etag: ETag = Field(description="ETag of the project group object")
+    id: ObjectId = Field(description="ID of the project group")
+    name: str = Field(description="Name of the project group")
+    sort_option: Optional[SortOptionV2] = Field(
+        validation_alias="sortOption",
+        description="How to sort the tasks in the project",
+    )
+    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+        default=None,
+        validation_alias="viewMode",
+        description='view mode, "list", "kanban", "timeline"',
+    )
+
+    # unknown fields
+    deleted: int
+    show_all: bool = Field(validation_alias="showAll")
+    sort_order: int = Field(validation_alias="sortOrder")
+    sort_type: str = Field(validation_alias="sortType")
+    team_id: Any = Field(validation_alias="teamId")
+    timeline: Optional[ProjectTimelineV2]
+    user_id: int = Field(validation_alias="userId")
+
+
+class TagV2(BaseModel):
+    """Model for a tag in the V2 API.
+
+    This model is used to represent a tag in TickTick. Tags are used to categorize tasks
+    and make them easier to find. They can be assigned a color and a sort order.
+
+    They do not have a unique ID, but they can be identified by their raw name.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    # known fields
+    color: Optional[Color] = Field(
+        default=None,
+        description="Color of the tag, eg. '#F18181'",
+    )
+    etag: ETag = Field(description="ETag of the tag object")
+    label: TagLabel = Field(description="Name of the tag, as it appears in the UI")
+    name: TagName = Field(
+        description="Name of the tag, similar to the label but lowercase, and not visible in the UI",
+    )
+    parent: Optional[TagName] = Field(
+        default=None,
+        description="Name of the parent tag, if nested.",
+    )
+    raw_name: TagName = Field(
+        validation_alias="rawName",
+        description="Original name of the tag, used to identify it",
+    )
+    sort_option: Optional[SortOptionV2] = Field(
+        default=None,
+        validation_alias="sortOption",
+        description="How to sort the tasks within the tag",
+    )
+    sort_type: Literal["project", "title", "tag"] = Field(
+        default="project",
+        validation_alias="sortType",
+        description="Sort type when displaying by selected tag",
+    )
+
+    # unknown fields
+    sort_order: int = Field(validation_alias="sortOrder")
+    timeline: Optional[ProjectTimelineV2] = None
+    type: int
+
+
+class TaskReminderV2(BaseModel):
+    """Model for a reminder for a task via the V2 API."""
+
+    id: Optional[ObjectId] = Field(default=None, description="Reminder ID")
+    trigger: ICalTrigger = Field(description="Reminder trigger")
+
+
+class ItemV2(BaseModel):
+    """Model for a checklist item via the V2 API."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    completed_time: Optional[str] = Field(
+        default=None,
+        validation_alias="completedTime",
+        description="Completed time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
+    )
+    id: ObjectId = Field(description="ID of the checklist item")
+    is_all_day: Optional[bool] = Field(
+        default=None,
+        validation_alias="isAllDay",
+        description="The task is due any time on the due date, rather than at a specific time",
+    )
+    sort_order: Optional[int] = Field(
+        default=None,
+        validation_alias="sortOrder",
+        description="The order of checklist item",
+    )
+    start_date: Optional[str] = Field(
+        default=None,
+        validation_alias="startDate",
+        description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
+    )
+    status: Optional[Status] = Field(
+        default=None,
+        description="The completion status of checklist item",
+    )
+    time_zone: Optional[TimeZoneName] = Field(
+        default=None,
+        validation_alias="timeZone",
+        description="IANA time zone. Example: 'America/Los_Angeles'",
+    )
+    title: Optional[str] = Field(default=None, description="Checklist item title")
+
+    snooze_reminder_time: Any = Field(
+        default=None,
+        validation_alias="snoozeReminderTime",
+    )
+
+
+class TaskV2(BaseModel):
+    """Model for a task in a batch response via the V2 API."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    child_ids: Optional[list[ObjectId]] = Field(
+        default=None,
+        validation_alias="childIds",
+        description="List of sub-task IDs",
+    )
+    completed_time: Optional[datetime] = Field(
+        default=None,
+        validation_alias="completedTime",
+        description="Completed time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
+    )
+    content: Optional[str] = Field(
+        default=None,
+        description="Content of the task, used for `TEXT` or `NOTE` tasks, otherwise `desc` is used",
+    )
+    created_time: Optional[datetime] = Field(
+        default=None,
+        validation_alias="createdTime",
+        description="Created time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
+    )
+    desc: Optional[str] = Field(
+        default=None,
+        description="Description of the task, used for `CHECKLIST` tasks, otherwise `content` is used",
+    )
+    due_date: Optional[datetime] = Field(
+        default=None,
+        validation_alias="dueDate",
+        description="Due date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
+    )
+    etag: ETag = Field(description="ETag of the task object")
+    id: ObjectId = Field(description="ID of the task")
+    is_all_day: Optional[bool] = Field(
+        default=None,
+        validation_alias="isAllDay",
+        description="The task is due any time on the due date, rather than at a specific time",
+    )
+    is_floating: bool = Field(
+        validation_alias="isFloating",
+        description="The task will remain at the same time regardless of time zone",
+    )
+    items: list[ItemV2] = Field(description="List of checklist items")
+    kind: Kind = Field(
+        default="TEXT",
+        description='"TEXT", "NOTE", or "CHECKLIST"',
+    )
+    modified_time: datetime = Field(
+        validation_alias="modifiedTime",
+        description="Last modified time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
+    )
+    parent_id: Optional[ObjectId] = Field(
+        default=None,
+        validation_alias="parentId",
+        description="ID of the parent task, if this is a subtask",
+    )
+    priority: Priority = Field(description="Priority of the task")
+    progress: Optional[Progress] = Field(
+        default=None,
+        description="Progress of a `CHECKLIST` task, should be a number between 0 and 100",
+    )
+    project_id: Union[InboxId, ObjectId] = Field(
+        validation_alias="projectId",
+        description="ID of the project the task is in",
+    )
+    reminder: Optional[ICalTrigger] = Field(
+        default=None,
+        description="Unclear what this is, but it can sometimes be one of the reminder triggers in `reminders`",
+    )
+    reminders: Optional[list[TaskReminderV2]] = Field(
+        default=None,
+        description="List of reminders for the task",
+    )
+    repeat_first_date: Optional[datetime] = Field(
+        default=None,
+        validation_alias="repeatFirstDate",
+        description="First date of the repeating task in `yyyy-MM-dd'T'HH:mm:ssZ` format",
+    )
+    repeat_flag: Optional[TTRRule] = Field(
+        default=None,
+        validation_alias="repeatFlag",
+        description="Recurring rules of task",
+    )
+    repeat_from: Optional[RepeatFrom] = Field(
+        default=None,
+        validation_alias="repeatFrom",
+        description="When to start repeating the task",
+    )
+    repeat_task_id: Optional[ObjectId] = Field(
+        default=None,
+        validation_alias="repeatTaskId",
+        description="ID of the repeating task if a duplicate is somehow (re)opened",
+    )
+    start_date: Optional[datetime] = Field(
+        default=None,
+        validation_alias="startDate",
+        description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
+    )
+    status: Status = Field(description="Status of the task")
+    tags: list[TagName] = Field(
+        default=[],
+        description="List of tag names for the task",
+    )
+    title: Optional[str] = Field(description="Title of the task")
+    time_zone: Optional[TimeZoneName] = Field(
+        default=None,
+        validation_alias="timeZone",
+        description="IANA time zone. Example: 'America/Los_Angeles'",
+    )
+
+    # unknown fields
+    attachments: list[Any] = []
+    annoying_alert: Optional[int] = Field(
+        default=None,
+        validation_alias="annoyingAlert",
+    )
+    column_id: Optional[ObjectId] = Field(default=None, validation_alias="columnId")
+    comment_count: Optional[int] = Field(default=None, validation_alias="commentCount")
+    completed_user_id: Optional[int] = Field(
+        default=None,
+        validation_alias="completedUserId",
+    )
+    creator: int
+    deleted: int
+    ex_date: Optional[list[Any]] = Field(default=None, validation_alias="exDate")
+    img_mode: Optional[int] = Field(default=None, validation_alias="imgMode")
+    focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
+    sort_order: int = Field(validation_alias="sortOrder")
