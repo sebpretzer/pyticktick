@@ -4,7 +4,14 @@ import pytest
 from pydantic import TypeAdapter
 
 from pyticktick.models.v2 import Color, GetBatchV2, TimeZoneName
-from pyticktick.models.v2.models import ProjectV2, TaskV2
+from pyticktick.models.v2.models import (
+    ItemV2,
+    ProjectGroupV2,
+    ProjectV2,
+    TagV2,
+    TaskReminderV2,
+    TaskV2,
+)
 
 
 @pytest.mark.order(3)
@@ -277,7 +284,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         for g in resp.project_groups:
             if g.id == data["id"]:
                 break
-        assert g is not None
+        assert isinstance(g, ProjectGroupV2)
         assert data["id"] == g.id
         assert data["name"] == g.name
 
@@ -287,6 +294,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
             if g.id == data["id"]:
                 break
         assert isinstance(g, ProjectV2)
+        assert data["id"] == g.id
         assert data["name"] == g.name
         if "group_id" in data:
             assert data["group_id"] == g.group_id
@@ -301,7 +309,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         for t in resp.tags:
             if t.name == data["name"]:
                 break
-        assert t is not None
+        assert isinstance(t, TagV2)
         assert t.name == data["name"]
         assert data["label"] == t.label
         if "color" in data:
@@ -358,7 +366,8 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
                 for i in t.items:
                     if i.id == item_data["id"]:
                         break
-                assert i is not None
+                assert isinstance(i, ItemV2)
+                assert item_data["id"] == i.id
                 assert item_data["title"] == i.title
                 if "is_all_day" in item_data and data["is_all_day"] is None:
                     assert item_data["is_all_day"] == i.is_all_day
@@ -375,7 +384,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
                 for r in t.reminders:
                     if r.id == reminder_data["id"]:
                         break
-                assert r is not None
+                assert isinstance(r, TaskReminderV2)
                 assert reminder_data["id"] == r.id
                 assert reminder_data["trigger"] == r.trigger
 
@@ -387,7 +396,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         for t in resp.sync_task_bean.update:
             if t.id == data["task_id"]:
                 break
-        assert t is not None
+        assert isinstance(t, TaskV2)
         assert data["parent_id"] == t.parent_id
         assert data["project_id"] == t.project_id
 

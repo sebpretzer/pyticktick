@@ -1,7 +1,10 @@
+import pytest
+
 from pyticktick import Client
 from pyticktick.settings import TokenV1
 
 
+@pytest.fixture()
 def test_client(
     test_v1_client_id,
     test_v1_client_secret,

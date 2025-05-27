@@ -4,6 +4,7 @@ import pytest
 from pydantic import TypeAdapter
 
 from pyticktick.models.v2 import ClosedRespV2, TimeZoneName
+from pyticktick.models.v2.models import ItemV2, TaskReminderV2, TaskV2
 
 
 @pytest.mark.order(2)
@@ -160,7 +161,7 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
         for t in resp.root:
             if t.id == data["id"]:
                 break
-        assert t is not None
+        assert isinstance(t, TaskV2)
         assert data["id"] == t.id
         assert data["title"] == t.title
         assert data["project_id"] == t.project_id
@@ -204,7 +205,7 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
                 for i in t.items:
                     if i.id == item_data["id"]:
                         break
-                assert i is not None
+                assert isinstance(i, ItemV2)
                 assert item_data["id"] == i.id
                 assert item_data["title"] == i.title
                 if "is_all_day" in item_data and data["is_all_day"] is None:
@@ -222,7 +223,7 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
                 for r in t.reminders:
                     if r.id == reminder_data["id"]:
                         break
-                assert r is not None
+                assert isinstance(r, TaskReminderV2)
                 assert reminder_data["id"] == r.id
                 assert reminder_data["trigger"] == r.trigger
 
@@ -305,7 +306,7 @@ def test_get_project_all_wont_do_v2(generate_object_id, delete_projects, client)
         for t in resp.root:
             if t.id == data["id"]:
                 break
-        assert t is not None
+        assert isinstance(t, TaskV2)
         assert data["id"] == t.id
         assert data["title"] == t.title
         assert data["project_id"] == t.project_id
