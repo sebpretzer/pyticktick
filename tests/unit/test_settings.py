@@ -3,7 +3,7 @@ from time import time
 from uuid import UUID, uuid4
 
 import pytest
-from pydantic import ValidationError
+from pydantic import SecretStr, ValidationError
 
 from pyticktick import Settings
 from pyticktick.settings import TokenV1
@@ -24,10 +24,10 @@ def test_settings(
     return Settings(
         v1_client_id=test_v1_client_id,
         v1_client_secret=test_v1_client_secret,
-        v1_token={
-            "value": test_v1_token_value,
-            "expiration": test_v1_token_expiration,
-        },
+        v1_token=TokenV1(
+            value=test_v1_token_value,
+            expiration=test_v1_token_expiration,
+        ),
         v2_username=test_v2_username,
         v2_password=test_v2_password,
         v2_token=test_v2_token,
@@ -79,7 +79,7 @@ def test_v1_token_initialize_invalid(
         test_expiration = None
 
     with pytest.raises(ValidationError):
-        TokenV1(value=test_value, expiration=test_expiration)
+        TokenV1(value=test_value, expiration=test_expiration)  # pyright: ignore[reportArgumentType]
 
 
 def test_v1_token_expiration():
@@ -139,7 +139,9 @@ def test_v1_settings_initialize(
         settings = Settings.model_validate(kwargs)
 
     assert settings.v1_client_id == test_v1_client_id
+    assert isinstance(settings.v1_client_secret, SecretStr)
     assert settings.v1_client_secret.get_secret_value() == test_v1_client_secret
+    assert isinstance(settings.v1_token, TokenV1)
     assert settings.v1_token.value == UUID(test_v1_token_value)
 
 
@@ -172,6 +174,7 @@ def test_v2_settings_initialize(
         settings = Settings.model_validate(kwargs)
 
     assert settings.v2_username == test_v2_username
+    assert isinstance(settings.v2_password, SecretStr)
     assert settings.v2_password.get_secret_value() == test_v2_password
     assert settings.v2_token == test_v2_token
 

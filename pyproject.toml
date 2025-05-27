@@ -136,6 +136,7 @@ venv = ".venv"
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 strict = true
+exclude = ["tests/"]
 
 [tool.coverage.run]
 relative_files = true

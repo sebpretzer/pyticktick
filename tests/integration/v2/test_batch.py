@@ -4,6 +4,7 @@ import pytest
 from pydantic import TypeAdapter
 
 from pyticktick.models.v2 import Color, GetBatchV2, TimeZoneName
+from pyticktick.models.v2.models import ProjectV2, TaskV2
 
 
 @pytest.mark.order(3)
@@ -269,11 +270,15 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
     assert resp is not None
     assert isinstance(resp, GetBatchV2)
 
+    g = None
     for data in project_group_data:
+        assert isinstance(resp.project_groups, list)
         assert any(data["id"] == g.id for g in resp.project_groups)
         for g in resp.project_groups:
             if g.id == data["id"]:
                 break
+        assert g is not None
+        assert data["id"] == g.id
         assert data["name"] == g.name
 
     for data in project_data:
@@ -281,6 +286,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         for g in resp.project_profiles:
             if g.id == data["id"]:
                 break
+        assert isinstance(g, ProjectV2)
         assert data["name"] == g.name
         if "group_id" in data:
             assert data["group_id"] == g.group_id
@@ -290,19 +296,26 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
             assert data["kind"] == g.kind
 
     for data in tag_data:
+        t = None
         assert any(data["name"] == t.name for t in resp.tags)
         for t in resp.tags:
             if t.name == data["name"]:
                 break
+        assert t is not None
+        assert t.name == data["name"]
         assert data["label"] == t.label
         if "color" in data:
             assert TypeAdapter(Color).validate_python(data["color"]) == t.color
 
+    t = None
     for data in task_data + subtask_task_data:
         assert any(data["id"] == t.id for t in resp.sync_task_bean.update)
         for t in resp.sync_task_bean.update:
             if t.id == data["id"]:
                 break
+        assert t is not None
+        assert isinstance(t, TaskV2)
+        assert data["id"] == t.id
         assert data["title"] == t.title
         assert data["project_id"] == t.project_id
         if "tags" in data:
@@ -340,10 +353,12 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         if "items" in data:
             assert len(data["items"]) == len(t.items)
             for item_data in data["items"]:
+                i = None
                 assert any(item_data["id"] == i.id for i in t.items)
                 for i in t.items:
                     if i.id == item_data["id"]:
                         break
+                assert i is not None
                 assert item_data["title"] == i.title
                 if "is_all_day" in item_data and data["is_all_day"] is None:
                     assert item_data["is_all_day"] == i.is_all_day
@@ -352,12 +367,16 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
                 if "status" in item_data:
                     assert item_data["status"] == i.status
         if "reminders" in data:
+            assert isinstance(t.reminders, list)
             assert len(data["reminders"]) == len(t.reminders)
             for reminder_data in data["reminders"]:
+                r = None
                 assert any(reminder_data["id"] == r.id for r in t.reminders)
                 for r in t.reminders:
                     if r.id == reminder_data["id"]:
                         break
+                assert r is not None
+                assert reminder_data["id"] == r.id
                 assert reminder_data["trigger"] == r.trigger
 
             if t.reminder is not None:
@@ -368,6 +387,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         for t in resp.sync_task_bean.update:
             if t.id == data["task_id"]:
                 break
+        assert t is not None
         assert data["parent_id"] == t.parent_id
         assert data["project_id"] == t.project_id
 

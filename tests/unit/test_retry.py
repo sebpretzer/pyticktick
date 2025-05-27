@@ -28,16 +28,16 @@ def test_retry_api_v1():
     wrapped_function = decorator(_func)
     assert isinstance(wrapped_function, FunctionType)
 
-    assert isinstance(wrapped_function.retry, Retrying)
-    assert wrapped_function.retry.stop.max_attempt_number == attempts
-    assert wrapped_function.retry.wait.min == min_wait
-    assert wrapped_function.retry.wait.max == max_wait
+    assert isinstance(wrapped_function.retry, Retrying)  # pyright: ignore[reportFunctionMemberAccess]
+    assert wrapped_function.retry.stop.max_attempt_number == attempts  # pyright: ignore[reportFunctionMemberAccess,reportAttributeAccessIssue]
+    assert wrapped_function.retry.wait.min == min_wait  # pyright: ignore[reportFunctionMemberAccess,reportAttributeAccessIssue]
+    assert wrapped_function.retry.wait.max == max_wait  # pyright: ignore[reportFunctionMemberAccess,reportAttributeAccessIssue]
 
-    retries = wrapped_function.retry.retry.retries
+    retries = wrapped_function.retry.retry.retries  # pyright: ignore[reportFunctionMemberAccess,reportAttributeAccessIssue]
     assert len(retries) == 2
     assert any(isinstance(retry, retry_if_exception_message) for retry in retries)
 
-    assert wrapped_function.statistics == {}
+    assert wrapped_function.statistics == {}  # pyright: ignore[reportFunctionMemberAccess]
     with pytest.raises(RetryError):
         wrapped_function()
-    assert wrapped_function.statistics.get("attempt_number") == attempts
+    assert wrapped_function.statistics.get("attempt_number") == attempts  # pyright: ignore[reportFunctionMemberAccess]
