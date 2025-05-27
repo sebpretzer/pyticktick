@@ -1,4 +1,5 @@
 from time import time
+from typing import Callable
 from uuid import uuid4
 
 import pytest
@@ -7,7 +8,7 @@ from pyticktick.models.v2 import UserSignOnV2
 
 
 @pytest.fixture()
-def test_v1_token_expiration_days() -> callable:
+def test_v1_token_expiration_days() -> Callable[[int], int]:
     def _test_v1_token_expiration_days(days: int) -> int:
         return int(time()) + days * 24 * 60 * 60
 
@@ -51,23 +52,25 @@ def test_v2_token() -> str:
 
 @pytest.fixture()
 def test_v2_usersignonv2(test_v2_username, test_v2_token) -> UserSignOnV2:
-    return UserSignOnV2(
-        token=test_v2_token,
-        userId="test_user_id",
-        userCode=str(uuid4()),
-        username=test_v2_username,
-        teamPro=False,
-        proStartDate="test_pro_start_date",
-        proEndDate="test_pro_end_date",
-        subscribeType="test_subscribe_type",
-        subscribeFreq="test_subscribe_freq",
-        needSubscribe=False,
-        freq="test_freq",
-        inboxId="test_inbox_id",
-        teamUser=False,
-        activeTeamUser=False,
-        freeTrial=False,
-        gracePeriod=False,
-        pro=False,
-        ds=False,
+    return UserSignOnV2.parse_obj(
+        {
+            "token": test_v2_token,
+            "userId": "test_user_id",
+            "userCode": uuid4(),
+            "username": test_v2_username,
+            "teamPro": False,
+            "proStartDate": "test_pro_start_date",
+            "proEndDate": "test_pro_end_date",
+            "subscribeType": "test_subscribe_type",
+            "subscribeFreq": "test_subscribe_freq",
+            "needSubscribe": False,
+            "freq": "test_freq",
+            "inboxId": "test_inbox_id",
+            "teamUser": False,
+            "activeTeamUser": False,
+            "freeTrial": False,
+            "gracePeriod": False,
+            "pro": False,
+            "ds": False,
+        },
     )

@@ -2,6 +2,7 @@ from time import time
 from uuid import UUID
 
 import pytest
+from pydantic import SecretStr
 
 from pyticktick import Settings
 from pyticktick.settings import TokenV1
@@ -15,6 +16,7 @@ def test_authenticate_v1(client):
     settings = Settings(v1_client_id=_client_id, v1_client_secret=_client_secret)
 
     assert settings.v1_client_id == _client_id
+    assert isinstance(settings.v1_client_secret, SecretStr)
     assert settings.v1_client_secret.get_secret_value() == _client_secret
     assert settings.v1_token is not None
     assert isinstance(settings.v1_token, TokenV1)
@@ -33,6 +35,7 @@ def test_initialize_api_v2(client):
     settings = Settings(v2_username=_username, v2_password=_password)
 
     assert settings.v2_username == _username
+    assert isinstance(settings.v2_password, SecretStr)
     assert settings.v2_password.get_secret_value() == _password
     assert settings.v2_token is not None
     assert isinstance(settings.v2_token, str)

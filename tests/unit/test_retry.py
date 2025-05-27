@@ -1,3 +1,7 @@
+# pyright: reportFunctionMemberAccess=false
+# pyright: reportAttributeAccessIssue=false
+
+
 from types import FunctionType
 
 import pytest
@@ -27,6 +31,8 @@ def test_retry_api_v1():
 
     wrapped_function = decorator(_func)
     assert isinstance(wrapped_function, FunctionType)
+
+    assert hasattr(wrapped_function, "retry")
 
     assert isinstance(wrapped_function.retry, Retrying)
     assert wrapped_function.retry.stop.max_attempt_number == attempts

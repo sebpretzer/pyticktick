@@ -132,7 +132,6 @@ skip-checking-short-docstrings = false
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-ignore = ["tests/"]
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]

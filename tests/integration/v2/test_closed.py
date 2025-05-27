@@ -4,6 +4,7 @@ import pytest
 from pydantic import TypeAdapter
 
 from pyticktick.models.v2 import ClosedRespV2, TimeZoneName
+from pyticktick.models.v2.models import ItemV2, TaskReminderV2, TaskV2
 
 
 @pytest.mark.order(2)
@@ -154,11 +155,14 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
     resp = client.get_project_all_closed_v2({"status": "Completed"})
     assert resp is not None
     assert isinstance(resp, ClosedRespV2)
+    t = None
     for data in completed_data:
         assert any(t.id == data["id"] for t in resp.root)
         for t in resp.root:
             if t.id == data["id"]:
                 break
+        assert isinstance(t, TaskV2)
+        assert data["id"] == t.id
         assert data["title"] == t.title
         assert data["project_id"] == t.project_id
         if "tags" in data:
@@ -195,11 +199,14 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
             assert data["kind"] == t.kind
         if "items" in data:
             assert len(data["items"]) == len(t.items)
+            i = None
             for item_data in data["items"]:
                 assert any(item_data["id"] == i.id for i in t.items)
                 for i in t.items:
                     if i.id == item_data["id"]:
                         break
+                assert isinstance(i, ItemV2)
+                assert item_data["id"] == i.id
                 assert item_data["title"] == i.title
                 if "is_all_day" in item_data and data["is_all_day"] is None:
                     assert item_data["is_all_day"] == i.is_all_day
@@ -208,12 +215,16 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
                 if "status" in item_data:
                     assert item_data["status"] == i.status
         if "reminders" in data:
+            assert isinstance(t.reminders, list)
             assert len(data["reminders"]) == len(t.reminders)
             for reminder_data in data["reminders"]:
+                r = None
                 assert any(reminder_data["id"] == r.id for r in t.reminders)
                 for r in t.reminders:
                     if r.id == reminder_data["id"]:
                         break
+                assert isinstance(r, TaskReminderV2)
+                assert reminder_data["id"] == r.id
                 assert reminder_data["trigger"] == r.trigger
 
             if t.reminder is not None:
@@ -289,11 +300,14 @@ def test_get_project_all_wont_do_v2(generate_object_id, delete_projects, client)
     resp = client.get_project_all_closed_v2({"status": "Abandoned"})
     assert resp is not None
     assert isinstance(resp, ClosedRespV2)
+    t = None
     for data in wont_do_data:
         assert any(t.id == data["id"] for t in resp.root)
         for t in resp.root:
             if t.id == data["id"]:
                 break
+        assert isinstance(t, TaskV2)
+        assert data["id"] == t.id
         assert data["title"] == t.title
         assert data["project_id"] == t.project_id
         assert data["status"] == t.status

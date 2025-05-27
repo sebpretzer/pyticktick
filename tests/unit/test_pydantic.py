@@ -49,9 +49,9 @@ def test_update_model_config_nested():
 
     data = PostBatchTaskV2.model_validate(dict_)
     assert isinstance(data, PostBatchTaskV2)
-    assert data.extra_field == "value"
-    assert data.add[0].extra_nested_field == "value"
-    assert data.add[0].items[0].extra_nested_nested_field == "value"
-    assert data.update[0].extra_nested_field == "value"
-    assert data.update[0].reminders[0].extra_extra_nested_field == "value"
-    assert data.delete[0].extra_nested_field == "value"
+    assert data.extra_field == "value"  # pyright: ignore[reportAttributeAccessIssue]
+    assert data.add[0].extra_nested_field == "value"  # pyright: ignore[reportAttributeAccessIssue]
+    assert data.add[0].items[0].extra_nested_nested_field == "value"  # pyright: ignore[reportOptionalSubscript,reportAttributeAccessIssue]
+    assert data.update[0].extra_nested_field == "value"  # pyright: ignore[reportAttributeAccessIssue]
+    assert data.update[0].reminders[0].extra_extra_nested_field == "value"  # pyright: ignore[reportOptionalSubscript,reportAttributeAccessIssue]
+    assert data.delete[0].extra_nested_field == "value"  # pyright: ignore[reportAttributeAccessIssue]
