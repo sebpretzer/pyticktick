@@ -397,6 +397,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
             if t.id == data["task_id"]:
                 break
         assert isinstance(t, TaskV2)
+        assert data["task_id"] == t.id
         assert data["parent_id"] == t.parent_id
         assert data["project_id"] == t.project_id
 
