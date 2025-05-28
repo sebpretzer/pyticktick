@@ -109,7 +109,17 @@ docstring-code-format = true
 [tool.ruff.lint.per-file-ignores]
 "**/__init__.py" = ["D104"]
 "src/pyticktick/models/*" = ["ANN401", "E501"]
-"tests/*" = ["ANN", "D", "INP", "C901", "PLR0913", "PLR2004", "S101", "SLF001"]
+"tests/*" = [
+    "ANN",
+    "D",
+    "INP",
+    "C901",
+    "FBT001",
+    "PLR0913",
+    "PLR2004",
+    "S101",
+    "SLF001",
+]
 
 # Remove this after rules are added to ruff
 # https://github.com/astral-sh/ruff/issues/12434
@@ -136,6 +146,22 @@ venv = ".venv"
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 strict = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+# https://github.com/python/mypy/issues/11401
+disallow_any_generics = false
+disallow_subclassing_any = false
+disallow_untyped_calls = false
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+disallow_untyped_decorators = false
+warn_unused_ignores = false
+warn_return_any = false
+no_implicit_reexport = false
+strict_equality = false
+extra_checks = false
 
 [tool.coverage.run]
 relative_files = true
