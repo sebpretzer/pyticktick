@@ -137,9 +137,10 @@ venv = ".venv"
 plugins = ["pydantic.mypy"]
 strict = true
 
+# Switch all rules to `strict = false` after
+# # https://github.com/python/mypy/issues/11401
 [[tool.mypy.overrides]]
 module = ["tests.*"]
-# https://github.com/python/mypy/issues/11401
 disallow_any_generics = false
 disallow_subclassing_any = false
 disallow_untyped_calls = false
