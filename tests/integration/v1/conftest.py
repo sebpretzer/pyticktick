@@ -1,5 +1,3 @@
-# mypy: disable-error-code="str-bytes-safe"
-
 from __future__ import annotations
 
 import logging
