@@ -1,3 +1,5 @@
+# mypy: disable-error-code="str-bytes-safe"
+
 from __future__ import annotations
 
 import logging
@@ -33,9 +35,9 @@ def helper_get_projects(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 
@@ -52,9 +54,9 @@ def helper_get_project_data(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 
@@ -72,9 +74,9 @@ def helper_create_project(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 
@@ -91,9 +93,9 @@ def helper_delete_project(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
 
     return _retry(_delete_project)
@@ -153,9 +155,9 @@ def helper_create_task(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 
@@ -172,9 +174,9 @@ def helper_get_task(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 

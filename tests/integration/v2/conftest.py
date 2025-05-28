@@ -1,3 +1,5 @@
+# mypy: disable-error-code="str-bytes-safe"
+#
 from __future__ import annotations
 
 import logging
@@ -42,9 +44,9 @@ def get_batch(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 
@@ -63,9 +65,9 @@ def get_task_v2(client):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
         return resp.json()
 
@@ -94,9 +96,9 @@ def delete_projects(client, get_batch):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
 
     return _retry(_delete_projects)
@@ -124,9 +126,9 @@ def delete_project_groups(client, get_batch):
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
 
     return _retry(_delete_project_groups)
@@ -151,9 +153,9 @@ def delete_tags(client, get_batch):
                 )
                 resp.raise_for_status()
         except httpx.HTTPStatusError as e:
+            msg = f"Response [{e.response.status_code}]"
             if isinstance((content := e.response.content), bytes):
-                content = content.decode()
-            msg = f"Response [{e.response.status_code}]:\n{content}"
+                msg += f":\n{content.decode()}"
             raise ValueError(msg) from e
 
     return _retry(_delete_tags)
