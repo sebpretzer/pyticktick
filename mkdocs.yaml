@@ -9,8 +9,8 @@ nav:
           - Generate a V1 Token: guides/ticktick_api/generate_v1_token.md
       - Cookbook:
           - Settings:
-              - Set V1 Secrets: guides/cookbook/settings/set_v1_authentication_parameters.md
-              - Set V2 Username and Password: guides/cookbook/settings/set_v2_authentication_parameters.md
+              - Set V1 Secrets: guides/cookbook/settings/set_v1_secrets.md
+              - Set V2 Username and Password: guides/cookbook/settings/set_v2_username_and_password.md
           - Tasks:
               - Create a Basic Task: guides/cookbook/tasks/create_a_basic_task.md
               - Update a Basic Task: guides/cookbook/tasks/update_a_basic_task.md
