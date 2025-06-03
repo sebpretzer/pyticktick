@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
         "pyproject",
         type=Path,
         nargs="?",
-        default=Path(__file__).parent.parent.joinpath("pyproject.toml"),
+        default=Path(__file__).parents[2].joinpath("pyproject.toml"),
         help="Path to the pyproject.toml file",
     )
     return parser.parse_args()
