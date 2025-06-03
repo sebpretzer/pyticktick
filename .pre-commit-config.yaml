@@ -70,8 +70,19 @@ repos:
         args: [--config-file, pyproject.toml, .]
         require_serial: true
         pass_filenames: false
-      - id: scripts/pypi_version_check.py
-        name: scripts/pypi_version_check.py
-        entry: ./scripts/pypi_version_check.py
+      - id: scripts/checks/pypi_version.py
+        name: scripts/checks/pypi_version.py
+        entry: ./scripts/checks/pypi_version.py
         language: system
         files: ^pyproject.toml$
+        pass_filenames: false
+      - id: scripts/checks/changelog.py
+        name: scripts/checks/changelog.py
+        entry: ./scripts/checks/changelog.py
+        language: system
+        files: |
+          (?x)^(
+            docs/CHANGELOG\.md
+            |pyproject.toml
+          )$
+        pass_filenames: false

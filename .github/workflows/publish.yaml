@@ -20,6 +20,8 @@ jobs:
         run: make install-uv
       - name: Install dependencies
         run: make install
+      - name: Check changelog
+        run: make check-changelog
       - name: Build wheel
         run: make build
       - name: Test Publish
