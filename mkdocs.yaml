@@ -8,6 +8,10 @@ nav:
           - Register a V1 App: guides/ticktick_api/register_v1_app.md
           - Generate a V1 Token: guides/ticktick_api/generate_v1_token.md
       - Cookbook:
+          - Settings:
+              - Authenticate Client via Python: guides/cookbook/settings/authenticate_client_via_python.md
+              - Authenticate Client via Env Vars: guides/cookbook/settings/authenticate_client_via_env_vars.md
+              - Authenticate Client via Dotenv: guides/cookbook/settings/authenticate_client_via_dotenv.md
           - Tasks:
               - Create a Basic Task: guides/cookbook/tasks/create_a_basic_task.md
               - Update a Basic Task: guides/cookbook/tasks/update_a_basic_task.md

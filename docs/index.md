@@ -22,9 +22,7 @@ for task in resp.sync_task_bean.update:
     print(json.dumps(task.model_dump(mode="json"), indent=4))
 ```
 
-<!-- TODO: Switch create a project to settings guide when it comes -->
-
-To see more, you can check out all the of recipes from the [cookbook](./guides/cookbook/projects/create_a_project.md).
+To see more, you can check out all of the recipes from the [cookbook](./guides/cookbook/settings/authenticate_client_via_python.md).
 
 ??? warning "Disclaimer"
 
