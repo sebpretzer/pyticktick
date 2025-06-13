@@ -10,7 +10,7 @@ The official API, formally known as the _TickTick Open API_, is a RESTful API fo
 
 ### API V2
 
-The unofficial API does not have an formal name, but we refer to it as _API V2_, given the URL starts with `api.ticktick.com/api/v2/`. This API is undocumented, so the information provided in this documentation is based on other projects' efforts to reverse-engineer the API, as well as our own observations, and may not be entirely accurate. This is the API that the TickTick web app uses to communicate with the TickTick servers, so anything you can do in the web app, you can do with this API.
+The unofficial API does not have a formal name, but we refer to it as _API V2_, given the URL starts with `api.ticktick.com/api/v2/`. This API is undocumented, so the information provided in this documentation is based on other projects' efforts to reverse-engineer the API, as well as our own observations, and may not be entirely accurate. This is the API that the TickTick web app uses to communicate with the TickTick servers, so anything you can do in the web app, you can do with this API.
 
 ## Why support two APIs?
 
@@ -18,4 +18,4 @@ The goal is to provide the best experience possible for developers using this li
 
 ## Which API should I use?
 
-TickTick has not mentioned the _API V2_ anywhere on their website, but it provides a better experience for developers. Given that TickTick has not given explicit permission to use it, it may go against their [Terms of Service](https://ticktick.com/tos). This was discussed in [lazeroffmichael/ticktick-py#38](https://github.com/lazeroffmichael/ticktick-py/issues/38) if you want to see other developers' opinions on the matter. The recommendation of this library is to use the official API where possible, and only use the unofficial API when necessary. The library client is designed to be flexible, so you can do whatever you feel comfortable with.
+TickTick has not mentioned the _API V2_ anywhere on their website, but it provides a better experience for developers. Given that TickTick has not given explicit permission to use it, it may go against their [Terms of Service](https://ticktick.com/tos). This was discussed in [lazeroffmichael/ticktick-py#38](https://github.com/lazeroffmichael/ticktick-py/issues/38) if you want to see other developers' opinions on the matter. This library's recommendation is to use the official API where possible, and only use the unofficial API when necessary. The library client is designed to be flexible, so you can do whatever you feel comfortable with.

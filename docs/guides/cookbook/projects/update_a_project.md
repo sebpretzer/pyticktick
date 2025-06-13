@@ -1,4 +1,4 @@
-# Update a project
+# Update a Project
 
 Let's assume we want to update the project from the [create project recipe](create_a_project.md) with the following properties:
 

@@ -78,5 +78,3 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
 
     client = Client()
     ```
-
-To see more on env file support, please refer to [Pydantic Settings' Dotenv (.env) support](https://docs.pydantic.dev/latest/concepts/pydantic_settings/#dotenv-env-support).

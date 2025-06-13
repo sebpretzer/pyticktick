@@ -13,7 +13,7 @@ This silent error handling can mislead users into thinking their extra fields ar
 
 ## What if the API Changes?
 
-If the V2 API changes, we will need to update our models. If there is any lag between the API update and the model update, the models will through a validation error. We have an [escape hatch to override this behavior](../guides/settings/overriding_models_that_forbid_extra_fields.md), at least on the response side.
+If the V2 API changes, we will need to update our models. If there is any lag between the API update and the model update, the models will throw a validation error. We have an [escape hatch to override this behavior](../guides/settings/overriding_models_that_forbid_extra_fields.md), at least on the response side.
 
 ## Why Ignore Extra Fields in V1 Response Models?
 

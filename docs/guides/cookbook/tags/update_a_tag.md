@@ -14,7 +14,7 @@ This is what the update would look like in the TickTick app:
 
 This is what the `pyticktick` equivalent would look like:
 
-=== "V2 -dict"
+=== "V2 - dict"
 
     ```python
     import json

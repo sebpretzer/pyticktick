@@ -1,6 +1,6 @@
 # pyticktick
 
-[`pyticktick`](http://pyticktick.pretzer.io/) is the modern (unofficial) python library for interacting with [TickTick](https://ticktick.com/home). [`pyticktick`](http://pyticktick.pretzer.io/) supports both the official and unofficial APIs, provides elegant retry logic, and catches data errors early with [`pydantic`](https://docs.pydantic.dev/latest/).
+[`pyticktick`](http://pyticktick.pretzer.io/) is the modern (unofficial) Python library for interacting with [TickTick](https://ticktick.com/home). [`pyticktick`](http://pyticktick.pretzer.io/) supports both the official and unofficial APIs, provides elegant retry logic, and catches data errors early with [`pydantic`](https://docs.pydantic.dev/latest/).
 
 Check out the [documentation](https://pyticktick.pretzer.io/) for more information.
 

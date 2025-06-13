@@ -14,6 +14,7 @@ This is what the `pyticktick` equivalent would look like:
     import json
     from pyticktick import Client
 
+    client = Client()
     resp = client.get_batch_v2()
     if resp.project_groups is None:
         print("No project groups found.")

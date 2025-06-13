@@ -14,7 +14,7 @@ This is what the `pyticktick` equivalent would look like:
 
 !!! warning
 
-    The `group_id` is set to `#!python "NONE"` to remove the project from the group, rather than the standard `None` python value.
+    The `group_id` is set to `#!python "NONE"` to remove the project from the group, rather than the standard `None` Python value.
 
 === "V2 - dict"
 
