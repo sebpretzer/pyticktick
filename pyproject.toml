@@ -158,4 +158,4 @@ extra_checks = false
 relative_files = true
 
 [tool.typos.default]
-extend-ignore-words-re = ["ba", "ser_*", "extenal_*"]
+extend-ignore-words-re = ["ba", "ser_*", "extenal_*", "Fo"]
