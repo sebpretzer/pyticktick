@@ -1,9 +1,9 @@
 # Checklist vs Subtasks
 
-TickTick supports both checklists (called [check items](https://help.ticktick.com/articles/7055782408586526720#check-items)) and subtasks (called [multilevel tasks](https://help.ticktick.com/articles/7055782219767349248)). These have very similar functionalities, and it can be difficult to discern when to use one over the other.
+TickTick supports both checklists (called [check items](https://help.ticktick.com/articles/7055782408586526720#check-items)) and subtasks (called [multilevel tasks](https://help.ticktick.com/articles/7055782219767349248)). These have very similar functionalities, and it can be difficult to determine when to use one over the other.
 
 <figure markdown="span">
-    <figcaption>Difference between an **checklist** and **subtasks**:</figcaption>
+    <figcaption>Difference between a **checklist** and **subtasks**:</figcaption>
     ![Checklist example](./../../_images/checklists_vs_subtasks/checklist.png){ width="47%" align="left" }
     ![Subtask example](./../../_images/checklists_vs_subtasks/subtask.png){ width="47%" align="right" }
 </figure>

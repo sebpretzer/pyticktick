@@ -18,7 +18,7 @@ from pyticktick import Client
 client = Client(override_forbid_extra=True)
 ```
 
-You can see alternative ways to set `override_forbid_extra` in the [Settings](http://127.0.0.1:8000/reference/settings/#pyticktick.settings.Settings) reference.
+You can see alternative ways to set `override_forbid_extra` in the [Settings](../../reference/settings/#pyticktick.settings.Settings) reference.
 
 !!! note
 

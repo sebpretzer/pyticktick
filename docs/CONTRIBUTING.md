@@ -1,6 +1,6 @@
 # Contributing
 
-There are several ways to contribute to TickTick, based on your level of commitment. Please read the [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
+There are several ways to contribute to `pyticktick`, based on your level of commitment. Please read the [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ## Opening an Issue
 
@@ -44,13 +44,13 @@ When you are ready to submit your changes, you can [open a pull request](#openin
 
 In order to contribute to the codebase, please go through the [issue tracker](https://github.com/sebpretzer/pyticktick/issues?q=is%3Aissue%20state%3Aopen+label%3Abug%2Cenhancement) to find an issue that you can work on. If you don't find an issue, you can [create a bug report](https://github.com/sebpretzer/pyticktick/issues/new?template=bug.yaml) or [feature request](https://github.com/sebpretzer/pyticktick/issues/new?template=feature.yaml).
 
-Fork the repository and create a new branch for your changes. When you have the forked repository on your workspace, you can [set up your local environment](guides/development/setup_local_environment.md). You should try your best to follow the [codebase conventions](explanations/code_conventions.md) when making your changes. Once you are done editing, its time to [test your changes locally](guides/development/running_tests_locally.md).
+Fork the repository and create a new branch for your changes. When you have the forked repository on your workspace, you can [set up your local environment](guides/development/setup_local_environment.md). You should try your best to follow the [codebase conventions](explanations/code_conventions.md) when making your changes. Once you are done editing, it's time to [test your changes locally](guides/development/running_tests_locally.md).
 
 Once all tests pass on your machine, you can [open a pull request](#opening-a-pull-request).
 
 ## Opening a Pull Request
 
-To open a pull request, you can follow [Github's guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork). Please adhere to the following guidelines:
+To open a pull request, you can follow [GitHub's guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork). Please adhere to the following guidelines:
 
 - Title
     - Do not use the auto-generated title, re-word your title to be more descriptive

@@ -1,4 +1,4 @@
-# Create a project
+# Create a Project
 
 Let's assume we want to create a new project with the following properties:
 

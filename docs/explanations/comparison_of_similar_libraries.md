@@ -1,6 +1,6 @@
 # Comparison of Similar Libraries
 
-There are a few python libraries that provide similar functionality to `pyticktick`:
+There are a few Python libraries that provide similar functionality to `pyticktick`:
 
 1. [ticktick-py](https://lazeroffmichael.github.io/ticktick-py/)
 1. [dida365](https://cyfine.github.io/TickTick-Dida365-API-Client/)
@@ -89,7 +89,7 @@ The TickTick V2 API is undocumented, so the descriptions below may not be fully 
 
 ## Retry support
 
-`pyticktick` and `dida365` both support retrying when the V1 endpoint is overloaded with too many requests. `ticktick-py` is the only library to support retries for both V1 and V2 endpoints. This was not implemented in `pyticktick` since it was impossible to discern which V2 calls were failing due to rate limits versus other errors.
+`pyticktick` and `dida365` both support retrying when the V1 endpoint is overloaded with too many requests. `ticktick-py` is the only library to support retries for both V1 and V2 endpoints. This was not implemented in `pyticktick` since it was impossible to determine which V2 calls were failing due to rate limits versus other errors.
 
 ## Async Support
 

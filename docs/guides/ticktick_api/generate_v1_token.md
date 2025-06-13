@@ -52,7 +52,7 @@ This will take you to the TickTick login page. Log in with your account and clic
 
 ### Copy the Code
 
-**Do not close the browser window.** You will be redirected to (possibly non-functioning) page with a code. Copy the entire URL and paste it back into the console:
+**Do not close the browser window.** You will be redirected to a (possibly non-functioning) page with a code. Copy the entire URL and paste it back into the console:
 
 ```bash
 What is the URL you were redirected to?: http://127.0.0.1:8080/?code=jAyEtF&state=None
@@ -60,7 +60,7 @@ What is the URL you were redirected to?: http://127.0.0.1:8080/?code=jAyEtF&stat
 
 ### Get Your Token
 
-The python process should have your token stored in memory. There are a few ways to get the token at this point. You can either send the token and expiration time to your clipboard, or print it to the console, or save it to a file. The script will prompt you for your choice in that respective order, and whichever you choose will skip the following prompts:
+The Python process should have your token stored in memory. There are a few ways to get the token at this point. You can either send the token and expiration time to your clipboard, or print it to the console, or save it to a file. The script will prompt you for your choice in that respective order, and whichever you choose will skip the following prompts:
 
 ```bash
 Do you want the token to be copied to the clipboard? [Y/n]:

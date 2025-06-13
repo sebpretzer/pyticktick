@@ -9,7 +9,7 @@ By running the mkdocs documentation locally, you can create a dev server that up
 To run the mkdocs dev server, you simply have to run:
 
 ```bash
-mkdocs-dev
+make mkdocs-dev
 ```
 
 This will then serve the documentation at [`http://127.0.0.1:8000/`](http://127.0.0.1:8000/).

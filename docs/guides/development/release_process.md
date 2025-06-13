@@ -1,6 +1,6 @@
 # Release Process
 
-Releasing a new version of the project involves a few steps to ensure that the code is ready for release. The release process itself is automated through Github Actions, assuming the requirements are met.
+Releasing a new version of the project involves a few steps to ensure that the code is ready for release. The release process itself is automated through GitHub Actions, assuming the requirements are met.
 
 ## Update the Version
 
@@ -30,7 +30,7 @@ The changelog is tracked in the [`CHANGELOG.md` file](https://github.com/sebpret
 ...
 ```
 
-The relevant section of the changelog is extracted by the Githb Action as part of the release.
+The relevant section of the changelog is extracted by the GitHub Action as part of the release.
 
 ## Trigger the Release
 

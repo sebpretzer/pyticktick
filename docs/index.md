@@ -1,6 +1,6 @@
 # pyticktick
 
-`pyticktick` is the modern (unofficial) python library for interacting with [TickTick](https://ticktick.com/home). `pyticktick` supports both the official and unofficial APIs, provides elegant retry logic, and catches data errors early with [`pydantic`](https://docs.pydantic.dev/latest/).
+`pyticktick` is the modern (unofficial) Python library for interacting with [TickTick](https://ticktick.com/home). `pyticktick` supports both the official and unofficial APIs, provides elegant retry logic, and catches data errors early with [`pydantic`](https://docs.pydantic.dev/latest/).
 
 ______________________________________________________________________
 
@@ -10,7 +10,7 @@ Make sure you have `pyticktick` [installed](./guides/installation.md), then you 
 import json
 from pyticktick import Client
 
-client = Client(v2_username="username",v2_password="password")
+client = Client(v2_username="username", v2_password="password")
 resp = client.get_batch_v2()
 
 print("My Projects:")
