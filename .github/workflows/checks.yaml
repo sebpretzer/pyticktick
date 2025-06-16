@@ -199,6 +199,6 @@ jobs:
 
       - name: Generate coverage comment
         id: coverage-comment
-        uses: py-cov-action/python-coverage-comment-action@36b3c191f4996b5d1b7ac63a7ca2236cc8df34cc # v3
+        uses: py-cov-action/python-coverage-comment-action@84612d8ef59989fc534e04c41a80dfa6858183a3 # v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
