@@ -1,7 +1,7 @@
 from urllib.parse import urlencode
 
+from pyticktick.models.pydantic import HttpUrl
 from pyticktick.models.v1 import OAuthAuthorizeURLV1, OAuthTokenURLV1
-from pyticktick.models.v2.types import HttpUrl
 
 
 def test_settings_create_authorize_url(test_v1_client_id):

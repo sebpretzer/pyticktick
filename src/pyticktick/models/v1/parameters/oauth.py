@@ -11,8 +11,7 @@ from urllib.parse import urlencode
 
 from pydantic import BaseModel, ConfigDict, Field, model_serializer
 
-# This is an exception to the rule of not sharing models between versions
-from pyticktick.models.v2.types import HttpUrl
+from pyticktick.models.pydantic import HttpUrl
 
 
 class OAuthAuthorizeURLV1(BaseModel):

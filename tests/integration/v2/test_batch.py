@@ -3,7 +3,8 @@ from datetime import datetime
 import pytest
 from pydantic import TypeAdapter
 
-from pyticktick.models.v2 import Color, GetBatchV2, TimeZoneName
+from pyticktick.models.pydantic import Color
+from pyticktick.models.v2 import GetBatchV2, TimeZoneName
 from pyticktick.models.v2.models import (
     ItemV2,
     ProjectGroupV2,

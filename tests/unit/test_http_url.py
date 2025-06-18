@@ -1,6 +1,6 @@
 import pytest
 
-from pyticktick.models.v2 import HttpUrl
+from pyticktick.models.pydantic import HttpUrl
 
 
 @pytest.mark.parametrize(

@@ -3,7 +3,7 @@ import json
 import pytest
 from pydantic import BaseModel
 
-from pyticktick.models.v2 import Color
+from pyticktick.models.pydantic import Color
 
 
 @pytest.mark.parametrize(

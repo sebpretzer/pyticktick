@@ -42,9 +42,7 @@ from pyticktick.models.v2.responses.user import (
     UserStatusV2,
 )
 from pyticktick.models.v2.types import (
-    Color,
     ETag,
-    HttpUrl,
     ICalTrigger,
     Kind,
     ObjectId,
@@ -63,7 +61,6 @@ __all__ = [
     "BatchTagRespV2",
     "BatchTaskParentRespV2",
     "ClosedRespV2",
-    "Color",
     "CreateItemV2",
     "CreateProjectGroupV2",
     "CreateProjectV2",
@@ -75,7 +72,6 @@ __all__ = [
     "ETag",
     "GetBatchV2",
     "GetClosedV2",
-    "HttpUrl",
     "ICalTrigger",
     "Kind",
     "ObjectId",
