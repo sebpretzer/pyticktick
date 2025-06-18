@@ -26,10 +26,10 @@ test-integration:
 		tests/integration
 
 generate-v1-token: install
-	scripts/generate_v1_token.py
+	uv run scripts/generate_v1_token.py
 
 check-changelog: install
-	scripts/checks/changelog.py
+	uv run scripts/checks/changelog.py
 
 build: install
 	rm -rf dist/
