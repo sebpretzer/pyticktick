@@ -85,6 +85,7 @@ nav:
               - Models: reference/models/v2/models.md
               - Types: reference/models/v2/types.md
               - Class Diagrams: reference/models/v2/class_diagrams.md
+          - Pydantic: reference/models/pydantic.md
       - Retry: reference/retry.md
       - Pydantic: reference/pydantic.md
       - Logger: reference/logger.md
