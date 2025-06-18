@@ -17,10 +17,10 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     First, export the following environment variables:
 
     ```bash
-    export TICKTICK_API_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
-    export TICKTICK_API_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
-    export TICKTICK_API_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
-    export TICKTICK_API_V1_TOKEN_EXPIRATION=1781373801
+    export PYTICKTICK_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
+    export PYTICKTICK_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
+    export PYTICKTICK_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
+    export PYTICKTICK_V1_TOKEN_EXPIRATION=1781373801
     ```
 
     Then, you can create the client like this:
@@ -41,8 +41,8 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     First, export the following environment variables:
 
     ```bash
-    export TICKTICK_API_V2_USERNAME=computer_wiz_02@python.org
-    export TICKTICK_API_V2_PASSWORD=password123
+    export PYTICKTICK_V2_USERNAME=computer_wiz_02@python.org
+    export PYTICKTICK_V2_PASSWORD=password123
     ```
 
     Then, you can create the client like this:
@@ -63,12 +63,12 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     First, export the following environment variables:
 
     ```bash
-    export TICKTICK_API_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
-    export TICKTICK_API_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
-    export TICKTICK_API_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
-    export TICKTICK_API_V1_TOKEN_EXPIRATION=1781373801
-    export TICKTICK_API_V2_USERNAME=computer_wiz_02@python.org
-    export TICKTICK_API_V2_PASSWORD=password123
+    export PYTICKTICK_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
+    export PYTICKTICK_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
+    export PYTICKTICK_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
+    export PYTICKTICK_V1_TOKEN_EXPIRATION=1781373801
+    export PYTICKTICK_V2_USERNAME=computer_wiz_02@python.org
+    export PYTICKTICK_V2_PASSWORD=password123
     ```
 
     Then, you can create the client like this:

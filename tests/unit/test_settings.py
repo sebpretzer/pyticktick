@@ -107,18 +107,18 @@ def test_v1_settings_initialize(
     test_v1_token_expiration_days,
 ):
     if from_env:
-        monkeypatch.setenv("TICKTICK_API_V1_CLIENT_ID", test_v1_client_id)
-        monkeypatch.setenv("TICKTICK_API_V1_CLIENT_SECRET", test_v1_client_secret)
-        monkeypatch.setenv("TICKTICK_API_V1_TOKEN_VALUE", test_v1_token_value)
+        monkeypatch.setenv("PYTICKTICK_V1_CLIENT_ID", test_v1_client_id)
+        monkeypatch.setenv("PYTICKTICK_V1_CLIENT_SECRET", test_v1_client_secret)
+        monkeypatch.setenv("PYTICKTICK_V1_TOKEN_VALUE", test_v1_token_value)
         monkeypatch.setenv(
-            "TICKTICK_API_V1_TOKEN_EXPIRATION",
+            "PYTICKTICK_V1_TOKEN_EXPIRATION",
             str(test_v1_token_expiration_days(30)),
         )
         if test_base_url is not None:
-            monkeypatch.setenv("TICKTICK_API_V1_BASE_URL", test_base_url)
+            monkeypatch.setenv("PYTICKTICK_V1_BASE_URL", test_base_url)
         if test_oauth_redirect_url is not None:
             monkeypatch.setenv(
-                "TICKTICK_API_V1_OAUTH_REDIRECT_URL",
+                "PYTICKTICK_V1_OAUTH_REDIRECT_URL",
                 test_oauth_redirect_url,
             )
         settings = Settings()
@@ -156,11 +156,11 @@ def test_v2_settings_initialize(
     test_base_url,
 ):
     if from_env:
-        monkeypatch.setenv("TICKTICK_API_V2_USERNAME", test_v2_username)
-        monkeypatch.setenv("TICKTICK_API_V2_PASSWORD", test_v2_password)
-        monkeypatch.setenv("TICKTICK_API_V2_TOKEN", test_v2_token)
+        monkeypatch.setenv("PYTICKTICK_V2_USERNAME", test_v2_username)
+        monkeypatch.setenv("PYTICKTICK_V2_PASSWORD", test_v2_password)
+        monkeypatch.setenv("PYTICKTICK_V2_TOKEN", test_v2_token)
         if test_base_url is not None:
-            monkeypatch.setenv("TICKTICK_API_V2_BASE_URL", test_base_url)
+            monkeypatch.setenv("PYTICKTICK_V2_BASE_URL", test_base_url)
         settings = Settings()
 
     else:
@@ -260,12 +260,12 @@ def test_other_settings_initialize(
     test_forbid_extra,
 ):
     if from_env:
-        monkeypatch.setenv("TICKTICK_API_V2_USERNAME", test_v2_username)
-        monkeypatch.setenv("TICKTICK_API_V2_PASSWORD", test_v2_password)
-        monkeypatch.setenv("TICKTICK_API_V2_TOKEN", test_v2_token)
+        monkeypatch.setenv("PYTICKTICK_V2_USERNAME", test_v2_username)
+        monkeypatch.setenv("PYTICKTICK_V2_PASSWORD", test_v2_password)
+        monkeypatch.setenv("PYTICKTICK_V2_TOKEN", test_v2_token)
         if test_forbid_extra is not None:
             monkeypatch.setenv(
-                "TICKTICK_API_OVERRIDE_FORBID_EXTRA",
+                "PYTICKTICK_OVERRIDE_FORBID_EXTRA",
                 str(test_forbid_extra),
             )
         settings = Settings()

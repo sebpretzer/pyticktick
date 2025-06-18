@@ -25,12 +25,12 @@ open htmlcov/index.html
 Before running the integration tests, you need to set up your environment variables. You can do this by creating a `.env` file in the root of the repo and adding the following environment variables:
 
 ```bash title=".env"
-TICKTICK_API_V1_CLIENT_ID="YOUR_CLIENT_ID"
-TICKTICK_API_V1_CLIENT_SECRET="YOUR_CLIENT_SECRET"
-TICKTICK_API_V1_TOKEN_VALUE="YOUR_TOKEN_UUID"
-TICKTICK_API_V1_TOKEN_EXPIRATION=1111111111
-TICKTICK_API_V2_USERNAME="YOUR_USERNAME"
-TICKTICK_API_V2_PASSWORD="YOUR_PASSWORD"
+PYTICKTICK_V1_CLIENT_ID="YOUR_CLIENT_ID"
+PYTICKTICK_V1_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+PYTICKTICK_V1_TOKEN_VALUE="YOUR_TOKEN_UUID"
+PYTICKTICK_V1_TOKEN_EXPIRATION=1111111111
+PYTICKTICK_V2_USERNAME="YOUR_USERNAME"
+PYTICKTICK_V2_PASSWORD="YOUR_PASSWORD"
 ```
 
 If you don't want to create a `.env` file, you can set the same environment variables in your session before running the tests.
