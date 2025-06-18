@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -22,11 +22,11 @@ class GetClosedV2(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    from_: Optional[datetime] = Field(
+    from_: datetime | None = Field(
         default=None,
         alias="The latest date to get tasks from",
     )
-    to: Optional[datetime] = Field(
+    to: datetime | None = Field(
         default=None,
         description="The earliest date to get tasks from",
     )

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import types
 from sys import version_info
-from typing import Any, Optional, Union, get_origin
+from typing import Any, Union, get_origin
 
 from pydantic import BaseModel, ConfigDict
 
@@ -23,7 +23,7 @@ def _is_union(annotation: type[Any]) -> bool:
 
 
 def _check_field_for_submodel(
-    annotation: Optional[type[Any]],
+    annotation: type[Any] | None,
     **config_kwargs: Any,  # noqa: ANN401
 ) -> None:
     """Check if a field is a Pydantic model and attempt to update its config if it is.

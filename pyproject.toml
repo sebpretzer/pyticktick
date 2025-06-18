@@ -41,6 +41,7 @@ dev = [
     "ruff>=0.11.2",
     "mkdocs-autorefs>=1.4.1",
     "pydantic-2-mermaid>=0.7.3",
+    "eval-type-backport>=0.2.2",
 ]
 mypy = [
     "mypy>=1.15.0",
@@ -117,9 +118,11 @@ docstring-code-format = true
 style = "google"
 exclude = "tests/"
 select = ["DOC", "PYD"]
-ignore = [
-    "DOC201", # all obsoleted by ruff
+ignore = [ # all obsoleted by ruff
+    "DOC105",
+    "DOC201",
     "DOC202",
+    "DOC203",
     "DOC402",
     "DOC403",
     "DOC501",

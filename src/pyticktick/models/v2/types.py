@@ -48,7 +48,7 @@ a resource.
 """
 
 
-def convert_ical_trigger(trigger: str) -> Optional[timedelta]:
+def convert_ical_trigger(trigger: str) -> timedelta | None:
     """Converts an iCalendar trigger to a timedelta.
 
     iCalendar triggers are used in alarms to specify when the alarm will trigger. It

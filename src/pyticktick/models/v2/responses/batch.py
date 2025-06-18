@@ -10,7 +10,7 @@ for `GET` batch requests.
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -124,7 +124,7 @@ class GetBatchV2(BaseModel):
         validation_alias="inboxId",
         description="ID of the inbox project, a special kind of project",
     )
-    project_groups: Optional[list[ProjectGroupV2]] = Field(
+    project_groups: list[ProjectGroupV2] | None = Field(
         validation_alias="projectGroups",
         description="List of all active project groups",
     )
@@ -141,7 +141,7 @@ class GetBatchV2(BaseModel):
     # unknown fields
     check_point: int = Field(validation_alias="checkPoint")
     checks: None
-    filters: Optional[list[dict[str, Any]]]
+    filters: list[dict[str, Any]] | None
     sync_order_bean: dict[str, Any] = Field(validation_alias="syncOrderBean")
     sync_order_bean_v3: SyncOrderBeanV3V2 = Field(validation_alias="syncOrderBeanV3")
     sync_task_order_bean: SyncTaskOrderBeanV2 = Field(

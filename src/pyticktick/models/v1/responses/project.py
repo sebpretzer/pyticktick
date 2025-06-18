@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -22,27 +22,27 @@ class ProjectV1(BaseModel):
 
     id: str = Field(description="Project identifier")
     name: str = Field(description="Project name")
-    color: Optional[str] = Field(default=None, description="Project color, eg. #F18181")
+    color: str | None = Field(default=None, description="Project color, eg. #F18181")
     sort_order: int = Field(
         validation_alias="sortOrder",
         description="Order value",
     )
-    closed: Optional[bool] = Field(default=None, description="Project closed")
-    group_id: Optional[str] = Field(
+    closed: bool | None = Field(default=None, description="Project closed")
+    group_id: str | None = Field(
         default=None,
         validation_alias="groupId",
         description="Project group identifier",
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         validation_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
     )
-    permission: Optional[Literal["read", "write", "comment"]] = Field(
+    permission: Literal["read", "write", "comment"] | None = Field(
         default=None,
         description='"read", "write" or "comment"',
     )
-    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+    kind: Literal["TASK", "NOTE"] | None = Field(
         default=None,
         description='"TASK" or "NOTE"',
     )

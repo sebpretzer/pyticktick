@@ -38,7 +38,7 @@ def main() -> None:
 
     if confirm("Do you want the token to be copied to the clipboard?", default=True):
         # https://github.com/asweigart/pyperclip/issues/210
-        import pyperclip  # type: ignore[import-untyped]
+        import pyperclip  # type: ignore[import-untyped] # noqa: PLC0415
 
         pyperclip.copy(str(token_value))
         logger.info("Token copied to clipboard.")
