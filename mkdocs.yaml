@@ -47,9 +47,7 @@ nav:
               - Get All Tags: guides/cookbook/tags/get_all_tags.md
               - Get a Tag by Name: guides/cookbook/tags/get_a_tag_by_name.md
       - Development:
-          - Code of Conduct: CODE_OF_CONDUCT.md
           - Contributing: CONTRIBUTING.md
-          - Changelog: CHANGELOG.md
           - Setting Up the Local Environment: guides/development/setup_local_environment.md
           - Running Tests Locally: guides/development/running_tests_locally.md
           - Running Docs Locally: guides/development/running_the_documentation_server_locally.md
@@ -90,6 +88,9 @@ nav:
       - Retry: reference/retry.md
       - Pydantic: reference/pydantic.md
       - Logger: reference/logger.md
+      - Development:
+          - Code of Conduct: CODE_OF_CONDUCT.md
+          - Changelog: CHANGELOG.md
   - Explanations:
       - The TickTick API:
           - The Two TickTick APIs: explanations/ticktick_api/two_apis.md
