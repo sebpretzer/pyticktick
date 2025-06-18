@@ -11,7 +11,6 @@ account.
 from __future__ import annotations
 
 from textwrap import dedent
-from typing import Optional
 
 from click import command, confirm, option
 from loguru import logger
@@ -34,7 +33,7 @@ from pyticktick import Client
     default=None,
     help="The password for the V2 API",
 )
-def main(username: Optional[str], password: Optional[str]) -> None:  # noqa: C901
+def main(username: str | None, password: str | None) -> None:  # noqa: C901
     """Delete all objects from a TickTick account.
 
     Args:

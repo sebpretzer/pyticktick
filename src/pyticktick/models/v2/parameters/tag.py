@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -27,15 +27,15 @@ class CreateTagV2(BaseModel):
     label: TagLabel = Field(description="Name of the tag to create")
 
     # optional fields
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="Color of the tag, eg. '#F18181'",
     )
-    name: Optional[TagName] = Field(
+    name: TagName | None = Field(
         default=None,
         description="Name of the tag to create",
     )
-    parent: Optional[str] = Field(default=None, description="Name of the parent tag")
+    parent: str | None = Field(default=None, description="Name of the parent tag")
     sort_type: Literal["project", "title", "tag"] = Field(
         default="project",
         serialization_alias="sortType",
@@ -43,7 +43,7 @@ class CreateTagV2(BaseModel):
     )
 
     # unknown fields
-    sort_order: Optional[int] = Field(default=None, serialization_alias="sortOrder")
+    sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
     @model_validator(mode="after")
     def _validate_name(self) -> CreateTagV2:
@@ -66,16 +66,16 @@ class UpdateTagV2(BaseModel):
     label: TagLabel = Field(description="Name of the tag to update")
 
     # optional fields
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="Color of the tag, eg. '#F18181'",
     )
-    name: Optional[TagName] = Field(
+    name: TagName | None = Field(
         default=None,
         description="Stand-in for the identifier of the tag, by default will be the tag label, but lowercase, it is recommended to not specify this field",
     )
-    parent: Optional[str] = Field(default=None, description="Name of the parent tag")
-    raw_name: Optional[TagName] = Field(
+    parent: str | None = Field(default=None, description="Name of the parent tag")
+    raw_name: TagName | None = Field(
         default=None,
         serialization_alias="rawName",
         description="Original name of the tag, used to identify it",
@@ -87,7 +87,7 @@ class UpdateTagV2(BaseModel):
     )
 
     # unknown fields
-    sort_order: Optional[int] = Field(default=None, serialization_alias="sortOrder")
+    sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
     @model_validator(mode="after")
     def _validate_name(self) -> UpdateTagV2:

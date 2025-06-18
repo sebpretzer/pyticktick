@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -20,21 +20,21 @@ class CreateProjectV1(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     name: str = Field(description="name of the project")
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="color of project, eg. '#F18181'",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         serialization_alias="sortOrder",
         description="sort order value of the project",
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         serialization_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
     )
-    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+    kind: Literal["TASK", "NOTE"] | None = Field(
         default=None,
         description='"TASK" or "NOTE"',
     )
@@ -50,22 +50,22 @@ class UpdateProjectV1(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    name: Optional[str] = Field(default=None, description="name of the project")
-    color: Optional[Color] = Field(
+    name: str | None = Field(default=None, description="name of the project")
+    color: Color | None = Field(
         default=None,
         description="color of project, eg. '#F18181'",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         serialization_alias="sortOrder",
         description="sort order value of the project",
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         serialization_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
     )
-    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+    kind: Literal["TASK", "NOTE"] | None = Field(
         default=None,
         description='"TASK" or "NOTE"',
     )

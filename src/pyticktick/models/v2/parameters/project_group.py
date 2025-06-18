@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -28,7 +28,7 @@ class CreateProjectGroupV2(BaseModel):
     name: str = Field(description="Name of the project group to create")
 
     # optional fields
-    id: Optional[ObjectId] = Field(
+    id: ObjectId | None = Field(
         default=None,
         description="ID of the project group to create",
     )

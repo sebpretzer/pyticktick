@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -17,32 +17,32 @@ class CreateItemV1(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    title: Optional[str] = Field(default=None, description="Subtask title")
-    start_date: Optional[str] = Field(
+    title: str | None = Field(default=None, description="Subtask title")
+    start_date: str | None = Field(
         default=None,
         serialization_alias="startDate",
         description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    is_all_day: Optional[bool] = Field(
+    is_all_day: bool | None = Field(
         default=None,
         serialization_alias="isAllDay",
         description="All day",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         serialization_alias="sortOrder",
         description="The order of checklist item",
     )
-    time_zone: Optional[str] = Field(
+    time_zone: str | None = Field(
         default=None,
         serialization_alias="timeZone",
         description="The time zone in which the Start time is specified",
     )
-    status: Optional[bool] = Field(
+    status: bool | None = Field(
         default=None,
         description="The completion status of checklist item",
     )
-    completed_time: Optional[str] = Field(
+    completed_time: str | None = Field(
         default=None,
         serialization_alias="completedTime",
         description="Completed time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
@@ -59,56 +59,56 @@ class CreateTaskV1(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    id: Optional[str] = Field(default=None, description="Task id")
+    id: str | None = Field(default=None, description="Task id")
     title: str = Field(description="Task title")
     project_id: str = Field(
         serialization_alias="projectId",
         description="Task project id. (Note: This is missing in the API docs)",
     )
-    content: Optional[str] = Field(default=None, description="Task content")
-    desc: Optional[str] = Field(
+    content: str | None = Field(default=None, description="Task content")
+    desc: str | None = Field(
         default=None,
         description="Task description of checklist",
     )
-    is_all_day: Optional[bool] = Field(
+    is_all_day: bool | None = Field(
         default=None,
         serialization_alias="isAllDay",
         description="All day",
     )
-    start_date: Optional[str] = Field(
+    start_date: str | None = Field(
         default=None,
         serialization_alias="startDate",
         description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    due_date: Optional[str] = Field(
+    due_date: str | None = Field(
         default=None,
         serialization_alias="dueDate",
         description="Due date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    time_zone: Optional[str] = Field(
+    time_zone: str | None = Field(
         default=None,
         serialization_alias="timeZone",
         description="The time zone in which the time is specified",
     )
-    reminders: Optional[list[str]] = Field(
+    reminders: list[str] | None = Field(
         default=None,
         description="Lists of reminders specific to the task",
     )
-    repeat_flag: Optional[str] = Field(
+    repeat_flag: str | None = Field(
         default=None,
         serialization_alias="repeatFlag",
         description="Recurring rules of task",
     )
-    priority: Optional[Literal[0, 1, 3, 5]] = Field(
+    priority: Literal[0, 1, 3, 5] | None = Field(
         default=None,
         description="The priority of task, default is '0'",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         serialization_alias="sortOrder",
         description="The order of task",
     )
-    items: Optional[list[CreateItemV1]] = Field(
+    items: list[CreateItemV1] | None = Field(
         default=None,
         description="The list of checklist items to create",
     )
@@ -124,32 +124,32 @@ class UpdateItemV1(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    title: Optional[str] = Field(default=None, description="Subtask title")
-    start_date: Optional[str] = Field(
+    title: str | None = Field(default=None, description="Subtask title")
+    start_date: str | None = Field(
         default=None,
         serialization_alias="startDate",
         description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    is_all_day: Optional[bool] = Field(
+    is_all_day: bool | None = Field(
         default=None,
         serialization_alias="isAllDay",
         description="All day",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         serialization_alias="sortOrder",
         description="The order of checklist item",
     )
-    time_zone: Optional[str] = Field(
+    time_zone: str | None = Field(
         default=None,
         serialization_alias="timeZone",
         description="The time zone in which the Start time is specified",
     )
-    status: Optional[bool] = Field(
+    status: bool | None = Field(
         default=None,
         description="The completion status of checklist item",
     )
-    completed_time: Optional[str] = Field(
+    completed_time: str | None = Field(
         default=None,
         serialization_alias="completedTime",
         description="Completed time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
@@ -171,51 +171,51 @@ class UpdateTaskV1(BaseModel):
         serialization_alias="projectId",
         description="Task project id",
     )
-    title: Optional[str] = Field(default=None, description="Task title")
-    content: Optional[str] = Field(default=None, description="Task content")
-    desc: Optional[str] = Field(
+    title: str | None = Field(default=None, description="Task title")
+    content: str | None = Field(default=None, description="Task content")
+    desc: str | None = Field(
         default=None,
         description="Task description of checklist",
     )
-    is_all_day: Optional[bool] = Field(
+    is_all_day: bool | None = Field(
         default=None,
         serialization_alias="isAllDay",
         description="All day",
     )
-    start_date: Optional[str] = Field(
+    start_date: str | None = Field(
         default=None,
         serialization_alias="startDate",
         description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    due_date: Optional[str] = Field(
+    due_date: str | None = Field(
         default=None,
         serialization_alias="dueDate",
         description="Due date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    time_zone: Optional[str] = Field(
+    time_zone: str | None = Field(
         default=None,
         serialization_alias="timeZone",
         description="The time zone in which the time is specified",
     )
-    reminders: Optional[list[str]] = Field(
+    reminders: list[str] | None = Field(
         default=None,
         description="Lists of reminders specific to the task",
     )
-    repeat_flag: Optional[str] = Field(
+    repeat_flag: str | None = Field(
         default=None,
         serialization_alias="repeatFlag",
         description="Recurring rules of task",
     )
-    priority: Optional[Literal[0, 1, 3, 5]] = Field(
+    priority: Literal[0, 1, 3, 5] | None = Field(
         default=None,
         description="The priority of task, default is '0'",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         serialization_alias="sortOrder",
         description="The order of task",
     )
-    items: Optional[list[UpdateItemV1]] = Field(
+    items: list[UpdateItemV1] | None = Field(
         default=None,
         description="The list of checklist items to update",
     )

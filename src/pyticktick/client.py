@@ -7,7 +7,7 @@ with the API endpoints and handle the responses.
 from __future__ import annotations
 
 import json
-from typing import Any, Optional, Union
+from typing import Any, Union
 
 import httpx
 from loguru import logger
@@ -98,7 +98,7 @@ class Client(Settings):
     def _post_api_v1(
         self,
         endpoint: str,
-        data: Optional[dict[str, Any]] = None,
+        data: dict[str, Any] | None = None,
     ) -> Any:  # noqa: ANN401
         if data is None:
             data = {}
@@ -727,7 +727,7 @@ class Client(Settings):
     def _get_api_v2(
         self,
         endpoint: str,
-        data: Optional[dict[str, Any]] = None,
+        data: dict[str, Any] | None = None,
     ) -> Any:  # noqa: ANN401
         try:
             resp = httpx.get(
@@ -754,7 +754,7 @@ class Client(Settings):
     def _post_api_v2(
         self,
         endpoint: str,
-        data: Optional[dict[str, Any]] = None,
+        data: dict[str, Any] | None = None,
     ) -> Any:  # noqa: ANN401
         if data is None:
             data = {}
@@ -783,7 +783,7 @@ class Client(Settings):
     def _delete_api_v2(
         self,
         endpoint: str,
-        data: Optional[dict[str, Any]] = None,
+        data: dict[str, Any] | None = None,
     ) -> None:
         try:
             resp = httpx.delete(

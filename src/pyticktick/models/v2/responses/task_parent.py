@@ -7,8 +7,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from pydantic import BaseModel, ConfigDict, Field
 
 from pyticktick.models.v2.types import ETag, ObjectId
@@ -20,8 +18,8 @@ class BatchTaskParentRespValueV2(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: ObjectId
-    parent_id: Optional[ObjectId] = Field(default=None, validation_alias="parentId")
-    child_ids: Optional[list[ObjectId]] = Field(
+    parent_id: ObjectId | None = Field(default=None, validation_alias="parentId")
+    child_ids: list[ObjectId] | None = Field(
         default=None,
         validation_alias="childIds",
     )

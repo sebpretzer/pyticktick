@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Literal, Optional, Union
+from typing import Any, Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -53,8 +53,8 @@ class ProjectTimelineV2(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     # unknown fields
-    range: Optional[str]
-    sort_type: Optional[str] = Field(validation_alias="sortType")
+    range: str | None
+    sort_type: str | None = Field(validation_alias="sortType")
     sort_option: SortOptionV2 = Field(validation_alias="sortOption")
 
 
@@ -68,12 +68,12 @@ class ProjectV2(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     # known fields
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="Color of the project profile, eg. '#F18181'",
     )
     etag: ETag = Field(description="ETag of the project object")
-    group_id: Optional[ObjectId] = Field(
+    group_id: ObjectId | None = Field(
         validation_alias="groupId",
         description="ID of the project group the project is in",
     )
@@ -82,7 +82,7 @@ class ProjectV2(BaseModel):
         validation_alias="inAll",
         description="Whether or not to show in Smart Lists. If False, tasks within this list won't be shown in 'All', 'Today', 'Tomorrow', 'Next 7 Days', or other smart lists, but you will still receive reminders.",
     )
-    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+    kind: Literal["TASK", "NOTE"] | None = Field(
         default=None,
         description='"TASK" or "NOTE"',
     )
@@ -91,11 +91,11 @@ class ProjectV2(BaseModel):
         description="Last modified time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
     )
     name: str = Field(description="Name of the project")
-    sort_option: Optional[SortOptionV2] = Field(
+    sort_option: SortOptionV2 | None = Field(
         validation_alias="sortOption",
         description="How to sort the tasks in the project",
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         validation_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
@@ -105,7 +105,7 @@ class ProjectV2(BaseModel):
     barcode_need_audit: bool = Field(validation_alias="barcodeNeedAudit")
     is_owner: bool = Field(validation_alias="isOwner")
     sort_order: int = Field(validation_alias="sortOrder")
-    sort_type: Optional[str] = Field(validation_alias="sortType")
+    sort_type: str | None = Field(validation_alias="sortType")
     user_count: int = Field(validation_alias="userCount")
     closed: Any
     muted: bool
@@ -113,13 +113,13 @@ class ProjectV2(BaseModel):
     notification_options: Any = Field(validation_alias="notificationOptions")
     team_id: Any = Field(validation_alias="teamId")
     permission: Any
-    timeline: Optional[ProjectTimelineV2]
+    timeline: ProjectTimelineV2 | None
     need_audit: bool = Field(validation_alias="needAudit")
-    open_to_team: Optional[bool] = Field(validation_alias="openToTeam")
+    open_to_team: bool | None = Field(validation_alias="openToTeam")
     team_member_permission: Any = Field(validation_alias="teamMemberPermission")
     source: int
-    show_type: Optional[str] = Field(validation_alias="showType")
-    reminder_type: Optional[str] = Field(validation_alias="reminderType")
+    show_type: str | None = Field(validation_alias="showType")
+    reminder_type: str | None = Field(validation_alias="reminderType")
 
 
 class ProjectGroupV2(BaseModel):
@@ -135,11 +135,11 @@ class ProjectGroupV2(BaseModel):
     etag: ETag = Field(description="ETag of the project group object")
     id: ObjectId = Field(description="ID of the project group")
     name: str = Field(description="Name of the project group")
-    sort_option: Optional[SortOptionV2] = Field(
+    sort_option: SortOptionV2 | None = Field(
         validation_alias="sortOption",
         description="How to sort the tasks in the project",
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         validation_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
@@ -151,7 +151,7 @@ class ProjectGroupV2(BaseModel):
     sort_order: int = Field(validation_alias="sortOrder")
     sort_type: str = Field(validation_alias="sortType")
     team_id: Any = Field(validation_alias="teamId")
-    timeline: Optional[ProjectTimelineV2]
+    timeline: ProjectTimelineV2 | None
     user_id: int = Field(validation_alias="userId")
 
 
@@ -167,7 +167,7 @@ class TagV2(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     # known fields
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="Color of the tag, eg. '#F18181'",
     )
@@ -176,7 +176,7 @@ class TagV2(BaseModel):
     name: TagName = Field(
         description="Name of the tag, similar to the label but lowercase, and not visible in the UI",
     )
-    parent: Optional[TagName] = Field(
+    parent: TagName | None = Field(
         default=None,
         description="Name of the parent tag, if nested.",
     )
@@ -184,7 +184,7 @@ class TagV2(BaseModel):
         validation_alias="rawName",
         description="Original name of the tag, used to identify it",
     )
-    sort_option: Optional[SortOptionV2] = Field(
+    sort_option: SortOptionV2 | None = Field(
         default=None,
         validation_alias="sortOption",
         description="How to sort the tasks within the tag",
@@ -197,14 +197,14 @@ class TagV2(BaseModel):
 
     # unknown fields
     sort_order: int = Field(validation_alias="sortOrder")
-    timeline: Optional[ProjectTimelineV2] = None
+    timeline: ProjectTimelineV2 | None = None
     type: int
 
 
 class TaskReminderV2(BaseModel):
     """Model for a reminder for a task via the V2 API."""
 
-    id: Optional[ObjectId] = Field(default=None, description="Reminder ID")
+    id: ObjectId | None = Field(default=None, description="Reminder ID")
     trigger: ICalTrigger = Field(description="Reminder trigger")
 
 
@@ -213,37 +213,37 @@ class ItemV2(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    completed_time: Optional[str] = Field(
+    completed_time: str | None = Field(
         default=None,
         validation_alias="completedTime",
         description="Completed time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
     id: ObjectId = Field(description="ID of the checklist item")
-    is_all_day: Optional[bool] = Field(
+    is_all_day: bool | None = Field(
         default=None,
         validation_alias="isAllDay",
         description="The task is due any time on the due date, rather than at a specific time",
     )
-    sort_order: Optional[int] = Field(
+    sort_order: int | None = Field(
         default=None,
         validation_alias="sortOrder",
         description="The order of checklist item",
     )
-    start_date: Optional[str] = Field(
+    start_date: str | None = Field(
         default=None,
         validation_alias="startDate",
         description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    status: Optional[Status] = Field(
+    status: Status | None = Field(
         default=None,
         description="The completion status of checklist item",
     )
-    time_zone: Optional[TimeZoneName] = Field(
+    time_zone: TimeZoneName | None = Field(
         default=None,
         validation_alias="timeZone",
         description="IANA time zone. Example: 'America/Los_Angeles'",
     )
-    title: Optional[str] = Field(default=None, description="Checklist item title")
+    title: str | None = Field(default=None, description="Checklist item title")
 
     snooze_reminder_time: Any = Field(
         default=None,
@@ -256,37 +256,37 @@ class TaskV2(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    child_ids: Optional[list[ObjectId]] = Field(
+    child_ids: list[ObjectId] | None = Field(
         default=None,
         validation_alias="childIds",
         description="List of sub-task IDs",
     )
-    completed_time: Optional[datetime] = Field(
+    completed_time: datetime | None = Field(
         default=None,
         validation_alias="completedTime",
         description="Completed time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
     )
-    content: Optional[str] = Field(
+    content: str | None = Field(
         default=None,
         description="Content of the task, used for `TEXT` or `NOTE` tasks, otherwise `desc` is used",
     )
-    created_time: Optional[datetime] = Field(
+    created_time: datetime | None = Field(
         default=None,
         validation_alias="createdTime",
         description="Created time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
     )
-    desc: Optional[str] = Field(
+    desc: str | None = Field(
         default=None,
         description="Description of the task, used for `CHECKLIST` tasks, otherwise `content` is used",
     )
-    due_date: Optional[datetime] = Field(
+    due_date: datetime | None = Field(
         default=None,
         validation_alias="dueDate",
         description="Due date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
     etag: ETag = Field(description="ETag of the task object")
     id: ObjectId = Field(description="ID of the task")
-    is_all_day: Optional[bool] = Field(
+    is_all_day: bool | None = Field(
         default=None,
         validation_alias="isAllDay",
         description="The task is due any time on the due date, rather than at a specific time",
@@ -304,13 +304,13 @@ class TaskV2(BaseModel):
         validation_alias="modifiedTime",
         description="Last modified time in `YYYY-MM-DD'T'HH:MM:SS.sss'+'hhmm` format",
     )
-    parent_id: Optional[ObjectId] = Field(
+    parent_id: ObjectId | None = Field(
         default=None,
         validation_alias="parentId",
         description="ID of the parent task, if this is a subtask",
     )
     priority: Priority = Field(description="Priority of the task")
-    progress: Optional[Progress] = Field(
+    progress: Progress | None = Field(
         default=None,
         description="Progress of a `CHECKLIST` task, should be a number between 0 and 100",
     )
@@ -318,35 +318,35 @@ class TaskV2(BaseModel):
         validation_alias="projectId",
         description="ID of the project the task is in",
     )
-    reminder: Optional[ICalTrigger] = Field(
+    reminder: ICalTrigger | None = Field(
         default=None,
         description="Unclear what this is, but it can sometimes be one of the reminder triggers in `reminders`",
     )
-    reminders: Optional[list[TaskReminderV2]] = Field(
+    reminders: list[TaskReminderV2] | None = Field(
         default=None,
         description="List of reminders for the task",
     )
-    repeat_first_date: Optional[datetime] = Field(
+    repeat_first_date: datetime | None = Field(
         default=None,
         validation_alias="repeatFirstDate",
         description="First date of the repeating task in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
-    repeat_flag: Optional[TTRRule] = Field(
+    repeat_flag: TTRRule | None = Field(
         default=None,
         validation_alias="repeatFlag",
         description="Recurring rules of task",
     )
-    repeat_from: Optional[RepeatFrom] = Field(
+    repeat_from: RepeatFrom | None = Field(
         default=None,
         validation_alias="repeatFrom",
         description="When to start repeating the task",
     )
-    repeat_task_id: Optional[ObjectId] = Field(
+    repeat_task_id: ObjectId | None = Field(
         default=None,
         validation_alias="repeatTaskId",
         description="ID of the repeating task if a duplicate is somehow (re)opened",
     )
-    start_date: Optional[datetime] = Field(
+    start_date: datetime | None = Field(
         default=None,
         validation_alias="startDate",
         description="Start date and time in `yyyy-MM-dd'T'HH:mm:ssZ` format",
@@ -356,8 +356,8 @@ class TaskV2(BaseModel):
         default=[],
         description="List of tag names for the task",
     )
-    title: Optional[str] = Field(description="Title of the task")
-    time_zone: Optional[TimeZoneName] = Field(
+    title: str | None = Field(description="Title of the task")
+    time_zone: TimeZoneName | None = Field(
         default=None,
         validation_alias="timeZone",
         description="IANA time zone. Example: 'America/Los_Angeles'",
@@ -365,19 +365,19 @@ class TaskV2(BaseModel):
 
     # unknown fields
     attachments: list[Any] = []
-    annoying_alert: Optional[int] = Field(
+    annoying_alert: int | None = Field(
         default=None,
         validation_alias="annoyingAlert",
     )
-    column_id: Optional[ObjectId] = Field(default=None, validation_alias="columnId")
-    comment_count: Optional[int] = Field(default=None, validation_alias="commentCount")
-    completed_user_id: Optional[int] = Field(
+    column_id: ObjectId | None = Field(default=None, validation_alias="columnId")
+    comment_count: int | None = Field(default=None, validation_alias="commentCount")
+    completed_user_id: int | None = Field(
         default=None,
         validation_alias="completedUserId",
     )
     creator: int
     deleted: int
-    ex_date: Optional[list[Any]] = Field(default=None, validation_alias="exDate")
-    img_mode: Optional[int] = Field(default=None, validation_alias="imgMode")
+    ex_date: list[Any] | None = Field(default=None, validation_alias="exDate")
+    img_mode: int | None = Field(default=None, validation_alias="imgMode")
     focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
     sort_order: int = Field(validation_alias="sortOrder")

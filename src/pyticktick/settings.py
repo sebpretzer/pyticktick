@@ -12,7 +12,7 @@ import json
 import warnings
 import webbrowser
 from time import time
-from typing import Any, Optional
+from typing import Any
 from urllib.parse import parse_qsl, urlparse
 
 import click
@@ -180,15 +180,15 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         extra="forbid",
     )
 
-    v1_client_id: Optional[str] = Field(
+    v1_client_id: str | None = Field(
         default=None,
         description="The client ID for the V1 API.",
     )
-    v1_client_secret: Optional[SecretStr] = Field(
+    v1_client_secret: SecretStr | None = Field(
         default=None,
         description="The client secret for the V1 API.",
     )
-    v1_token: Optional[TokenV1] = Field(
+    v1_token: TokenV1 | None = Field(
         default=None,
         description="The OAuth2 token for the V1 API.",
     )
@@ -201,15 +201,15 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         description="The URL to redirect to after authorization.",
     )
 
-    v2_username: Optional[EmailStr] = Field(
+    v2_username: EmailStr | None = Field(
         default=None,
         description="The username for the V2 API.",
     )
-    v2_password: Optional[SecretStr] = Field(
+    v2_password: SecretStr | None = Field(
         default=None,
         description="The password for the V2 API.",
     )
-    v2_token: Optional[str] = Field(
+    v2_token: str | None = Field(
         default=None,
         description="The cookie token for the V2 API.",
     )

@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional, Union
+from typing import Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -29,31 +29,31 @@ class CreateProjectV2(BaseModel):
     name: str = Field(description="name of the project")
 
     # optional fields
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="color of project, eg. '#F18181'",
     )
-    group_id: Optional[ObjectId] = Field(
+    group_id: ObjectId | None = Field(
         default=None,
         description="ID of the project group to add the project to",
         serialization_alias="groupId",
     )
-    id: Optional[ObjectId] = Field(
+    id: ObjectId | None = Field(
         default=None,
         description="ID of the project to create",
     )
-    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+    kind: Literal["TASK", "NOTE"] | None = Field(
         default=None,
         description='"TASK" or "NOTE"',
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         serialization_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
     )
 
     # unknown fields
-    sort_order: Optional[int] = Field(default=None, serialization_alias="sortOrder")
+    sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
 
 class UpdateProjectV2(BaseModel):
@@ -72,7 +72,7 @@ class UpdateProjectV2(BaseModel):
     name: str = Field(description="name of the project, must be set even on update")
 
     # optional fields
-    color: Optional[Color] = Field(
+    color: Color | None = Field(
         default=None,
         description="color of project, eg. '#F18181'",
     )
@@ -81,18 +81,18 @@ class UpdateProjectV2(BaseModel):
         description='ID of the project group to move the project to, `"NONE"` to actively be ungrouped, `None` to be set to the group it was in before',
         serialization_alias="groupId",
     )
-    kind: Optional[Literal["TASK", "NOTE"]] = Field(
+    kind: Literal["TASK", "NOTE"] | None = Field(
         default=None,
         description='"TASK" or "NOTE"',
     )
-    view_mode: Optional[Literal["list", "kanban", "timeline"]] = Field(
+    view_mode: Literal["list", "kanban", "timeline"] | None = Field(
         default=None,
         serialization_alias="viewMode",
         description='view mode, "list", "kanban", "timeline"',
     )
 
     # unknown fields
-    sort_order: Optional[int] = Field(default=None, serialization_alias="sortOrder")
+    sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
 
 class PostBatchProjectV2(BaseModel):

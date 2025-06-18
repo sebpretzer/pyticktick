@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -22,7 +22,7 @@ class ItemV1(BaseModel):
     status: bool = Field(
         description="The completion status of checklist item. Normal: 0, Completed: 1",
     )
-    completed_time: Optional[str] = Field(
+    completed_time: str | None = Field(
         default=None,
         validation_alias="completedTime",
         description="Subtask completed time in `yyyy-MM-dd'T'HH:mm:ssZ`",
@@ -35,7 +35,7 @@ class ItemV1(BaseModel):
         validation_alias="sortOrder",
         description="Subtask sort order",
     )
-    start_date: Optional[str] = Field(
+    start_date: str | None = Field(
         default=None,
         validation_alias="startDate",
         description="Subtask start date time in `yyyy-MM-dd'T'HH:mm:ssZ`",
@@ -77,33 +77,33 @@ class TaskV1(BaseModel):
         validation_alias="isAllDay",
         description="All day",
     )
-    completed_time: Optional[str] = Field(
+    completed_time: str | None = Field(
         default=None,
         validation_alias="completedTime",
         description="Task completed time in `yyyy-MM-dd'T'HH:mm:ssZ`",
     )
-    content: Optional[str] = Field(default=None, description="Task content")
-    desc: Optional[str] = Field(
+    content: str | None = Field(default=None, description="Task content")
+    desc: str | None = Field(
         default=None,
         description="Task description of checklist",
     )
-    due_date: Optional[str] = Field(
+    due_date: str | None = Field(
         default=None,
         validation_alias="dueDate",
         description="Task due date time in `yyyy-MM-dd'T'HH:mm:ssZ`",
     )
-    items: Optional[list[ItemV1]] = Field(
+    items: list[ItemV1] | None = Field(
         default=None,
         description="Subtasks of Task",
     )
     priority: Literal[0, 1, 3, 5] = Field(
         description="Task priority. None:0, Low:1, Medium:3, High:5",
     )
-    reminders: Optional[list[str]] = Field(
+    reminders: list[str] | None = Field(
         default=None,
         description="List of reminder triggers. Example: ['TRIGGER:P0DT9H0M0S', 'TRIGGER:PT0S']",
     )
-    repeat_flag: Optional[str] = Field(
+    repeat_flag: str | None = Field(
         default=None,
         validation_alias="repeatFlag",
         description="Recurring rules of task. Example: 'RRULE:FREQ=DAILY;INTERVAL=1'",
@@ -112,7 +112,7 @@ class TaskV1(BaseModel):
         validation_alias="sortOrder",
         description="Task sort order",
     )
-    start_date: Optional[str] = Field(
+    start_date: str | None = Field(
         default=None,
         validation_alias="startDate",
         description="Start date time in `yyyy-MM-dd'T'HH:mm:ssZ`",

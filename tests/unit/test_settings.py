@@ -83,7 +83,7 @@ def test_v1_token_initialize_invalid(
 
 
 def test_v1_token_expiration():
-    with pytest.warns(UserWarning):
+    with pytest.warns(UserWarning, match="`token` will expire in less than 7 days"):
         TokenV1._validate_expiration(int(time()) + 1)
 
     with pytest.raises(ValueError, match="`token` has expired"):

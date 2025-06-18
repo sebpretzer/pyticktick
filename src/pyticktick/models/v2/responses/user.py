@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timezone
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import (
     UUID4,
@@ -44,17 +44,17 @@ class UserSignOnV2(BaseModel):
     active_team_user: bool = Field(validation_alias="activeTeamUser")
     ds: bool
     free_trial: bool = Field(validation_alias="freeTrial")
-    freq: Optional[str] = None
-    grace_period: Optional[bool] = Field(default=None, validation_alias="gracePeriod")
+    freq: str | None = None
+    grace_period: bool | None = Field(default=None, validation_alias="gracePeriod")
     need_subscribe: bool = Field(validation_alias="needSubscribe")
     pro: bool
     pro_end_date: str = Field(validation_alias="proEndDate")
-    pro_start_date: Optional[str] = Field(default=None, validation_alias="proStartDate")
-    subscribe_freq: Optional[str] = Field(
+    pro_start_date: str | None = Field(default=None, validation_alias="proStartDate")
+    subscribe_freq: str | None = Field(
         default=None,
         validation_alias="subscribeFreq",
     )
-    subscribe_type: Optional[str] = Field(
+    subscribe_type: str | None = Field(
         default=None,
         validation_alias="subscribeType",
     )
@@ -80,7 +80,7 @@ class UserProfileV2(BaseModel):
     verified_email: bool = Field(validation_alias="verifiedEmail")
     faked_email: bool = Field(validation_alias="fakedEmail")
     phone: Any
-    name: Optional[str] = None
+    name: str | None = None
     given_name: Any = Field(validation_alias="givenName")
     family_name: Any = Field(validation_alias="familyName")
     link: Any
@@ -108,7 +108,7 @@ class UserStatusV2(BaseModel):
     user_code: UUID4 = Field(validation_alias="userCode")
     username: EmailStr = Field(description="The user's email address.")
     team_pro: bool = Field(validation_alias="teamPro")
-    pro_start_date: Optional[str] = Field(
+    pro_start_date: str | None = Field(
         default=None,
         validation_alias="proStartDate",
         description="The date when the user started their premium subscription.",
@@ -117,16 +117,16 @@ class UserStatusV2(BaseModel):
         validation_alias="proEndDate",
         description="The date when the user's premium subscription is slated to end.",
     )
-    subscribe_type: Optional[str] = Field(
+    subscribe_type: str | None = Field(
         default=None,
         validation_alias="subscribeType",
     )
-    subscribe_freq: Optional[str] = Field(
+    subscribe_freq: str | None = Field(
         default=None,
         validation_alias="subscribeFreq",
     )
     need_subscribe: bool = Field(validation_alias="needSubscribe")
-    freq: Optional[str] = None
+    freq: str | None = None
     inbox_id: str = Field(
         validation_alias="inboxId",
         description="The user's inbox ID.",
@@ -142,7 +142,7 @@ class UserStatusV2(BaseModel):
         validation_alias="timeStamp",
         description="Timestamp of the last update.",
     )
-    grace_period: Optional[bool] = Field(default=None, validation_alias="gracePeriod")
+    grace_period: bool | None = Field(default=None, validation_alias="gracePeriod")
 
 
 def _cast_task_count_keys(root: dict[str, Any]) -> dict[date, Any]:
