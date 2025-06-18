@@ -2,6 +2,12 @@ install:
 	uv sync --all-extras
 	uv run pre-commit install
 
+install-uv:
+	curl -LsSf https://astral.sh/uv/install.sh | sh
+
+install-python:
+	uv python install
+
 lint:
 	uv run pre-commit run --all-files
 
@@ -58,7 +64,3 @@ generate-model-mermaid-diagrams:
 
 	echo '\n!!! info\n    This was auto-generated code by [pydantic-2-mermaid](https://github.com/EricWebsmith/pydantic-2-mermaid).' >> docs/reference/models/v1/class_diagrams.md
 	echo '\n!!! info\n    This was auto-generated code by [pydantic-2-mermaid](https://github.com/EricWebsmith/pydantic-2-mermaid).' >> docs/reference/models/v2/class_diagrams.md
-
-
-install-uv:
-	curl -LsSf https://astral.sh/uv/install.sh | sh
