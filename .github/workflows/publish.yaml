@@ -13,12 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: install uv
-        run: make install-uv
-      - name: install python
-        run: make install-python
-      - name: Install dependencies
-        run: make install
+      - name: Install uv, python, and dependencies
+        run: make install-all
       - name: Check changelog
         run: make check-changelog
       - name: Build wheel

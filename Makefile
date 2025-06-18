@@ -8,6 +8,8 @@ install-uv:
 install-python:
 	uv python install
 
+install-all: install-uv install-python install
+
 lint:
 	uv run pre-commit run --all-files
 

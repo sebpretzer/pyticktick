@@ -25,12 +25,8 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-      - name: install uv
-        run: make install-uv
-      - name: install python
-        run: make install-python
-      - name: Install mkdocs dependencies
-        run: make install
+      - name: Install uv, python, and dependencies
+        run: make install-all
       - name: Build the site
         if: github.ref != 'refs/heads/main'
         run: make mkdocs-check
