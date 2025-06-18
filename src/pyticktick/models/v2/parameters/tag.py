@@ -11,7 +11,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from pyticktick.models.v2.types import Color, TagLabel, TagName
+from pyticktick.models.pydantic import Color
+from pyticktick.models.v2.types import TagLabel, TagName
 
 
 class CreateTagV2(BaseModel):

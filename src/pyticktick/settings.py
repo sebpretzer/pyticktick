@@ -30,10 +30,10 @@ from pydantic import (
 )
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from pyticktick.models.pydantic import HttpUrl
 from pyticktick.models.v1.parameters.oauth import OAuthAuthorizeURLV1, OAuthTokenURLV1
 from pyticktick.models.v1.responses.oauth import OAuthTokenV1
 from pyticktick.models.v2.responses.user import UserSignOnV2
-from pyticktick.models.v2.types import HttpUrl
 
 
 class TokenV1(BaseModel):  # noqa: DOC601, DOC603

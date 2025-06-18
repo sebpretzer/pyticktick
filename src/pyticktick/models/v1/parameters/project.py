@@ -6,7 +6,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from pyticktick.models.v2.types import Color
+from pyticktick.models.pydantic import Color
 
 
 class CreateProjectV1(BaseModel):

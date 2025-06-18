@@ -12,8 +12,8 @@ from typing import Any, Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from pyticktick.models.pydantic import Color
 from pyticktick.models.v2.types import (
-    Color,
     ETag,
     ICalTrigger,
     InboxId,
