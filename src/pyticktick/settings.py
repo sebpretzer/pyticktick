@@ -123,13 +123,13 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
 
     ???+ example "Load settings from environment variables"
         ```bash title=".bashrc"
-        export TICKTICK_API_V1_CLIENT_ID="client_id"
-        export TICKTICK_API_V1_CLIENT_SECRET="client_secret"
-        export TICKTICK_API_V1_TOKEN_VALUE="fa371b10-8b95-442b-b4a5-11a9959d3590"
-        export TICKTICK_API_V1_TOKEN_EXPIRATION="1701701789"
-        export TICKTICK_API_V2_USERNAME="username"
-        export TICKTICK_API_V2_PASSWORD="password"
-        export TICKTICK_API_OVERRIDE_FORBID_EXTRA="True"
+        export PYTICKTICK_V1_CLIENT_ID="client_id"
+        export PYTICKTICK_V1_CLIENT_SECRET="client_secret"
+        export PYTICKTICK_V1_TOKEN_VALUE="fa371b10-8b95-442b-b4a5-11a9959d3590"
+        export PYTICKTICK_V1_TOKEN_EXPIRATION="1701701789"
+        export PYTICKTICK_V2_USERNAME="username"
+        export PYTICKTICK_V2_PASSWORD="password"
+        export PYTICKTICK_OVERRIDE_FORBID_EXTRA="True"
         ```
 
         ```python
@@ -140,13 +140,13 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
 
     ???+ example "Load settings from a secret file"
         ```bash title=".env"
-        TICKTICK_API_V1_CLIENT_ID="client_id"
-        TICKTICK_API_V1_CLIENT_SECRET="client_secret"
-        TICKTICK_API_V1_TOKEN_VALUE="fa371b10-8b95-442b-b4a5-11a9959d3590"
-        TICKTICK_API_V1_TOKEN_EXPIRATION="1701701789"
-        TICKTICK_API_V2_USERNAME="username"
-        TICKTICK_API_V2_PASSWORD="password"
-        TICKTICK_API_OVERRIDE_FORBID_EXTRA="True"
+        PYTICKTICK_V1_CLIENT_ID="client_id"
+        PYTICKTICK_V1_CLIENT_SECRET="client_secret"
+        PYTICKTICK_V1_TOKEN_VALUE="fa371b10-8b95-442b-b4a5-11a9959d3590"
+        PYTICKTICK_V1_TOKEN_EXPIRATION="1701701789"
+        PYTICKTICK_V2_USERNAME="username"
+        PYTICKTICK_V2_PASSWORD="password"
+        PYTICKTICK_OVERRIDE_FORBID_EXTRA="True"
         ```
 
         ```python
@@ -175,7 +175,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
     # BaseSettings: https://github.com/mkdocstrings/griffe-pydantic/issues/27
 
     model_config = SettingsConfigDict(
-        env_prefix="ticktick_api_",
+        env_prefix="pyticktick_",
         env_nested_delimiter="_",
         extra="forbid",
     )

@@ -123,12 +123,12 @@ jobs:
         run: make test-integration
         env:
           COVERAGE_FILE: coverage/.coverage.integration-3.13
-          TICKTICK_API_V1_CLIENT_ID: ${{ secrets.TICKTICK_API_V1_CLIENT_ID }}
-          TICKTICK_API_V1_CLIENT_SECRET: ${{ secrets.TICKTICK_API_V1_CLIENT_SECRET }}
-          TICKTICK_API_V1_TOKEN_VALUE: ${{ secrets.TICKTICK_API_V1_TOKEN_VALUE }}
-          TICKTICK_API_V1_TOKEN_EXPIRATION: ${{ secrets.TICKTICK_API_V1_TOKEN_EXPIRATION }}
-          TICKTICK_API_V2_USERNAME: ${{ secrets.TICKTICK_API_V2_USERNAME }}
-          TICKTICK_API_V2_PASSWORD: ${{ secrets.TICKTICK_API_V2_PASSWORD }}
+          PYTICKTICK_V1_CLIENT_ID: ${{ secrets.PYTICKTICK_V1_CLIENT_ID }}
+          PYTICKTICK_V1_CLIENT_SECRET: ${{ secrets.PYTICKTICK_V1_CLIENT_SECRET }}
+          PYTICKTICK_V1_TOKEN_VALUE: ${{ secrets.PYTICKTICK_V1_TOKEN_VALUE }}
+          PYTICKTICK_V1_TOKEN_EXPIRATION: ${{ secrets.PYTICKTICK_V1_TOKEN_EXPIRATION }}
+          PYTICKTICK_V2_USERNAME: ${{ secrets.PYTICKTICK_V2_USERNAME }}
+          PYTICKTICK_V2_PASSWORD: ${{ secrets.PYTICKTICK_V2_PASSWORD }}
       - name: Store coverage files
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

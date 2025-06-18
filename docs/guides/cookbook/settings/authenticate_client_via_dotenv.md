@@ -17,10 +17,10 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     First, make a Dotenv (`.env`) file in your project directory with the following content:
 
     ```env title=".env"
-    TICKTICK_API_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
-    TICKTICK_API_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
-    TICKTICK_API_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
-    TICKTICK_API_V1_TOKEN_EXPIRATION=1781373801
+    PYTICKTICK_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
+    PYTICKTICK_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
+    PYTICKTICK_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
+    PYTICKTICK_V1_TOKEN_EXPIRATION=1781373801
     ```
 
     Then, you can create the client like this:
@@ -41,8 +41,8 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     First, make a Dotenv (`.env`) file in your project directory with the following content:
 
     ```env title=".env"
-    TICKTICK_API_V2_USERNAME=computer_wiz_02@python.org
-    TICKTICK_API_V2_PASSWORD=password123
+    PYTICKTICK_V2_USERNAME=computer_wiz_02@python.org
+    PYTICKTICK_V2_PASSWORD=password123
     ```
 
     Then, you can create the client like this:
@@ -63,12 +63,12 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     First, make a Dotenv (`.env`) file in your project directory with the following content:
 
     ```env title=".env"
-    TICKTICK_API_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
-    TICKTICK_API_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
-    TICKTICK_API_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
-    TICKTICK_API_V1_TOKEN_EXPIRATION=1781373801
-    TICKTICK_API_V2_USERNAME=computer_wiz_02@python.org
-    TICKTICK_API_V2_PASSWORD=password123
+    PYTICKTICK_V1_CLIENT_ID=7p3Hw9YMqnfxaIvKc4
+    PYTICKTICK_V1_CLIENT_SECRET=Qxm^^3h(7ZK994U8M%/g!YFo2VEPs*k!
+    PYTICKTICK_V1_TOKEN_VALUE=a5b2c3a7-9385-47e4-80b8-a445f842e403
+    PYTICKTICK_V1_TOKEN_EXPIRATION=1781373801
+    PYTICKTICK_V2_USERNAME=computer_wiz_02@python.org
+    PYTICKTICK_V2_PASSWORD=password123
     ```
 
     Then, you can create the client like this:

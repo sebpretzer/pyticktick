@@ -58,10 +58,10 @@ def main() -> None:
             confirm("Parent directory does not exist. Create?", abort=True)
             file_path.parent.mkdir(parents=True)
         _text = f"""
-        TICKTICK_API_V1_CLIENT_ID="{client_id}"
-        TICKTICK_API_V1_CLIENT_SECRET="{client_secret}"
-        TICKTICK_API_V1_TOKEN_VALUE="{token_value}"
-        TICKTICK_API_V1_TOKEN_EXPIRATION="{token_expiration}"
+        PYTICKTICK_V1_CLIENT_ID="{client_id}"
+        PYTICKTICK_V1_CLIENT_SECRET="{client_secret}"
+        PYTICKTICK_V1_TOKEN_VALUE="{token_value}"
+        PYTICKTICK_V1_TOKEN_EXPIRATION="{token_expiration}"
         """
         file_path.write_text(_text)
         logger.info(f"Token and expiration saved to `{file_path}`")
