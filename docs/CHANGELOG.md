@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0
+
+- Refactor V1 model names to be more consistent with V2 model names [#40](https://github.com/sebpretzer/pyticktick/pull/40)
+- Isolate generic Pydantic types that are used in both V1 and V2 APIs [#39](https://github.com/sebpretzer/pyticktick/pull/39)
+
 ## 0.0.3
 
 - Switch Github Actions to use `uv` managed python installs [#38](https://github.com/sebpretzer/pyticktick/pull/38)
