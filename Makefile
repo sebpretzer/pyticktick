@@ -55,10 +55,10 @@ mkdocs-publish:
 
 generate-model-mermaid-diagrams:
 	uv run pydantic-mermaid \
-	    -m pyticktick/models/v1/__init__.py \
+	    -m src/pyticktick/models/v1/__init__.py \
 		-o docs/reference/models/v1/class_diagrams.md
 	uv run pydantic-mermaid \
-	    -m pyticktick/models/v2/__init__.py \
+	    -m src/pyticktick/models/v2/__init__.py \
 		-o docs/reference/models/v2/class_diagrams.md
 
 	perl -i -0pe 's/classDiagram\n\n    class/classDiagram\n    direction LR\n    class/g' docs/reference/models/v1/class_diagrams.md
