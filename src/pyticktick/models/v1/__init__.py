@@ -8,7 +8,7 @@ from pyticktick.models.v1.responses.project import (
     ProjectsRespV1,
     ProjectV1,
 )
-from pyticktick.models.v1.responses.task import TaskV1
+from pyticktick.models.v1.responses.task import TaskRespV1
 
 __all__ = [
     "CreateProjectV1",
@@ -20,7 +20,7 @@ __all__ = [
     "ProjectRespV1",
     "ProjectV1",
     "ProjectsRespV1",
-    "TaskV1",
+    "TaskRespV1",
     "UpdateProjectV1",
     "UpdateTaskV1",
 ]

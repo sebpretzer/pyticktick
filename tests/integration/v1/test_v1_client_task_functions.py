@@ -1,4 +1,4 @@
-from pyticktick.models.v1 import CreateTaskV1, TaskV1, UpdateTaskV1
+from pyticktick.models.v1 import CreateTaskV1, TaskRespV1, UpdateTaskV1
 
 
 def test_get_task(
@@ -21,7 +21,7 @@ def test_get_task(
 
     task = client.get_task_v1(project_id, task_id)
     assert task is not None
-    assert isinstance(task, TaskV1)
+    assert isinstance(task, TaskRespV1)
     assert task.id == task_id
     assert task.project_id == project_id
     assert task.title == test_task_name
@@ -46,7 +46,7 @@ def test_create_task(
         CreateTaskV1(project_id=project_id, title=test_task_name),
     )
     assert task is not None
-    assert isinstance(task, TaskV1)
+    assert isinstance(task, TaskRespV1)
     assert task.project_id == project_id
     assert task.title == test_task_name
 
@@ -86,7 +86,7 @@ def test_update_task(
         UpdateTaskV1(id=task_id, project_id=project_id, title=new_task_name),
     )
     assert task is not None
-    assert isinstance(task, TaskV1)
+    assert isinstance(task, TaskRespV1)
     assert task.id == task_id
     assert task.project_id == project_id
     assert task.title == new_task_name

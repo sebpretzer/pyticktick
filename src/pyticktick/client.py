@@ -19,7 +19,7 @@ from pyticktick.models.v1.responses.project import (
     ProjectRespV1,
     ProjectsRespV1,
 )
-from pyticktick.models.v1.responses.task import TaskV1
+from pyticktick.models.v1.responses.task import TaskRespV1
 from pyticktick.models.v2.parameters.closed import GetClosedV2
 from pyticktick.models.v2.parameters.project import PostBatchProjectV2
 from pyticktick.models.v2.parameters.project_group import PostBatchProjectGroupV2
@@ -485,7 +485,7 @@ class Client(Settings):
         """
         self._delete_api_v1(f"/project/{project_id}")
 
-    def get_task_v1(self, project_id: str, task_id: str) -> TaskV1:
+    def get_task_v1(self, project_id: str, task_id: str) -> TaskRespV1:
         """Get a single task from the V1 API.
 
         This method calls the [`GET /project/{project_id}/task/{task_id}`](https://developer.ticktick.com/docs/index.html#/openapi?id=get-task-by-project-id-and-task-id)
@@ -533,18 +533,18 @@ class Client(Settings):
             task_id (str): Identifier of the task to retrieve.
 
         Returns:
-            TaskV1: The task object retrieved from the API.
+            TaskRespV1: The task object retrieved from the API.
         """
         resp = self._get_api_v1(f"/project/{project_id}/task/{task_id}")
-        return TaskV1.model_validate(resp)
+        return TaskRespV1.model_validate(resp)
 
-    def create_task_v1(self, data: Union[CreateTaskV1, dict[str, Any]]) -> TaskV1:
+    def create_task_v1(self, data: Union[CreateTaskV1, dict[str, Any]]) -> TaskRespV1:
         """Create a task in the V1 API.
 
         This method creates a new task in the TickTick application using the [`POST /task`](https://developer.ticktick.com/docs/index.html#/openapi?id=create-task)
         V1 endpoint. The `data` parameter can be a `CreateTaskV1` model or a dictionary
         that matches the same structure. The method returns the created task as a
-        `TaskV1` model.
+        `TaskRespV1` model.
 
         ??? example "Example"
             ```python hl_lines="5"
@@ -592,25 +592,25 @@ class Client(Settings):
             data (Union[CreateTaskV1, dict[str, Any]]): Data to create the task.
 
         Returns:
-            TaskV1: Created task object.
+            TaskRespV1: Created task object.
         """
         if isinstance(data, dict):
             data = CreateTaskV1.model_validate(data)
         resp = self._post_api_v1("/task", self._model_dump(data))
-        return TaskV1.model_validate(resp)
+        return TaskRespV1.model_validate(resp)
 
     def update_task_v1(
         self,
         task_id: str,
         data: Union[UpdateTaskV1, dict[str, Any]],
-    ) -> TaskV1:
+    ) -> TaskRespV1:
         """Update a task in the V1 API.
 
         This method updates an existing task in the TickTick application using the
         [`POST /task/{task_id}`](https://developer.ticktick.com/docs/index.html#/openapi?id=update-task)
         V1 endpoint. The `data` parameter can be an `UpdateTaskV1` model or a dictionary
         that matches the same structure. The method returns the updated task as a
-        `TaskV1` model.
+        `TaskRespV1` model.
 
         ??? example "Example"
             ```python hl_lines="5"
@@ -661,12 +661,12 @@ class Client(Settings):
             data (Union[UpdateTaskV1, dict[str, Any]]): Data to update the task.
 
         Returns:
-            TaskV1: Updated task.
+            TaskRespV1: Updated task.
         """
         if isinstance(data, dict):
             data = UpdateTaskV1.model_validate(data)
         resp = self._post_api_v1(f"/task/{task_id}", self._model_dump(data))
-        return TaskV1.model_validate(resp)
+        return TaskRespV1.model_validate(resp)
 
     def complete_task_v1(self, project_id: str, task_id: str) -> None:
         """Complete a task in the V1 API.

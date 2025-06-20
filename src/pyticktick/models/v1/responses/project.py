@@ -6,7 +6,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 
-from pyticktick.models.v1.responses.task import TaskV1
+from pyticktick.models.v1.responses.task import TaskRespV1
 
 
 class ProjectV1(BaseModel):
@@ -108,5 +108,5 @@ class ProjectDataRespV1(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
     project: ProjectV1 = Field(description="Project info")
-    tasks: list[TaskV1] = Field(description="Undone tasks under project")
+    tasks: list[TaskRespV1] = Field(description="Undone tasks under project")
     columns: list[ColumnV1] = Field(description="Columns under project")
