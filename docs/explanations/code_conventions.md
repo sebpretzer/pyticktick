@@ -56,7 +56,7 @@ Parameter models attempt to follow the naming convention of request method, foll
 
 Response models attempt to follow the naming convention of endpoint name / TickTick object type, followed by "resp", followed by API version. Here are some examples:
 
-- `TaskV1()`
+- `TaskRespV1()`
 - `BatchTagRespV2()`
 - `UserSignOnV2()`
 

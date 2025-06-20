@@ -11,7 +11,7 @@ class ItemV1(BaseModel):
     """Model for a response with checklist item information in the V1 API.
 
     This model is used to represent a checklist item in the V1 API. It is used in the
-    `TaskV1` model to represent checklist items of a task. It maps directly to the [checklistitem](https://developer.ticktick.com/docs#/openapi?id=checklistitem)
+    `TaskRespV1` model to represent checklist items of a task. It maps directly to the [checklistitem](https://developer.ticktick.com/docs#/openapi?id=checklistitem)
     definition in the V1 API docs.
     """
 
@@ -56,7 +56,7 @@ class ItemV1(BaseModel):
         raise ValueError(msg)
 
 
-class TaskV1(BaseModel):
+class TaskRespV1(BaseModel):
     """Model for a response with task information in the V1 API.
 
     This model is used to represent a task in the V1 API. It is used in a few different

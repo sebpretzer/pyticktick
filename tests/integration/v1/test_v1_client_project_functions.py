@@ -1,9 +1,10 @@
 from pyticktick.models.v1 import (
     CreateProjectV1,
-    ProjectDataV1,
+    ProjectDataRespV1,
     ProjectV1,
     UpdateProjectV1,
 )
+from pyticktick.models.v1.responses.project import ProjectRespV1, ProjectsRespV1
 
 
 def test_get_projects(
@@ -14,14 +15,14 @@ def test_get_projects(
     test_project_names = ["test_get_projects_1", "test_get_projects_2"]
     helper_create_or_recreate_projects(test_project_names)
 
-    projects = client.get_projects_v1()
+    resp = client.get_projects_v1()
 
-    assert projects is not None
-    assert isinstance(projects, list)
-    assert all(isinstance(p, ProjectV1) for p in projects)
+    assert resp is not None
+    assert isinstance(resp, ProjectsRespV1)
+    assert all(isinstance(p, ProjectV1) for p in resp.root)
 
     for p in test_project_names:
-        assert p in [p.name for p in projects]
+        assert p in [p.name for p in resp.root]
 
     helper_delete_projects_if_exists(test_project_names)
 
@@ -37,11 +38,11 @@ def test_get_project(
     project_id = resp.get("id")
     assert isinstance(project_id, str)
 
-    project = client.get_project_v1(project_id)
-    assert project is not None
-    assert isinstance(project, ProjectV1)
-    assert project.id == project_id
-    assert project.name == test_project_name
+    resp = client.get_project_v1(project_id)
+    assert resp is not None
+    assert isinstance(resp, ProjectRespV1)
+    assert resp.root.id == project_id
+    assert resp.root.name == test_project_name
 
     helper_delete_projects_if_exists(test_project_name)
 
@@ -63,7 +64,7 @@ def test_get_project_with_data(
 
     project = client.get_project_with_data_v1(project_id)
     assert project is not None
-    assert isinstance(project, ProjectDataV1)
+    assert isinstance(project, ProjectDataRespV1)
     assert isinstance(project.project, ProjectV1)
     assert project.project.id == project_id
     assert project.project.name == test_project_name
@@ -83,11 +84,11 @@ def test_create_project(
     test_project_name = "test_create_project"
     helper_delete_projects_if_exists(test_project_name)
 
-    project = client.create_project_v1(CreateProjectV1(name=test_project_name))
+    resp = client.create_project_v1(CreateProjectV1(name=test_project_name))
 
-    assert project is not None
-    assert isinstance(project, ProjectV1)
-    assert project.name == test_project_name
+    assert resp is not None
+    assert isinstance(resp, ProjectRespV1)
+    assert resp.root.name == test_project_name
 
     project_dicts = helper_get_projects()
     assert test_project_name in [p["name"] for p in project_dicts]
@@ -113,8 +114,8 @@ def test_update_project(
         project_id,
         UpdateProjectV1(name=test_project_name_updated),
     )
-    assert project_updated.id == project_id
-    assert project_updated.name == test_project_name_updated
+    assert project_updated.root.id == project_id
+    assert project_updated.root.name == test_project_name_updated
 
     helper_delete_projects_if_exists([test_project_name, test_project_name_updated])
 
