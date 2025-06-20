@@ -7,15 +7,18 @@ with the API endpoints and handle the responses.
 from __future__ import annotations
 
 import json
-from typing import Any, Union
+from typing import TYPE_CHECKING, Any, Union
 
 import httpx
 from loguru import logger
-from pydantic import BaseModel, TypeAdapter
 
 from pyticktick.models.v1.parameters.project import CreateProjectV1, UpdateProjectV1
 from pyticktick.models.v1.parameters.task import CreateTaskV1, UpdateTaskV1
-from pyticktick.models.v1.responses.project import ProjectDataV1, ProjectV1
+from pyticktick.models.v1.responses.project import (
+    ProjectDataRespV1,
+    ProjectRespV1,
+    ProjectsRespV1,
+)
 from pyticktick.models.v1.responses.task import TaskV1
 from pyticktick.models.v2.parameters.closed import GetClosedV2
 from pyticktick.models.v2.parameters.project import PostBatchProjectV2
@@ -35,6 +38,9 @@ from pyticktick.models.v2.responses.user import (
 from pyticktick.pydantic import update_model_config
 from pyticktick.retry import retry_api_v1
 from pyticktick.settings import Settings
+
+if TYPE_CHECKING:
+    from pydantic import BaseModel
 
 
 class Client(Settings):
@@ -140,7 +146,7 @@ class Client(Settings):
             logger.error(msg)
             raise ValueError(msg)  # noqa: B904
 
-    def get_projects_v1(self) -> list[ProjectV1]:
+    def get_projects_v1(self) -> ProjectsRespV1:
         """Get all projects from the V1 API.
 
         This method gets all the active projects from the [`GET /project`](https://developer.ticktick.com/docs/index.html#/openapi?id=get-user-project)
@@ -194,13 +200,12 @@ class Client(Settings):
             ```
 
         Returns:
-            list[ProjectV1]: List of projects from the V1 API.
+            ProjectsRespV1: List of projects from the V1 API.
         """
         resp = self._get_api_v1("/project")
-        ta = TypeAdapter(list[ProjectV1])
-        return ta.validate_python(resp)
+        return ProjectsRespV1.model_validate(resp)
 
-    def get_project_v1(self, project_id: str) -> ProjectV1:
+    def get_project_v1(self, project_id: str) -> ProjectRespV1:
         """Get a single project from the V1 API.
 
         This method calls the [`GET /project/{project_id}`](https://developer.ticktick.com/docs/index.html#/openapi?id=get-project-by-id)
@@ -235,12 +240,12 @@ class Client(Settings):
             project_id (str): Identifier of the project to retrieve.
 
         Returns:
-            ProjectV1: Project object containing project details.
+            ProjectRespV1: Project object containing project details.
         """
         resp = self._get_api_v1(f"/project/{project_id}")
-        return ProjectV1.model_validate(resp)
+        return ProjectRespV1.model_validate(resp)
 
-    def get_project_with_data_v1(self, project_id: str) -> ProjectDataV1:
+    def get_project_with_data_v1(self, project_id: str) -> ProjectDataRespV1:
         """Get details of a single project from the V1 API.
 
         This method calls the [`GET /project/{project_id}/data`](https://developer.ticktick.com/docs/index.html#/openapi?id=get-project-with-data)
@@ -339,15 +344,15 @@ class Client(Settings):
             project_id (str): Identifier of the project to retrieve.
 
         Returns:
-            ProjectDataV1: Project data object containing project and task details.
+            ProjectDataRespV1: Project data object containing project and task details.
         """
         resp = self._get_api_v1(f"/project/{project_id}/data")
-        return ProjectDataV1.model_validate(resp)
+        return ProjectDataRespV1.model_validate(resp)
 
     def create_project_v1(
         self,
         data: Union[CreateProjectV1, dict[str, Any]],
-    ) -> ProjectV1:
+    ) -> ProjectRespV1:
         """Create a project in the V1 API.
 
         This method creates a new project in the TickTick application using the
@@ -393,18 +398,18 @@ class Client(Settings):
             data (Union[CreateProjectV1, dict[str, Any]]): Data to create the project.
 
         Returns:
-            ProjectV1: Created project.
+            ProjectRespV1: Created project.
         """
         if isinstance(data, dict):
             data = CreateProjectV1.model_validate(data)
         resp = self._post_api_v1("/project", data=self._model_dump(data))
-        return ProjectV1.model_validate(resp)
+        return ProjectRespV1.model_validate(resp)
 
     def update_project_v1(
         self,
         project_id: str,
         data: Union[UpdateProjectV1, dict[str, Any]],
-    ) -> ProjectV1:
+    ) -> ProjectRespV1:
         """Update a project in the V1 API.
 
         This method updates an existing project in the TickTick application using the
@@ -451,12 +456,12 @@ class Client(Settings):
             data (Union[UpdateProjectV1, dict[str, Any]]): Data to update the project.
 
         Returns:
-            ProjectV1: Updated project.
+            ProjectRespV1: Updated project.
         """
         if isinstance(data, dict):
             data = UpdateProjectV1.model_validate(data)
         resp = self._post_api_v1(f"/project/{project_id}", data=self._model_dump(data))
-        return ProjectV1.model_validate(resp)
+        return ProjectRespV1.model_validate(resp)
 
     def delete_project_v1(self, project_id: str) -> None:
         """Delete a project in the V1 API.

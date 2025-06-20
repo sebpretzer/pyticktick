@@ -1,6 +1,6 @@
 from pyticktick.models.v1 import (
     CreateProjectV1,
-    ProjectDataV1,
+    ProjectDataRespV1,
     ProjectV1,
     UpdateProjectV1,
 )
@@ -63,7 +63,7 @@ def test_get_project_with_data(
 
     project = client.get_project_with_data_v1(project_id)
     assert project is not None
-    assert isinstance(project, ProjectDataV1)
+    assert isinstance(project, ProjectDataRespV1)
     assert isinstance(project.project, ProjectV1)
     assert project.project.id == project_id
     assert project.project.name == test_project_name

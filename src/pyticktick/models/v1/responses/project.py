@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 
 from pyticktick.models.v1.responses.task import TaskV1
 
@@ -52,9 +52,9 @@ class ColumnV1(BaseModel):
     """Model for a response with column information in the V1 API.
 
     This model is used to represent a column in the V1 API. It is used in the
-    `ProjectDataV1` model to represent columns under a project. It maps directly to the
-    [column](https://developer.ticktick.com/docs#/openapi?id=column) definition in the
-    V1 API docs.
+    `ProjectDataRespV1` model to represent columns under a project. It maps directly to
+    the [column](https://developer.ticktick.com/docs#/openapi?id=column) definition in
+    the V1 API docs.
 
     It is useful for Kanban views of tasks.
     """
@@ -73,7 +73,29 @@ class ColumnV1(BaseModel):
     )
 
 
-class ProjectDataV1(BaseModel):
+class ProjectRespV1(RootModel[ProjectV1]):
+    """Model for a response from the `GET /project/{project_id}` endpoint in the V1 API.
+
+    This model is used to represent a single project in the V1 API. It corresponds to
+    the the [`GET /project/{project_id}`](https://developer.ticktick.com/docs/index.html#/openapi?id=get-project-by-id)
+    V1 endpoint.
+    """
+
+    root: ProjectV1 = Field(description="The project info")
+
+
+class ProjectsRespV1(RootModel[list[ProjectV1]]):
+    """Model for a response from the `GET /project` endpoint in the V1 API.
+
+    This model is used to represent a list of projects in the V1 API. It corresponds to
+    the [`GET /project`](https://developer.ticktick.com/docs/index.html#/openapi?id=get-user-project)
+    V1 endpoint.
+    """
+
+    root: list[ProjectV1] = Field(description="")
+
+
+class ProjectDataRespV1(BaseModel):
     """Model for a response with more detailed project information in the V1 API.
 
     This model is used to represent a project in the V1 API with more detailed
