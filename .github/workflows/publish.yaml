@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # https://github.com/cli/cli/issues/2067#issuecomment-704224994
         run: |
-          sed -n '/^## ${{ env.PKG_VERSION }}/,/^## /p' CHANGELOG.md | sed '1d;$d' | \
+          sed -n '/^## ${{ env.PKG_VERSION }}/,/^## /p' docs/CHANGELOG.md | sed '1d;$d' | \
           gh release create ${{ env.PKG_VERSION }} \
             -t ${{ env.PKG_VERSION }} \
             -F - \
