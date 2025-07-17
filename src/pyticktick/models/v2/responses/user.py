@@ -22,6 +22,23 @@ from pydantic import (
 )
 
 
+class UserSignOnWithTOTPV2(BaseModel):
+    """Model for the response of a sign-on request via the V2 API with TOTP.
+
+    This model is used when the user has enabled two-factor authentication (2FA) via
+    TOTP (Time-based One-Time Password).
+    """
+
+    auth_id: str = Field(
+        validation_alias="authId",
+        description="The authentication ID used for the sign-on request.",
+    )
+    expire_time: int = Field(
+        validation_alias="expireTime",
+        description="The expiration time of the authentication ID in seconds since the epoch.",
+    )
+
+
 class UserSignOnV2(BaseModel):
     """Model for the response of a sign-on request via the V2 API.
 

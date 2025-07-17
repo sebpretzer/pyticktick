@@ -25,15 +25,17 @@ from pydantic import (
     EmailStr,
     Field,
     SecretStr,
+    ValidationError,
     field_validator,
     model_validator,
 )
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pyotp import TOTP
 
 from pyticktick.models.pydantic import HttpUrl
 from pyticktick.models.v1.parameters.oauth import OAuthAuthorizeURLV1, OAuthTokenURLV1
 from pyticktick.models.v1.responses.oauth import OAuthTokenV1
-from pyticktick.models.v2.responses.user import UserSignOnV2
+from pyticktick.models.v2.responses.user import UserSignOnV2, UserSignOnWithTOTPV2
 
 
 class TokenV1(BaseModel):  # noqa: DOC601, DOC603
@@ -209,6 +211,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         default=None,
         description="The password for the V2 API.",
     )
+    v2_totp: SecretStr | None = Field(
+        default=None,
+        description="The TOTP Secret for the V2 API, used for two-factor authentication.",  # noqa: E501
+    )
     v2_token: str | None = Field(
         default=None,
         description="The cookie token for the V2 API.",
@@ -345,11 +351,41 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             raise TypeError(msg)
         return _dict
 
+    @staticmethod
+    def _v2_mfa_verify(
+        totp: str,
+        auth_id: str,
+        base_url: str,
+        headers: dict[str, str],
+    ) -> dict[str, Any]:
+        headers["x-verify-id"] = auth_id
+        try:
+            resp = httpx.post(
+                url=base_url + "/user/sign/mfa/code/verify",
+                headers=headers,
+                json={"code": TOTP(totp).now(), "method": "app"},
+            )
+            resp.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            if isinstance((_content := e.response.content), bytes):
+                content = _content.decode()
+            else:
+                content = _content
+            msg = f"Response [{e.response.status_code}]:\n{content}"
+            logger.error(msg)
+            raise ValueError(msg) from e
+
+        if not isinstance((_dict := resp.json()), dict):
+            msg = f"Invalid response, expected `dict`, got {type(_dict)}"
+            raise TypeError(msg)
+        return _dict
+
     @classmethod
     def v2_signon(
         cls,
         username: str,
         password: str,
+        totp: str | None,
         base_url: str,
         headers: dict[str, str],
     ) -> UserSignOnV2:
@@ -366,8 +402,16 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         Args:
             username (str): The username for the V2 API.
             password (str): The password for the V2 API.
+            totp (str | None): The TOTP secret for the V2 API, used for two-factor
+                authentication. If the sign on request requires TOTP verification, this
+                parameter must be provided. If the sign on request does not require TOTP
+                verification, this parameter can be `None`.
             base_url (str): The base URL for the V2 API.
             headers (dict[str, str]): The headers dictionary for the V2 API.
+
+        Raises:
+            ValueError: If the sign on request requires TOTP verification, but no TOTP
+                was provided.
 
         Returns:
             UserSignOnV2: The sign on response model for the V2 API.
@@ -378,6 +422,21 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             base_url=base_url,
             headers=headers,
         )
+        try:
+            totp_resp = UserSignOnWithTOTPV2.model_validate(resp)
+            if totp is None:
+                msg = "Sign on requires TOTP verification, but no TOTP was provided."
+                logger.error(msg)
+                raise ValueError(msg)
+            resp = cls._v2_mfa_verify(
+                totp=totp,
+                auth_id=totp_resp.auth_id,
+                base_url=base_url,
+                headers=headers,
+            )
+        except ValidationError:
+            pass
+
         return UserSignOnV2.model_validate(resp)
 
     def _check_no_settings(self) -> Settings:
@@ -417,9 +476,13 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
                 logger.warning(msg)
                 warnings.warn(msg, UserWarning, stacklevel=1)
             else:
+                totp = None
+                if self.v2_totp is not None:
+                    totp = self.v2_totp.get_secret_value()
                 self.v2_token = self.v2_signon(
                     username=self.v2_username,
                     password=self.v2_password.get_secret_value(),
+                    totp=totp,
                     base_url=str(self.v2_base_url),
                     headers=self.v2_headers,
                 ).token
