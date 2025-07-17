@@ -21,6 +21,7 @@ dependencies = [
     "pydantic-settings>=2.0.0",
     "pydantic[email]>=2.0.0",
     "pymongo>=4.0.0",
+    "pyotp>=2.9.0",
     "tenacity>=9.0.0",
 ]
 

@@ -38,6 +38,7 @@ from pyticktick.models.v2.responses.task_parent import BatchTaskParentRespV2
 from pyticktick.models.v2.responses.user import (
     UserProfileV2,
     UserSignOnV2,
+    UserSignOnWithTOTPV2,
     UserStatisticsV2,
     UserStatusV2,
 )
@@ -99,6 +100,7 @@ __all__ = [
     "UpdateTaskV2",
     "UserProfileV2",
     "UserSignOnV2",
+    "UserSignOnWithTOTPV2",
     "UserStatisticsV2",
     "UserStatusV2",
 ]

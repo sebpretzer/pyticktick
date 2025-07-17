@@ -25,15 +25,17 @@ from pydantic import (
     EmailStr,
     Field,
     SecretStr,
+    ValidationError,
     field_validator,
     model_validator,
 )
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pyotp import TOTP
 
 from pyticktick.models.pydantic import HttpUrl
 from pyticktick.models.v1.parameters.oauth import OAuthAuthorizeURLV1, OAuthTokenURLV1
 from pyticktick.models.v1.responses.oauth import OAuthTokenV1
-from pyticktick.models.v2.responses.user import UserSignOnV2
+from pyticktick.models.v2.responses.user import UserSignOnV2, UserSignOnWithTOTPV2
 
 
 class TokenV1(BaseModel):  # noqa: DOC601, DOC603
@@ -118,6 +120,17 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         )
         ```
 
+    ???+ example "Load only V2 API settings when 2FA is enabled"
+        ```python
+        from pyticktick import Settings
+
+        settings = Settings(
+            v2_username="username",
+            v2_password="password",
+            v2_totp_secret="totp_secret",
+        )
+        ```
+
     This class is a subclass of `pydantic_settings.BaseSettings`, which allows for
     [environment variable and secret file parsing](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
@@ -165,6 +178,8 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             Defaults to `http://127.0.0.1:8080/`.
         v2_username (Optional[EmailStr]): The username for the V2 API.
         v2_password (Optional[SecretStr]): The password for the V2 API.
+        v2_totp_secret (Optional[SecretStr]): The TOTP secret for the V2 API, required
+            for two-factor authentication.
         v2_token (Optional[str]): The cookie token for the V2 API.
         v2_base_url (HttpUrl): The base URL for the V2 API. Defaults to
             `https://api.ticktick.com/api/v2/`.
@@ -208,6 +223,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
     v2_password: SecretStr | None = Field(
         default=None,
         description="The password for the V2 API.",
+    )
+    v2_totp_secret: SecretStr | None = Field(
+        default=None,
+        description="The TOTP Secret for the V2 API, used for two-factor authentication.",  # noqa: E501
     )
     v2_token: str | None = Field(
         default=None,
@@ -345,11 +364,40 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             raise TypeError(msg)
         return _dict
 
+    @staticmethod
+    def _v2_mfa_verify(
+        totp_secret: str,
+        auth_id: str,
+        base_url: str,
+        headers: dict[str, str],
+    ) -> dict[str, Any]:
+        try:
+            resp = httpx.post(
+                url=base_url + "/user/sign/mfa/code/verify",
+                headers={**headers, "x-verify-id": auth_id},
+                json={"code": TOTP(totp_secret).now(), "method": "app"},
+            )
+            resp.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            if isinstance((_content := e.response.content), bytes):
+                content = _content.decode()
+            else:
+                content = _content
+            msg = f"Response [{e.response.status_code}]:\n{content}"
+            logger.error(msg)
+            raise ValueError(msg) from e
+
+        if not isinstance((_dict := resp.json()), dict):
+            msg = f"Invalid response, expected `dict`, got {type(_dict)}"
+            raise TypeError(msg)
+        return _dict
+
     @classmethod
     def v2_signon(
         cls,
         username: str,
         password: str,
+        totp_secret: str | None,
         base_url: str,
         headers: dict[str, str],
     ) -> UserSignOnV2:
@@ -366,8 +414,16 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         Args:
             username (str): The username for the V2 API.
             password (str): The password for the V2 API.
+            totp_secret (str | None): The TOTP secret for the V2 API, used for
+                two-factor authentication. If the sign on request requires TOTP
+                verification, this parameter must be provided. If the sign on request
+                does not require TOTP verification, this parameter can be `None`.
             base_url (str): The base URL for the V2 API.
             headers (dict[str, str]): The headers dictionary for the V2 API.
+
+        Raises:
+            ValueError: If the sign on request requires TOTP verification, but no TOTP
+                was provided.
 
         Returns:
             UserSignOnV2: The sign on response model for the V2 API.
@@ -378,6 +434,21 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             base_url=base_url,
             headers=headers,
         )
+        try:
+            totp_resp = UserSignOnWithTOTPV2.model_validate(resp)
+            if totp_secret is None:
+                msg = "Sign on requires TOTP verification, but no TOTP was provided."
+                logger.error(msg)
+                raise ValueError(msg)
+            resp = cls._v2_mfa_verify(
+                totp_secret=totp_secret,
+                auth_id=totp_resp.auth_id,
+                base_url=base_url,
+                headers=headers,
+            )
+        except ValidationError:
+            pass
+
         return UserSignOnV2.model_validate(resp)
 
     def _check_no_settings(self) -> Settings:
@@ -417,9 +488,13 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
                 logger.warning(msg)
                 warnings.warn(msg, UserWarning, stacklevel=1)
             else:
+                totp_secret = None
+                if self.v2_totp_secret is not None:
+                    totp_secret = self.v2_totp_secret.get_secret_value()
                 self.v2_token = self.v2_signon(
                     username=self.v2_username,
                     password=self.v2_password.get_secret_value(),
+                    totp_secret=totp_secret,
                     base_url=str(self.v2_base_url),
                     headers=self.v2_headers,
                 ).token
