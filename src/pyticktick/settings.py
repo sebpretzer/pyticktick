@@ -371,11 +371,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         base_url: str,
         headers: dict[str, str],
     ) -> dict[str, Any]:
-        headers["x-verify-id"] = auth_id
         try:
             resp = httpx.post(
                 url=base_url + "/user/sign/mfa/code/verify",
-                headers=headers,
+                headers={**headers, "x-verify-id": auth_id},
                 json={"code": TOTP(totp_secret).now(), "method": "app"},
             )
             resp.raise_for_status()
