@@ -16,7 +16,7 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
     client = Client(
         v2_username="computer_wiz_02@python.org",
         v2_password="password123",
-        v2_totp="5SY29FY0VXU5XBEJCJH3Z4KYNQ7G915S",
+        v2_totp_secret="5SY29FY0VXU5XBEJCJH3Z4KYNQ7G915S",
     )
     ```
 
@@ -34,6 +34,6 @@ For our V2 authentication requirements, assume our username is `computer_wiz_02@
         },
         v2_username="computer_wiz_02@python.org",
         v2_password="password123",
-        v2_totp="5SY29FY0VXU5XBEJCJH3Z4KYNQ7G915S",
+        v2_totp_secret="5SY29FY0VXU5XBEJCJH3Z4KYNQ7G915S",
     )
     ```

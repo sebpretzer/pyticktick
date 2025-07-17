@@ -127,7 +127,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         settings = Settings(
             v2_username="username",
             v2_password="password",
-            v2_totp="totp_secret",
+            v2_totp_secret="totp_secret",
         )
         ```
 
@@ -178,8 +178,8 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             Defaults to `http://127.0.0.1:8080/`.
         v2_username (Optional[EmailStr]): The username for the V2 API.
         v2_password (Optional[SecretStr]): The password for the V2 API.
-        v2_totp (Optional[SecretStr]): The TOTP secret for the V2 API, required for
-            two-factor authentication.
+        v2_totp_secret (Optional[SecretStr]): The TOTP secret for the V2 API, required
+            for two-factor authentication.
         v2_token (Optional[str]): The cookie token for the V2 API.
         v2_base_url (HttpUrl): The base URL for the V2 API. Defaults to
             `https://api.ticktick.com/api/v2/`.
@@ -224,7 +224,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         default=None,
         description="The password for the V2 API.",
     )
-    v2_totp: SecretStr | None = Field(
+    v2_totp_secret: SecretStr | None = Field(
         default=None,
         description="The TOTP Secret for the V2 API, used for two-factor authentication.",  # noqa: E501
     )
@@ -366,7 +366,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
 
     @staticmethod
     def _v2_mfa_verify(
-        totp: str,
+        totp_secret: str,
         auth_id: str,
         base_url: str,
         headers: dict[str, str],
@@ -376,7 +376,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             resp = httpx.post(
                 url=base_url + "/user/sign/mfa/code/verify",
                 headers=headers,
-                json={"code": TOTP(totp).now(), "method": "app"},
+                json={"code": TOTP(totp_secret).now(), "method": "app"},
             )
             resp.raise_for_status()
         except httpx.HTTPStatusError as e:
@@ -398,7 +398,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         cls,
         username: str,
         password: str,
-        totp: str | None,
+        totp_secret: str | None,
         base_url: str,
         headers: dict[str, str],
     ) -> UserSignOnV2:
@@ -415,10 +415,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         Args:
             username (str): The username for the V2 API.
             password (str): The password for the V2 API.
-            totp (str | None): The TOTP secret for the V2 API, used for two-factor
-                authentication. If the sign on request requires TOTP verification, this
-                parameter must be provided. If the sign on request does not require TOTP
-                verification, this parameter can be `None`.
+            totp_secret (str | None): The TOTP secret for the V2 API, used for
+                two-factor authentication. If the sign on request requires TOTP
+                verification, this parameter must be provided. If the sign on request
+                does not require TOTP verification, this parameter can be `None`.
             base_url (str): The base URL for the V2 API.
             headers (dict[str, str]): The headers dictionary for the V2 API.
 
@@ -437,12 +437,12 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         )
         try:
             totp_resp = UserSignOnWithTOTPV2.model_validate(resp)
-            if totp is None:
+            if totp_secret is None:
                 msg = "Sign on requires TOTP verification, but no TOTP was provided."
                 logger.error(msg)
                 raise ValueError(msg)
             resp = cls._v2_mfa_verify(
-                totp=totp,
+                totp_secret=totp_secret,
                 auth_id=totp_resp.auth_id,
                 base_url=base_url,
                 headers=headers,
@@ -489,13 +489,13 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
                 logger.warning(msg)
                 warnings.warn(msg, UserWarning, stacklevel=1)
             else:
-                totp = None
-                if self.v2_totp is not None:
-                    totp = self.v2_totp.get_secret_value()
+                totp_secret = None
+                if self.v2_totp_secret is not None:
+                    totp_secret = self.v2_totp_secret.get_secret_value()
                 self.v2_token = self.v2_signon(
                     username=self.v2_username,
                     password=self.v2_password.get_secret_value(),
-                    totp=totp,
+                    totp_secret=totp_secret,
                     base_url=str(self.v2_base_url),
                     headers=self.v2_headers,
                 ).token
