@@ -74,6 +74,7 @@ The TickTick V2 API is undocumented, so the descriptions below may not be fully 
 | Post Pomodoro Endpoints      | :x:                | :x:                                                           | :x:                                                              | :x:                                                     | :white_check_mark:                                 |
 | Post Habits Endpoints        | :x:                | :x:                                                           | :x:                                                              | :x:                                                     | :white_check_mark:                                 |
 | Post Countdown Endpoints     | :x:                | :x:                                                           | :x:                                                              | :x:                                                     | :x:                                                |
+| 2FA Support                  | :white_check_mark: | :x:                                                           | :x:                                                              | :x:                                                     | :x:                                                |
 
 ??? Question "Why no support for pomodoro, habits, countdown, etc?"
 
