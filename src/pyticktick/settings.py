@@ -120,6 +120,17 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         )
         ```
 
+    ???+ example "Load only V2 API settings when 2FA is enabled"
+        ```python
+        from pyticktick import Settings
+
+        settings = Settings(
+            v2_username="username",
+            v2_password="password",
+            v2_totp="totp_secret",
+        )
+        ```
+
     This class is a subclass of `pydantic_settings.BaseSettings`, which allows for
     [environment variable and secret file parsing](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
@@ -167,6 +178,8 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             Defaults to `http://127.0.0.1:8080/`.
         v2_username (Optional[EmailStr]): The username for the V2 API.
         v2_password (Optional[SecretStr]): The password for the V2 API.
+        v2_totp (Optional[SecretStr]): The TOTP secret for the V2 API, required for
+            two-factor authentication.
         v2_token (Optional[str]): The cookie token for the V2 API.
         v2_base_url (HttpUrl): The base URL for the V2 API. Defaults to
             `https://api.ticktick.com/api/v2/`.
