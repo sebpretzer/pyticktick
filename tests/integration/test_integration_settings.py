@@ -49,10 +49,11 @@ def test_initialize_api_v2_without_totp(client):
 def test_initialize_api_v2_with_totp(client):
     _username = client.v2_username
     _password = client.v2_password.get_secret_value()
-    _totp = client.v2_totp_secret.get_secret_value()
 
     if client.v2_totp_secret is None:
         pytest.skip("Client initialized without TOTP, skipping test.")
+
+    _totp = client.v2_totp_secret.get_secret_value()
 
     settings = Settings(
         v2_username=_username,
