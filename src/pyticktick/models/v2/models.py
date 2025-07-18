@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from pyticktick.models.pydantic import Color
 from pyticktick.models.v2.types import (
@@ -381,3 +381,10 @@ class TaskV2(BaseModel):
     img_mode: int | None = Field(default=None, validation_alias="imgMode")
     focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
     sort_order: int = Field(validation_alias="sortOrder")
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def _empty_str_to_none(cls, v: Any) -> Any:
+        if isinstance(v, str) and len(v) == 0:
+            return None
+        return v
