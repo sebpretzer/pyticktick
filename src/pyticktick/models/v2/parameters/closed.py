@@ -8,9 +8,9 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 
 class GetClosedV2(BaseModel):
@@ -24,12 +24,18 @@ class GetClosedV2(BaseModel):
 
     from_: datetime | None = Field(
         default=None,
-        alias="The latest date to get tasks from",
+        description="The earliest date to get tasks from",
     )
     to: datetime | None = Field(
         default=None,
-        description="The earliest date to get tasks from",
+        description="The latest date to get tasks from",
     )
     status: Literal["Completed", "Abandoned"] = Field(
         description='Whether to get completed or "won\'t do" tasks',
     )
+
+    @field_serializer("from_", "to")
+    def _serialize_dt(self, dt: datetime | None, _info: Any) -> str | None:
+        if dt is None:
+            return None
+        return dt.replace(tzinfo=None).isoformat(sep=" ", timespec="seconds")
