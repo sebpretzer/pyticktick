@@ -318,6 +318,11 @@ class TaskV2(BaseModel):
         validation_alias="projectId",
         description="ID of the project the task is in",
     )
+    remind_time: datetime | None = Field(
+        default=None,
+        validation_alias="remindTime",
+        description="Time to remind in `yyyy-MM-dd'T'HH:mm:ssZ` format",
+    )
     reminder: ICalTrigger | None = Field(
         default=None,
         description="Unclear what this is, but it can sometimes be one of the reminder triggers in `reminders`",
