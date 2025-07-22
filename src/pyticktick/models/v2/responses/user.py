@@ -88,7 +88,7 @@ class UserProfileV2(BaseModel):
     etimestamp: Any
     username: EmailStr
     site_domain: str = Field(validation_alias="siteDomain")
-    created_campaign: str = Field(validation_alias="createdCampaign")
+    created_campaign: str | None = Field(validation_alias="createdCampaign")
     created_device_info: Any = Field(validation_alias="createdDeviceInfo")
     filled_password: bool = Field(validation_alias="filledPassword")
     account_domain: Any = Field(validation_alias="accountDomain")
@@ -110,6 +110,13 @@ class UserProfileV2(BaseModel):
     external_id: Any = Field(validation_alias="externalId")
     phone_without_country_code: Any = Field(validation_alias="phoneWithoutCountryCode")
     display_name: str = Field(validation_alias="displayName")
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def _empty_str_to_none(cls, v: Any) -> Any:
+        if isinstance(v, str) and len(v) == 0:
+            return None
+        return v
 
 
 class UserStatusV2(BaseModel):
