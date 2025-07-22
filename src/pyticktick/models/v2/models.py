@@ -59,9 +59,10 @@ class BaseModelV2(BaseModel):
     def empty_str_to_none(cls, v: Any) -> Any:
         """Convert empty strings to None.
 
-        TickTick API responses sometimes return empty strings for fields, and sometimes
-        return `None`. This validator ensures that empty strings are converted to
-        `None`, which then allows for more consistent handling of the data.
+        TickTick API responses sometimes conflates `None` and empty strings for
+        optional fields. This validator ensures that empty strings are converted to
+        `None`, which then allows for more consistent handling of the data within the
+        library.
 
         Args:
             v (Any): The value to validate.
