@@ -9,20 +9,19 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 
+from pyticktick.models.v2.models import BaseModelV2
 from pyticktick.models.v2.types import ObjectId
 
 
-class CreateProjectGroupV2(BaseModel):
+class CreateProjectGroupV2(BaseModelV2):
     """Model for creating a project group via the V2 API.
 
     This model is used to create a project group via the V2 API. This is not currently
     documented or supported in the official API docs. This is used in the
     `PostBatchProjectGroupV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     name: str = Field(description="Name of the project group to create")
@@ -39,15 +38,13 @@ class CreateProjectGroupV2(BaseModel):
     )
 
 
-class UpdateProjectGroupV2(BaseModel):
+class UpdateProjectGroupV2(BaseModelV2):
     """Model for updating a project group via the V2 API.
 
     This model is used to update a project group via the V2 API. This is not currently
     documented or supported in the official API docs. This is used in the
     `PostBatchProjectGroupV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     name: str = Field(description="Name of the project group to update")
@@ -60,14 +57,12 @@ class UpdateProjectGroupV2(BaseModel):
     )
 
 
-class PostBatchProjectGroupV2(BaseModel):
+class PostBatchProjectGroupV2(BaseModelV2):
     """Model for batch project group operations via the V2 API.
 
     This model is used to batch create, update, and delete project groups in bulk
     against the V2 API endpoint `POST /batch/projectGroup`.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     add: list[CreateProjectGroupV2] = Field(

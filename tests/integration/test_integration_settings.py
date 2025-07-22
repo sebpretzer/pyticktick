@@ -46,6 +46,7 @@ def test_initialize_api_v2_without_totp(client):
     assert settings.v2_token != client.v2_token
 
 
+@pytest.mark.filterwarnings("ignore:Cannot signon to v1")
 def test_initialize_api_v2_with_totp(client):
     _username = client.v2_username
     _password = client.v2_password.get_secret_value()

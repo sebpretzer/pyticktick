@@ -10,8 +10,9 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Union
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import Field, model_validator
 
+from pyticktick.models.v2.models import BaseModelV2
 from pyticktick.models.v2.types import (
     ETag,
     ICalTrigger,
@@ -28,15 +29,13 @@ from pyticktick.models.v2.types import (
 )
 
 
-class CreateItemV2(BaseModel):
+class CreateItemV2(BaseModelV2):
     """Model for creating a checklist item via the V2 API.
 
     This model is used to create a checklist item via the V2 API, but its identical to
     the `CreateItemV1` model. It directly maps to the 'items' field in the [create task](https://developer.ticktick.com/docs#/openapi?id=create-task)
     documentation. It is used in the `CreateTaskV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # optional fields
     completed_time: datetime | None = Field(
@@ -70,17 +69,15 @@ class CreateItemV2(BaseModel):
     sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
 
-class CreateTaskReminderV2(BaseModel):
+class CreateTaskReminderV2(BaseModelV2):
     """Model for creating a reminder for a task via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     id: ObjectId | None = Field(default=None, description="Reminder ID")
     trigger: ICalTrigger = Field(description="Reminder trigger")
 
 
-class CreateTaskV2(BaseModel):
+class CreateTaskV2(BaseModelV2):
     """Model for creating a task via the V2 API.
 
     This model is used to create a task via the V2 API. It mostly maps to the 'items'
@@ -101,8 +98,6 @@ class CreateTaskV2(BaseModel):
 
     This is used in the `PostBatchTaskV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     project_id: Union[InboxId, ObjectId] = Field(
@@ -210,15 +205,13 @@ class CreateTaskV2(BaseModel):
         return self
 
 
-class UpdateItemV2(BaseModel):
+class UpdateItemV2(BaseModelV2):
     """Model for updating a checklist item via the V2 API.
 
     This model is used to update a checklist item via the V2 API, but its identical to
     the `UpdateItemV1` model. It directly maps to the 'items' field in the [update task](https://developer.ticktick.com/docs#/openapi?id=update-task)
     documentation. It is used in the `UpdateTaskV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     id: ObjectId = Field(description="Checklist item ID")
@@ -254,17 +247,15 @@ class UpdateItemV2(BaseModel):
     sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
 
-class UpdateTaskReminderV2(BaseModel):
+class UpdateTaskReminderV2(BaseModelV2):
     """Model for creating a reminder for a task via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     id: ObjectId = Field(description="Reminder ID")
     trigger: ICalTrigger = Field(description="Reminder trigger")
 
 
-class UpdateTaskV2(BaseModel):
+class UpdateTaskV2(BaseModelV2):
     """Model for updating a task via the V2 API.
 
     This model is used to update a task via the V2 API. It mostly maps to the 'items'
@@ -285,8 +276,6 @@ class UpdateTaskV2(BaseModel):
 
     This is used in the `PostBatchTaskV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     id: ObjectId = Field(description="Task id")
@@ -394,7 +383,7 @@ class UpdateTaskV2(BaseModel):
         return self
 
 
-class DeleteTaskV2(BaseModel):
+class DeleteTaskV2(BaseModelV2):
     """Model for deleting a task via the V2 API.
 
     This model is used to delete a task via the V2 API. It mostly maps to the `DELETE
@@ -402,8 +391,6 @@ class DeleteTaskV2(BaseModel):
     in a batch operation, it must be bundled in the `PostBatchTaskV2` model, rather
     than being a direct call to the API.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     project_id: Union[InboxId, ObjectId] = Field(
@@ -416,14 +403,12 @@ class DeleteTaskV2(BaseModel):
     )
 
 
-class PostBatchTaskV2(BaseModel):
+class PostBatchTaskV2(BaseModelV2):
     """Model for batch task operations via the V2 API.
 
     This model is used to create, update, and delete tasks in bulk against the V2 API
     endpoint `POST /batch/task`.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # optional fields
     add: list[CreateTaskV2] = Field(default=[], description="List of tasks to add")
