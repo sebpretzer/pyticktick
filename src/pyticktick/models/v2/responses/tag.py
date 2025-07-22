@@ -7,12 +7,17 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field
+from typing import TYPE_CHECKING
 
-from pyticktick.models.v2.types import ETag, TagName
+from pydantic import ConfigDict, Field
+
+from pyticktick.models.v2.models import BaseResponseV2
+
+if TYPE_CHECKING:
+    from pyticktick.models.v2.types import ETag, TagName
 
 
-class BatchTagRespV2(BaseModel):
+class BatchTagRespV2(BaseResponseV2):
     """Model for the response of a batch tag request via the V2 API.
 
     Since tags do not have an `id` field, the `id2etag` and `id2error` fields return

@@ -31,6 +31,29 @@ from pyticktick.models.v2.types import (
 )
 
 
+class BaseResponseV2(BaseModel):
+    """Base model for all responses in the V2 API."""
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def empty_str_to_none(cls, v: Any) -> Any:
+        """Convert empty strings to None.
+
+        TickTick API responses sometimes return empty strings for fields, and sometimes
+        return `None`. This validator ensures that empty strings are converted to
+        `None`, which then allows for more consistent handling of the data.
+
+        Args:
+            v (Any): The value to validate.
+
+        Returns:
+            Any: The input value if it is not an empty string, otherwise `None`.
+        """
+        if isinstance(v, str) and len(v) == 0:
+            return None
+        return v
+
+
 class SortOptionV2(BaseModel):
     """Model for the sort options of tasks within a project in the V2 API."""
 
@@ -381,10 +404,3 @@ class TaskV2(BaseModel):
     img_mode: int | None = Field(default=None, validation_alias="imgMode")
     focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
     sort_order: int = Field(validation_alias="sortOrder")
-
-    @field_validator("*", mode="before")
-    @classmethod
-    def _empty_str_to_none(cls, v: Any) -> Any:
-        if isinstance(v, str) and len(v) == 0:
-            return None
-        return v

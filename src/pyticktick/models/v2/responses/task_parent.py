@@ -7,12 +7,17 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field
+from typing import TYPE_CHECKING
 
-from pyticktick.models.v2.types import ETag, ObjectId
+from pydantic import ConfigDict, Field
+
+from pyticktick.models.v2.models import BaseResponseV2
+
+if TYPE_CHECKING:
+    from pyticktick.models.v2.types import ETag, ObjectId
 
 
-class BatchTaskParentRespValueV2(BaseModel):
+class BatchTaskParentRespValueV2(BaseResponseV2):
     """Model for the nested values of a batch task parent response via the V2 API."""
 
     model_config = ConfigDict(extra="forbid")
@@ -26,7 +31,7 @@ class BatchTaskParentRespValueV2(BaseModel):
     etag: ETag
 
 
-class BatchTaskParentRespV2(BaseModel):
+class BatchTaskParentRespV2(BaseResponseV2):
     """Model for the response of a batch task parent request via the V2 API.
 
     The `id2etag` and `id2error` fields return the `objectId` field as the key like

@@ -12,7 +12,6 @@ from typing import Any
 
 from pydantic import (
     UUID4,
-    BaseModel,
     ConfigDict,
     EmailStr,
     Field,
@@ -21,8 +20,10 @@ from pydantic import (
     field_validator,
 )
 
+from pyticktick.models.v2.models import BaseResponseV2
 
-class UserSignOnWithTOTPV2(BaseModel):
+
+class UserSignOnWithTOTPV2(BaseResponseV2):
     """Model for the response of a sign-on request via the V2 API with TOTP.
 
     This model is used when the user has enabled two-factor authentication (2FA) via
@@ -39,7 +40,7 @@ class UserSignOnWithTOTPV2(BaseModel):
     )
 
 
-class UserSignOnV2(BaseModel):
+class UserSignOnV2(BaseResponseV2):
     """Model for the response of a sign-on request via the V2 API.
 
     The most important field is `token`, which is used for authentication during a
@@ -80,7 +81,7 @@ class UserSignOnV2(BaseModel):
     user_code: UUID4 = Field(validation_alias="userCode")
 
 
-class UserProfileV2(BaseModel):
+class UserProfileV2(BaseResponseV2):
     """Model containing the user's profile information."""
 
     model_config = ConfigDict(extra="forbid")
@@ -111,15 +112,8 @@ class UserProfileV2(BaseModel):
     phone_without_country_code: Any = Field(validation_alias="phoneWithoutCountryCode")
     display_name: str = Field(validation_alias="displayName")
 
-    @field_validator("*", mode="before")
-    @classmethod
-    def _empty_str_to_none(cls, v: Any) -> Any:
-        if isinstance(v, str) and len(v) == 0:
-            return None
-        return v
 
-
-class UserStatusV2(BaseModel):
+class UserStatusV2(BaseResponseV2):
     """Model for the response of a user status request via the V2 API.
 
     This user "status" is mainly about the user's subscription status, rather than
@@ -198,7 +192,7 @@ class ScoreByDayV2(RootModel[dict[date, int]]):
         return _cast_task_count_keys(root)
 
 
-class TaskCountV2(BaseModel):
+class TaskCountV2(BaseResponseV2):
     """Model that represents the current task count for a given time period."""
 
     model_config = ConfigDict(extra="forbid")
@@ -258,7 +252,7 @@ class TaskByMonthV2(RootModel[dict[date, TaskCountV2]]):
         return _cast_task_count_keys(root)
 
 
-class UserStatisticsV2(BaseModel):
+class UserStatisticsV2(BaseResponseV2):
     """Model for the response of a user statistics request via the V2 API."""
 
     model_config = ConfigDict(extra="forbid")

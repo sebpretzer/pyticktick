@@ -10,15 +10,23 @@ for `GET` batch requests.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import ConfigDict, Field, model_validator
 
-from pyticktick.models.v2.models import ProjectGroupV2, ProjectV2, TagV2, TaskV2
-from pyticktick.models.v2.types import ETag, ObjectId
+from pyticktick.models.v2.models import (
+    BaseResponseV2,
+    ProjectGroupV2,
+    ProjectV2,
+    TagV2,
+    TaskV2,
+)
+
+if TYPE_CHECKING:
+    from pyticktick.models.v2.types import ETag, ObjectId
 
 
-class BatchRespV2(BaseModel):
+class BatchRespV2(BaseResponseV2):
     """Model for the response of a generic batch request via the V2 API.
 
     !!! warning
@@ -61,7 +69,7 @@ class BatchRespV2(BaseModel):
         return self
 
 
-class SyncTaskBeanV2(BaseModel):
+class SyncTaskBeanV2(BaseResponseV2):
     """Model for all the tasks in a batch response via the V2 API.
 
     This model is used to represent all the tasks in a batch response from the V2 API.
@@ -84,7 +92,7 @@ class SyncTaskBeanV2(BaseModel):
     tag_update: list[Any] = Field(validation_alias="tagUpdate")
 
 
-class SyncTaskOrderBeanV2(BaseModel):
+class SyncTaskOrderBeanV2(BaseResponseV2):
     """Unknown model for the V2 API."""
 
     model_config = ConfigDict(extra="forbid")
@@ -97,7 +105,7 @@ class SyncTaskOrderBeanV2(BaseModel):
     task_order_by_project: dict[str, Any] = Field(validation_alias="taskOrderByProject")
 
 
-class SyncOrderBeanV3V2(BaseModel):
+class SyncOrderBeanV3V2(BaseResponseV2):
     """Unknown model for the V2 API."""
 
     model_config = ConfigDict(extra="forbid")
@@ -106,7 +114,7 @@ class SyncOrderBeanV3V2(BaseModel):
     order_by_type: dict[str, Any] = Field(validation_alias="orderByType")
 
 
-class GetBatchV2(BaseModel):
+class GetBatchV2(BaseResponseV2):
     """Model for the response of a batch object status request via the V2 API.
 
     This model appears to be used like an [entity bean](https://en.wikipedia.org/wiki/Entity_Bean)

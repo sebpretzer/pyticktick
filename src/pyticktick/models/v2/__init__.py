@@ -1,3 +1,14 @@
+from pyticktick.models.v2.models import (
+    BaseResponseV2,
+    ItemV2,
+    ProjectGroupV2,
+    ProjectTimelineV2,
+    ProjectV2,
+    SortOptionV2,
+    TagV2,
+    TaskReminderV2,
+    TaskV2,
+)
 from pyticktick.models.v2.parameters.closed import GetClosedV2
 from pyticktick.models.v2.parameters.project import (
     CreateProjectV2,
@@ -58,6 +69,7 @@ from pyticktick.models.v2.types import (
 )
 
 __all__ = [
+    "BaseResponseV2",
     "BatchRespV2",
     "BatchTagRespV2",
     "BatchTaskParentRespV2",
@@ -74,6 +86,7 @@ __all__ = [
     "GetBatchV2",
     "GetClosedV2",
     "ICalTrigger",
+    "ItemV2",
     "Kind",
     "ObjectId",
     "PostBatchProjectGroupV2",
@@ -83,13 +96,20 @@ __all__ = [
     "PostBatchTaskV2",
     "Priority",
     "Progress",
+    "ProjectGroupV2",
+    "ProjectTimelineV2",
+    "ProjectV2",
     "RenameTagV2",
     "RepeatFrom",
     "SetTaskParentV2",
+    "SortOptionV2",
     "Status",
     "TTRRule",
     "TagLabel",
     "TagName",
+    "TagV2",
+    "TaskReminderV2",
+    "TaskV2",
     "TimeZoneName",
     "UnSetTaskParentV2",
     "UpdateItemV2",
