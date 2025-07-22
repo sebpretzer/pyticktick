@@ -141,8 +141,8 @@ class ProjectV2(BaseModel):
     open_to_team: bool | None = Field(validation_alias="openToTeam")
     team_member_permission: Any = Field(validation_alias="teamMemberPermission")
     source: int
-    show_type: str | None = Field(validation_alias="showType")
-    reminder_type: str | None = Field(validation_alias="reminderType")
+    show_type: int | None = Field(validation_alias="showType")
+    reminder_type: int | None = Field(validation_alias="reminderType")
 
 
 class ProjectGroupV2(BaseModel):

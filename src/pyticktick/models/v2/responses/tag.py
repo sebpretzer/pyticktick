@@ -7,14 +7,10 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from pydantic import ConfigDict, Field
 
 from pyticktick.models.v2.models import BaseResponseV2
-
-if TYPE_CHECKING:
-    from pyticktick.models.v2.types import ETag, TagName
+from pyticktick.models.v2.types import ETag, TagName
 
 
 class BatchTagRespV2(BaseResponseV2):

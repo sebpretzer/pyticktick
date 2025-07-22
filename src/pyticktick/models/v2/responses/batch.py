@@ -10,7 +10,7 @@ for `GET` batch requests.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from pydantic import ConfigDict, Field, model_validator
 
@@ -21,9 +21,7 @@ from pyticktick.models.v2.models import (
     TagV2,
     TaskV2,
 )
-
-if TYPE_CHECKING:
-    from pyticktick.models.v2.types import ETag, ObjectId
+from pyticktick.models.v2.types import ETag, ObjectId
 
 
 class BatchRespV2(BaseResponseV2):
