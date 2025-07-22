@@ -103,7 +103,7 @@ fixture-parentheses = true
 runtime-evaluated-base-classes = [
     "pydantic.BaseModel",
     "pydantic_settings.BaseSettings",
-    "pyticktick.models.v2.models.BaseResponseV2",
+    "pyticktick.models.v2.models.BaseModelV2",
 ]
 
 [tool.ruff.format]

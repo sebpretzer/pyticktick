@@ -10,17 +10,17 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_serializer
+from pydantic import Field, field_serializer
+
+from pyticktick.models.v2.models import BaseModelV2
 
 
-class GetClosedV2(BaseModel):
+class GetClosedV2(BaseModelV2):
     """Model for getting closed tasks from the database.
 
     These are tasks that have been marked as completed or abandoned. They will not show
     up in the normal task list.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     from_: datetime | None = Field(
         default=None,

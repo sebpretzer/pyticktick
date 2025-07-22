@@ -31,8 +31,28 @@ from pyticktick.models.v2.types import (
 )
 
 
-class BaseResponseV2(BaseModel):
-    """Base model for all responses in the V2 API."""
+class BaseModelV2(BaseModel):
+    """Base model for all pydantic models of the TickTick V2 API.
+
+    This model is used to provide a common configuration for all models in the V2 API.
+
+    It sets the `extra` configuration to `forbid`, which means that extra data is not
+    permitted in the model, and a `pydantic.ValidationError` will be raised if this is
+    the case. See [`pydantic.config.ConfigDict.extra`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.extra)
+    for more information.
+
+    It also sets both [`validate_by_name`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.validate_by_name)
+    and [`validate_by_alias`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.validate_by_alias)
+    to `True`, which means that field names will be validated by their name _or_ alias.
+    This is useful for compatibility with the V2 API, while still allowing for
+    instantiation in Python with field names.
+    """
+
+    model_config = ConfigDict(
+        extra="forbid",
+        validate_by_name=True,
+        validate_by_alias=True,
+    )
 
     @field_validator("*", mode="before")
     @classmethod
@@ -54,10 +74,8 @@ class BaseResponseV2(BaseModel):
         return v
 
 
-class SortOptionV2(BaseModel):
+class SortOptionV2(BaseModelV2):
     """Model for the sort options of tasks within a project in the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     group_by: SortOptions = Field(
@@ -70,10 +88,8 @@ class SortOptionV2(BaseModel):
     )
 
 
-class ProjectTimelineV2(BaseModel):
+class ProjectTimelineV2(BaseModelV2):
     """Unknown model for the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # unknown fields
     range: str | None
@@ -81,14 +97,12 @@ class ProjectTimelineV2(BaseModel):
     sort_option: SortOptionV2 = Field(validation_alias="sortOption")
 
 
-class ProjectV2(BaseModel):
+class ProjectV2(BaseModelV2):
     """Model for all the details of a project taken from the V2 API.
 
     This model is used to represent a single project in TickTick. It contains all the
     relevant details, such as name, color, sort order, etc. that you see in the web app.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     color: Color | None = Field(
@@ -145,14 +159,12 @@ class ProjectV2(BaseModel):
     reminder_type: int | None = Field(validation_alias="reminderType")
 
 
-class ProjectGroupV2(BaseModel):
+class ProjectGroupV2(BaseModelV2):
     """Model for a project group in the V2 API.
 
     This model is used to represent a group of projects in TickTick. It contains all the
     relevant details, such as name, color, sort order, etc. that you see in the web app.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     etag: ETag = Field(description="ETag of the project group object")
@@ -178,7 +190,7 @@ class ProjectGroupV2(BaseModel):
     user_id: int = Field(validation_alias="userId")
 
 
-class TagV2(BaseModel):
+class TagV2(BaseModelV2):
     """Model for a tag in the V2 API.
 
     This model is used to represent a tag in TickTick. Tags are used to categorize tasks
@@ -186,8 +198,6 @@ class TagV2(BaseModel):
 
     They do not have a unique ID, but they can be identified by their raw name.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     color: Color | None = Field(
@@ -224,17 +234,15 @@ class TagV2(BaseModel):
     type: int
 
 
-class TaskReminderV2(BaseModel):
+class TaskReminderV2(BaseModelV2):
     """Model for a reminder for a task via the V2 API."""
 
     id: ObjectId | None = Field(default=None, description="Reminder ID")
     trigger: ICalTrigger = Field(description="Reminder trigger")
 
 
-class ItemV2(BaseModel):
+class ItemV2(BaseModelV2):
     """Model for a checklist item via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     completed_time: str | None = Field(
         default=None,
@@ -274,10 +282,8 @@ class ItemV2(BaseModel):
     )
 
 
-class TaskV2(BaseModel):
+class TaskV2(BaseModelV2):
     """Model for a task in a batch response via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     child_ids: list[ObjectId] | None = Field(
         default=None,
@@ -348,6 +354,11 @@ class TaskV2(BaseModel):
     reminders: list[TaskReminderV2] | None = Field(
         default=None,
         description="List of reminders for the task",
+    )
+    remind_time: datetime | None = Field(
+        default=None,
+        validation_alias="remindTime",
+        description="Time to remind in `yyyy-MM-dd'T'HH:mm:ssZ` format",
     )
     repeat_first_date: datetime | None = Field(
         default=None,

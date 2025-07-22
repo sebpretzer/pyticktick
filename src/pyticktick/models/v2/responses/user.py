@@ -12,7 +12,6 @@ from typing import Any
 
 from pydantic import (
     UUID4,
-    ConfigDict,
     EmailStr,
     Field,
     RootModel,
@@ -20,10 +19,10 @@ from pydantic import (
     field_validator,
 )
 
-from pyticktick.models.v2.models import BaseResponseV2
+from pyticktick.models.v2.models import BaseModelV2
 
 
-class UserSignOnWithTOTPV2(BaseResponseV2):
+class UserSignOnWithTOTPV2(BaseModelV2):
     """Model for the response of a sign-on request via the V2 API with TOTP.
 
     This model is used when the user has enabled two-factor authentication (2FA) via
@@ -40,7 +39,7 @@ class UserSignOnWithTOTPV2(BaseResponseV2):
     )
 
 
-class UserSignOnV2(BaseResponseV2):
+class UserSignOnV2(BaseModelV2):
     """Model for the response of a sign-on request via the V2 API.
 
     The most important field is `token`, which is used for authentication during a
@@ -81,10 +80,8 @@ class UserSignOnV2(BaseResponseV2):
     user_code: UUID4 = Field(validation_alias="userCode")
 
 
-class UserProfileV2(BaseResponseV2):
+class UserProfileV2(BaseModelV2):
     """Model containing the user's profile information."""
-
-    model_config = ConfigDict(extra="forbid")
 
     etimestamp: Any
     username: EmailStr
@@ -113,14 +110,12 @@ class UserProfileV2(BaseResponseV2):
     display_name: str = Field(validation_alias="displayName")
 
 
-class UserStatusV2(BaseResponseV2):
+class UserStatusV2(BaseModelV2):
     """Model for the response of a user status request via the V2 API.
 
     This user "status" is mainly about the user's subscription status, rather than
     their current activity on TickTick.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     user_id: str = Field(validation_alias="userId", description="The user's ID.")
     user_code: UUID4 = Field(validation_alias="userCode")
@@ -192,10 +187,8 @@ class ScoreByDayV2(RootModel[dict[date, int]]):
         return _cast_task_count_keys(root)
 
 
-class TaskCountV2(BaseResponseV2):
+class TaskCountV2(BaseModelV2):
     """Model that represents the current task count for a given time period."""
-
-    model_config = ConfigDict(extra="forbid")
 
     complete_count: int = Field(validation_alias="completeCount")
     not_complete_count: int = Field(validation_alias="notCompleteCount")
@@ -252,10 +245,8 @@ class TaskByMonthV2(RootModel[dict[date, TaskCountV2]]):
         return _cast_task_count_keys(root)
 
 
-class UserStatisticsV2(BaseResponseV2):
+class UserStatisticsV2(BaseModelV2):
     """Model for the response of a user statistics request via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     score: int
     level: int

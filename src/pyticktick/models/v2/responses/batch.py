@@ -12,10 +12,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import ConfigDict, Field, model_validator
+from pydantic import Field, model_validator
 
 from pyticktick.models.v2.models import (
-    BaseResponseV2,
+    BaseModelV2,
     ProjectGroupV2,
     ProjectV2,
     TagV2,
@@ -24,7 +24,7 @@ from pyticktick.models.v2.models import (
 from pyticktick.models.v2.types import ETag, ObjectId
 
 
-class BatchRespV2(BaseResponseV2):
+class BatchRespV2(BaseModelV2):
     """Model for the response of a generic batch request via the V2 API.
 
     !!! warning
@@ -32,8 +32,6 @@ class BatchRespV2(BaseResponseV2):
         whether the `id2etag` and `id2error` fields are from MongoDB, but they seem to
         fit the pattern.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     id2error: dict[ObjectId, str] = Field(
@@ -67,7 +65,7 @@ class BatchRespV2(BaseResponseV2):
         return self
 
 
-class SyncTaskBeanV2(BaseResponseV2):
+class SyncTaskBeanV2(BaseModelV2):
     """Model for all the tasks in a batch response via the V2 API.
 
     This model is used to represent all the tasks in a batch response from the V2 API.
@@ -75,8 +73,6 @@ class SyncTaskBeanV2(BaseResponseV2):
     a complete understanding of how. For now, the `update` field is the most important,
     as it contains all the active tasks for the user.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     update: list[TaskV2] = Field(
@@ -90,10 +86,8 @@ class SyncTaskBeanV2(BaseResponseV2):
     tag_update: list[Any] = Field(validation_alias="tagUpdate")
 
 
-class SyncTaskOrderBeanV2(BaseResponseV2):
+class SyncTaskOrderBeanV2(BaseModelV2):
     """Unknown model for the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # unknown fields
     task_order_by_date: dict[str, Any] = Field(validation_alias="taskOrderByDate")
@@ -103,16 +97,14 @@ class SyncTaskOrderBeanV2(BaseResponseV2):
     task_order_by_project: dict[str, Any] = Field(validation_alias="taskOrderByProject")
 
 
-class SyncOrderBeanV3V2(BaseResponseV2):
+class SyncOrderBeanV3V2(BaseModelV2):
     """Unknown model for the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # unknown fields
     order_by_type: dict[str, Any] = Field(validation_alias="orderByType")
 
 
-class GetBatchV2(BaseResponseV2):
+class GetBatchV2(BaseModelV2):
     """Model for the response of a batch object status request via the V2 API.
 
     This model appears to be used like an [entity bean](https://en.wikipedia.org/wiki/Entity_Bean)
@@ -122,8 +114,6 @@ class GetBatchV2(BaseResponseV2):
     publish changes to the user's account. This model is currently intended for
     reading the user's state.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     inbox_id: str = Field(
