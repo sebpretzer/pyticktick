@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0
+
+- Add missing fields to `pyticktick.models.v2.TaskV2` [#86](https://github.com/sebpretzer/pyticktick/pull/86)
+- Fix integration test warnings [#85](https://github.com/sebpretzer/pyticktick/pull/85)
+- Fix unit test warnings [#84](https://github.com/sebpretzer/pyticktick/pull/84)
+- Add `BaseModelV2` for all V2 models to inherit from [#83](https://github.com/sebpretzer/pyticktick/pull/83)
+- Add models in `pyticktick.models.v2.models` to `pyticktick.models.v2` [#82](https://github.com/sebpretzer/pyticktick/pull/82)
+- Fix `created_campaign` in `pyticktick.models.v2.UserProfileV2` [#79](https://github.com/sebpretzer/pyticktick/pull/79)
+- Fix empty string conversion for `pyticktick.models.v2.TaskV2` [#78](https://github.com/sebpretzer/pyticktick/pull/78)
+- Fix typos in `pyticktick.models.v2.GetClosedV2` [#77](https://github.com/sebpretzer/pyticktick/pull/77)
+- Add support for 2FA [#72](https://github.com/sebpretzer/pyticktick/pull/72)
+- Fix changelog extractor for release github action [#42](https://github.com/sebpretzer/pyticktick/pull/42)
+
 ## 0.1.0
 
 - Refactor V1 model names to be more consistent with V2 model names [#40](https://github.com/sebpretzer/pyticktick/pull/40)
