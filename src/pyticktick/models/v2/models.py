@@ -348,11 +348,6 @@ class TaskV2(BaseModelV2):
         validation_alias="projectId",
         description="ID of the project the task is in",
     )
-    remind_time: datetime | None = Field(
-        default=None,
-        validation_alias="remindTime",
-        description="Time to remind in `yyyy-MM-dd'T'HH:mm:ssZ` format",
-    )
     reminder: ICalTrigger | None = Field(
         default=None,
         description="Unclear what this is, but it can sometimes be one of the reminder triggers in `reminders`",
@@ -399,6 +394,7 @@ class TaskV2(BaseModelV2):
     )
 
     # unknown fields
+    assignee: Any | None = None
     attachments: list[Any] = []
     annoying_alert: int | None = Field(
         default=None,
@@ -413,6 +409,9 @@ class TaskV2(BaseModelV2):
     creator: int
     deleted: int
     ex_date: list[Any] | None = Field(default=None, validation_alias="exDate")
-    img_mode: int | None = Field(default=None, validation_alias="imgMode")
     focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
+    img_mode: int | None = Field(default=None, validation_alias="imgMode")
+    is_dirty: bool | None = Field(default=None, validation_alias="isDirty")
+    local: bool | None = None
+    remind_time: datetime | None = Field(default=None, validation_alias="remindTime")
     sort_order: int = Field(validation_alias="sortOrder")
