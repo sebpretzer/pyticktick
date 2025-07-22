@@ -355,11 +355,6 @@ class TaskV2(BaseModelV2):
         default=None,
         description="List of reminders for the task",
     )
-    remind_time: datetime | None = Field(
-        default=None,
-        validation_alias="remindTime",
-        description="Time to remind in `yyyy-MM-dd'T'HH:mm:ssZ` format",
-    )
     repeat_first_date: datetime | None = Field(
         default=None,
         validation_alias="repeatFirstDate",
