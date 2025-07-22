@@ -9,18 +9,18 @@ from __future__ import annotations
 
 from typing import Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
+
+from pyticktick.models.v2.models import BaseModelV2
 
 
-class SetTaskParentV2(BaseModel):
+class SetTaskParentV2(BaseModelV2):
     """Model for setting a parent task via the V2 API.
 
     This model is used to set a parent task via the V2 API. This is not currently
     documented or supported in the official API docs. This is used as the payload in the
     `POST /batch/taskParent` endpoint.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     parent_id: str = Field(
@@ -37,15 +37,13 @@ class SetTaskParentV2(BaseModel):
     )
 
 
-class UnSetTaskParentV2(BaseModel):
+class UnSetTaskParentV2(BaseModelV2):
     """Model for unsetting a parent task via the V2 API.
 
     This model is used to unset a parent task via the V2 API. This is not currently
     documented or supported in the official API docs. This is used as the payload in the
     `POST /batch/taskParent` endpoint.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     old_parent_id: str = Field(

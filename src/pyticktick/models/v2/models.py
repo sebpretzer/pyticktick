@@ -31,10 +31,52 @@ from pyticktick.models.v2.types import (
 )
 
 
-class SortOptionV2(BaseModel):
-    """Model for the sort options of tasks within a project in the V2 API."""
+class BaseModelV2(BaseModel):
+    """Base model for all pydantic models of the TickTick V2 API.
 
-    model_config = ConfigDict(extra="forbid")
+    This model is used to provide a common configuration for all models in the V2 API.
+
+    It sets the `extra` configuration to `forbid`, which means that extra data is not
+    permitted in the model, and a `pydantic.ValidationError` will be raised if this is
+    the case. See [`pydantic.config.ConfigDict.extra`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.extra)
+    for more information.
+
+    It also sets both [`validate_by_name`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.validate_by_name)
+    and [`validate_by_alias`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.validate_by_alias)
+    to `True`, which means that field names will be validated by their name _or_ alias.
+    This is useful for compatibility with the V2 API, while still allowing for
+    instantiation in Python with field names.
+    """
+
+    model_config = ConfigDict(
+        extra="forbid",
+        validate_by_name=True,
+        validate_by_alias=True,
+    )
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def empty_str_to_none(cls, v: Any) -> Any:
+        """Convert empty strings to None.
+
+        TickTick API responses sometimes conflates `None` and empty strings for
+        optional fields. This validator ensures that empty strings are converted to
+        `None`, which then allows for more consistent handling of the data within the
+        library.
+
+        Args:
+            v (Any): The value to validate.
+
+        Returns:
+            Any: The input value if it is not an empty string, otherwise `None`.
+        """
+        if isinstance(v, str) and len(v) == 0:
+            return None
+        return v
+
+
+class SortOptionV2(BaseModelV2):
+    """Model for the sort options of tasks within a project in the V2 API."""
 
     # known fields
     group_by: SortOptions = Field(
@@ -47,10 +89,8 @@ class SortOptionV2(BaseModel):
     )
 
 
-class ProjectTimelineV2(BaseModel):
+class ProjectTimelineV2(BaseModelV2):
     """Unknown model for the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     # unknown fields
     range: str | None
@@ -58,14 +98,12 @@ class ProjectTimelineV2(BaseModel):
     sort_option: SortOptionV2 = Field(validation_alias="sortOption")
 
 
-class ProjectV2(BaseModel):
+class ProjectV2(BaseModelV2):
     """Model for all the details of a project taken from the V2 API.
 
     This model is used to represent a single project in TickTick. It contains all the
     relevant details, such as name, color, sort order, etc. that you see in the web app.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     color: Color | None = Field(
@@ -118,18 +156,16 @@ class ProjectV2(BaseModel):
     open_to_team: bool | None = Field(validation_alias="openToTeam")
     team_member_permission: Any = Field(validation_alias="teamMemberPermission")
     source: int
-    show_type: str | None = Field(validation_alias="showType")
-    reminder_type: str | None = Field(validation_alias="reminderType")
+    show_type: int | None = Field(validation_alias="showType")
+    reminder_type: int | None = Field(validation_alias="reminderType")
 
 
-class ProjectGroupV2(BaseModel):
+class ProjectGroupV2(BaseModelV2):
     """Model for a project group in the V2 API.
 
     This model is used to represent a group of projects in TickTick. It contains all the
     relevant details, such as name, color, sort order, etc. that you see in the web app.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     etag: ETag = Field(description="ETag of the project group object")
@@ -155,7 +191,7 @@ class ProjectGroupV2(BaseModel):
     user_id: int = Field(validation_alias="userId")
 
 
-class TagV2(BaseModel):
+class TagV2(BaseModelV2):
     """Model for a tag in the V2 API.
 
     This model is used to represent a tag in TickTick. Tags are used to categorize tasks
@@ -163,8 +199,6 @@ class TagV2(BaseModel):
 
     They do not have a unique ID, but they can be identified by their raw name.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # known fields
     color: Color | None = Field(
@@ -201,17 +235,15 @@ class TagV2(BaseModel):
     type: int
 
 
-class TaskReminderV2(BaseModel):
+class TaskReminderV2(BaseModelV2):
     """Model for a reminder for a task via the V2 API."""
 
     id: ObjectId | None = Field(default=None, description="Reminder ID")
     trigger: ICalTrigger = Field(description="Reminder trigger")
 
 
-class ItemV2(BaseModel):
+class ItemV2(BaseModelV2):
     """Model for a checklist item via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     completed_time: str | None = Field(
         default=None,
@@ -251,10 +283,8 @@ class ItemV2(BaseModel):
     )
 
 
-class TaskV2(BaseModel):
+class TaskV2(BaseModelV2):
     """Model for a task in a batch response via the V2 API."""
-
-    model_config = ConfigDict(extra="forbid")
 
     child_ids: list[ObjectId] | None = Field(
         default=None,
@@ -381,10 +411,3 @@ class TaskV2(BaseModel):
     img_mode: int | None = Field(default=None, validation_alias="imgMode")
     focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
     sort_order: int = Field(validation_alias="sortOrder")
-
-    @field_validator("*", mode="before")
-    @classmethod
-    def _empty_str_to_none(cls, v: Any) -> Any:
-        if isinstance(v, str) and len(v) == 0:
-            return None
-        return v

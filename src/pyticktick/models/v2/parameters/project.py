@@ -9,13 +9,14 @@ from __future__ import annotations
 
 from typing import Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 
 from pyticktick.models.pydantic import Color
+from pyticktick.models.v2.models import BaseModelV2
 from pyticktick.models.v2.types import ObjectId
 
 
-class CreateProjectV2(BaseModel):
+class CreateProjectV2(BaseModelV2):
     """Model for creating a project via the V2 API.
 
     This model is used to create a project via the V2 API. It mostly maps to the
@@ -23,8 +24,6 @@ class CreateProjectV2(BaseModel):
     documentation in the API docs. The main differences are the addition of the `id`
     and `group_id` fields. This is used in the `PostBatchProjectV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     name: str = Field(description="name of the project")
@@ -57,7 +56,7 @@ class CreateProjectV2(BaseModel):
     sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
 
-class UpdateProjectV2(BaseModel):
+class UpdateProjectV2(BaseModelV2):
     """Model for updating a project via the V2 API.
 
     This model is used to update a project via the V2 API. It mostly maps to the
@@ -65,8 +64,6 @@ class UpdateProjectV2(BaseModel):
     documentation in the API docs. The main differences are the addition of the `id`
     and `group_id` fields. This is used in the `PostBatchProjectV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     id: ObjectId = Field(description="ID of the project to update")
@@ -96,14 +93,12 @@ class UpdateProjectV2(BaseModel):
     sort_order: int | None = Field(default=None, serialization_alias="sortOrder")
 
 
-class PostBatchProjectV2(BaseModel):
+class PostBatchProjectV2(BaseModelV2):
     """Model for batch project operations via the V2 API.
 
     This model is used to create, update, and delete projects in bulk against the V2 API
     endpoint `POST /batch/project`.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # optional fields
     add: list[CreateProjectV2] = Field(

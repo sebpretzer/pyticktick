@@ -9,20 +9,19 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import Field, model_validator
 
 from pyticktick.models.pydantic import Color
+from pyticktick.models.v2.models import BaseModelV2
 from pyticktick.models.v2.types import TagLabel, TagName
 
 
-class CreateTagV2(BaseModel):
+class CreateTagV2(BaseModelV2):
     """Model for creating a tag via the V2 API.
 
     This model is used to create a tag via the V2 API. This is not currently documented
     or supported in the official API docs. This is used in the `PostBatchTagV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     label: TagLabel = Field(description="Name of the tag to create")
@@ -54,14 +53,12 @@ class CreateTagV2(BaseModel):
         return self
 
 
-class UpdateTagV2(BaseModel):
+class UpdateTagV2(BaseModelV2):
     """Model for updating a tag via the V2 API.
 
     This model is used to update a tag via the V2 API. This is not currently documented
     or supported in the official API docs. This is used in the `PostBatchTagV2` model.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     label: TagLabel = Field(description="Name of the tag to update")
@@ -101,7 +98,7 @@ class UpdateTagV2(BaseModel):
         return self
 
 
-class PostBatchTagV2(BaseModel):
+class PostBatchTagV2(BaseModelV2):
     """Model for batch tag operations via the V2 API.
 
     This model is used to batch create, and update tags in bulk against the V2 API
@@ -113,21 +110,17 @@ class PostBatchTagV2(BaseModel):
         separately.
     """
 
-    model_config = ConfigDict(extra="forbid")
-
     # optional fields
     add: list[CreateTagV2] = Field(default=[], description="List of tags to add")
     update: list[UpdateTagV2] = Field(default=[], description="List of tags to update")
 
 
-class RenameTagV2(BaseModel):
+class RenameTagV2(BaseModelV2):
     """Model for renaming a tag via the V2 API.
 
     This model is used to rename a tag via the V2 API endpoint `PUT /tag/rename`. This
     is not currently documented or supported in the official API docs.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     name: TagName = Field(description="Identifier of the tag to rename")
@@ -137,14 +130,12 @@ class RenameTagV2(BaseModel):
     )
 
 
-class DeleteTagV2(BaseModel):
+class DeleteTagV2(BaseModelV2):
     """Model for deleting a tag via the V2 API.
 
     This model is used to delete a tag against the V2 API endpoint `DELETE /tag`. This
     is not currently documented or supported in the official API docs.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     # required fields
     name: str = Field(description="Identifier of the tag to delete")

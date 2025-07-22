@@ -1,4 +1,5 @@
 from pyticktick.models.v2.models import (
+    BaseModelV2,
     ItemV2,
     ProjectGroupV2,
     ProjectTimelineV2,
@@ -68,6 +69,7 @@ from pyticktick.models.v2.types import (
 )
 
 __all__ = [
+    "BaseModelV2",
     "BatchRespV2",
     "BatchTagRespV2",
     "BatchTaskParentRespV2",
