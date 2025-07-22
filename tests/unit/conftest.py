@@ -52,7 +52,7 @@ def test_v2_token() -> str:
 
 @pytest.fixture()
 def test_v2_usersignonv2(test_v2_username, test_v2_token) -> UserSignOnV2:
-    return UserSignOnV2.parse_obj(
+    return UserSignOnV2.model_validate(
         {
             "token": test_v2_token,
             "userId": "test_user_id",

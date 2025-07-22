@@ -43,6 +43,7 @@ def test_settings__parse_url_params():
     }
 
 
+@pytest.mark.filterwarnings("ignore:`token` will expire in less than 7 days")
 @pytest.mark.parametrize("test_expiration_days", [1, 5, 30])
 def test_v1_token_initialize(
     test_v1_token_value,
@@ -90,6 +91,7 @@ def test_v1_token_expiration():
         TokenV1._validate_expiration(int(time()) - 1)
 
 
+@pytest.mark.filterwarnings("ignore:Cannot signon to v2")
 @pytest.mark.parametrize("from_env", [True, False])
 @pytest.mark.parametrize("test_base_url", [None, "http://test_base_url.com/"])
 @pytest.mark.parametrize(
@@ -145,6 +147,7 @@ def test_v1_settings_initialize(
     assert settings.v1_token.value == UUID(test_v1_token_value)
 
 
+@pytest.mark.filterwarnings("ignore:Cannot signon to v1")
 @pytest.mark.parametrize("from_env", [True, False])
 @pytest.mark.parametrize("test_base_url", [None, "http://test_base_url.com/"])
 def test_v2_settings_initialize(
@@ -179,6 +182,7 @@ def test_v2_settings_initialize(
     assert settings.v2_token == test_v2_token
 
 
+@pytest.mark.filterwarnings("ignore:Cannot signon to v1")
 def test_v2_settings__get_v2_token(
     mocker,
     test_v2_username,
@@ -249,6 +253,7 @@ def test_webbrowser_cannot_open(
         )
 
 
+@pytest.mark.filterwarnings("ignore:Cannot signon to v1")
 @pytest.mark.parametrize("from_env", [True, False])
 @pytest.mark.parametrize("test_forbid_extra", [True, False, None])
 def test_other_settings_initialize(

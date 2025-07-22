@@ -28,7 +28,7 @@ def test_color_json_serializeable():
 
     color_str = "#ff0000"
 
-    model = TestModel.parse_obj({"color": color_str})
+    model = TestModel.model_validate({"color": color_str})
     assert isinstance(model.color, Color)
 
     dict_ = model.model_dump()
