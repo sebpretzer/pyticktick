@@ -394,6 +394,7 @@ class TaskV2(BaseModelV2):
     )
 
     # unknown fields
+    assignee: Any | None = None
     attachments: list[Any] = []
     annoying_alert: int | None = Field(
         default=None,
@@ -408,6 +409,9 @@ class TaskV2(BaseModelV2):
     creator: int
     deleted: int
     ex_date: list[Any] | None = Field(default=None, validation_alias="exDate")
-    img_mode: int | None = Field(default=None, validation_alias="imgMode")
     focus_summaries: list[Any] = Field(default=[], validation_alias="focusSummaries")
+    img_mode: int | None = Field(default=None, validation_alias="imgMode")
+    is_dirty: bool | None = Field(default=None, validation_alias="isDirty")
+    local: bool | None = None
+    remind_time: datetime | None = Field(default=None, validation_alias="remindTime")
     sort_order: int = Field(validation_alias="sortOrder")
