@@ -25,7 +25,7 @@ repos:
     hooks:
       - id: markdownlint-fix
   - repo: https://github.com/crate-ci/typos
-    rev: v1.37.3
+    rev: v1.38.0
     hooks:
       - id: typos
         args: [--force-exclude]
