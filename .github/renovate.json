@@ -11,6 +11,8 @@
     ":prConcurrentLimitNone",
     ":rebaseStalePrs"
   ],
+  "timezone": "America/Chicago",
+  "schedule": ["* 0-5 * * *"],
   "assignees": ["sebpretzer"],
   "labels": ["renovate"],
   "lockFileMaintenance": {
