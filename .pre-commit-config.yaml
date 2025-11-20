@@ -13,13 +13,18 @@ repos:
 
   # docs checks
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.22
+    rev: 1.0.0
     hooks:
       - id: mdformat
-        args: [--exclude, docs/reference/**, --exclude, docs/CODE_OF_CONDUCT.md]
+        # Do not switch to mdformat --exclude until: https://github.com/hukkin/mdformat/issues/489
+        exclude: |
+          (?x)(
+            ^docs/CODE_OF_CONDUCT\.md$ |
+            ^docs/reference/.*\.md$
+          )
         additional_dependencies:
-          - mdformat-mkdocs==4.0.0
-          - mdformat-footnote==0.1.1
+          - mdformat-mkdocs
+          - mdformat-footnote
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.45.0
     hooks:
