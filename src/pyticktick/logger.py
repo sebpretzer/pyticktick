@@ -1,4 +1,4 @@
-"""Logging workound to use Loguru in conjunction with the standard logging module.
+"""Logging workaround to use Loguru in conjunction with the standard logging module.
 
 !!! Warning
     Users are not expected to use the module directly, this is for internal use only. It
