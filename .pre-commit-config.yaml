@@ -26,7 +26,7 @@ repos:
           - mdformat-mkdocs
           - mdformat-footnote
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.45.0
+    rev: v0.46.0
     hooks:
       - id: markdownlint-fix
   - repo: https://github.com/crate-ci/typos
@@ -41,11 +41,11 @@ repos:
     hooks:
       - id: validate-pyproject
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.8.24
+    rev: 0.9.10
     hooks:
       - id: uv-lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.0
+    rev: v0.14.5
     hooks:
       - id: ruff
         name: ruff-lint
@@ -62,7 +62,7 @@ repos:
           - Flake8-pyproject==1.2.3
           - pydoclint==0.6.6
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.406
+    rev: v1.1.407
     hooks:
       - id: pyright
   - repo: local
