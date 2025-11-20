@@ -16,6 +16,7 @@ repos:
     rev: 1.0.0
     hooks:
       - id: mdformat
+        # Do not switch to mdformat --exclude until: https://github.com/hukkin/mdformat/issues/489
         exclude: |
           (?x)(
             ^docs/CODE_OF_CONDUCT\.md$ |
