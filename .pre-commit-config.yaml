@@ -16,6 +16,11 @@ repos:
     rev: 1.0.0
     hooks:
       - id: mdformat
+        exclude: |
+          (?x)(
+            ^docs/CODE_OF_CONDUCT\.md$ |
+            ^docs/reference/.*\.md$
+          )
         additional_dependencies:
           - mdformat-mkdocs
           - mdformat-footnote

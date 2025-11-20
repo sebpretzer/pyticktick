@@ -1,4 +1,0 @@
-exclude = [
-    "docs/CODE_OF_CONDUCT.md",
-    "docs/reference/**",
-]
