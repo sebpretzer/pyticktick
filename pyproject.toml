@@ -6,7 +6,7 @@ description = "The modern library to interact with the TickTick API."
 authors = [{ name = "Seb Pretzer", email = "quick.creek3304@fastmail.com" }]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.9,<3.14"
+requires-python = ">=3.14,<3.15"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
