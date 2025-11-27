@@ -6,7 +6,7 @@ description = "The modern library to interact with the TickTick API."
 authors = [{ name = "Seb Pretzer", email = "quick.creek3304@fastmail.com" }]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.9,<3.14"
+requires-python = ">=3.10,<3.15"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -75,7 +75,6 @@ target-version = "py39"
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["UP007"] # Remove this after dropping Python 3.9 support
 preview = true
 explicit-preview-rules = true
 extend-select = [
