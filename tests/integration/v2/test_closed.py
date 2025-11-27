@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 import pytest
 from pydantic import TypeAdapter
@@ -262,18 +262,21 @@ def test_get_project_all_wont_do_v2(generate_object_id, delete_projects, client)
             "title": "test_get_project_all_wont_do_v2_TASK_A",
             "project_id": project_data["id"],
             "status": -1,
+            "completed_time": datetime.now(tz=UTC).isoformat(),
         },
         {
             "id": generate_object_id(),
             "title": "test_get_project_all_wont_do_v2_TASK_B",
             "project_id": project_data["id"],
             "status": -1,
+            "completed_time": datetime.now(tz=UTC).isoformat(),
         },
         {
             "id": generate_object_id(),
             "title": "test_get_project_all_wont_do_v2_TASK_C",
             "project_id": project_data["id"],
             "status": -1,
+            "completed_time": datetime.now(tz=UTC).isoformat(),
         },
     ]
 
