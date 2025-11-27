@@ -7,7 +7,7 @@ with the API endpoints and handle the responses.
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any
 
 import httpx
 from loguru import logger
@@ -351,7 +351,7 @@ class Client(Settings):
 
     def create_project_v1(
         self,
-        data: Union[CreateProjectV1, dict[str, Any]],
+        data: CreateProjectV1 | dict[str, Any],
     ) -> ProjectRespV1:
         """Create a project in the V1 API.
 
@@ -395,7 +395,7 @@ class Client(Settings):
             ```
 
         Args:
-            data (Union[CreateProjectV1, dict[str, Any]]): Data to create the project.
+            data (CreateProjectV1 | dict[str, Any]): Data to create the project.
 
         Returns:
             ProjectRespV1: Created project.
@@ -408,7 +408,7 @@ class Client(Settings):
     def update_project_v1(
         self,
         project_id: str,
-        data: Union[UpdateProjectV1, dict[str, Any]],
+        data: UpdateProjectV1 | dict[str, Any],
     ) -> ProjectRespV1:
         """Update a project in the V1 API.
 
@@ -453,7 +453,7 @@ class Client(Settings):
             ```
         Args:
             project_id (str): Identifier of the project to update.
-            data (Union[UpdateProjectV1, dict[str, Any]]): Data to update the project.
+            data (UpdateProjectV1 | dict[str, Any]): Data to update the project.
 
         Returns:
             ProjectRespV1: Updated project.
@@ -538,7 +538,7 @@ class Client(Settings):
         resp = self._get_api_v1(f"/project/{project_id}/task/{task_id}")
         return TaskRespV1.model_validate(resp)
 
-    def create_task_v1(self, data: Union[CreateTaskV1, dict[str, Any]]) -> TaskRespV1:
+    def create_task_v1(self, data: CreateTaskV1 | dict[str, Any]) -> TaskRespV1:
         """Create a task in the V1 API.
 
         This method creates a new task in the TickTick application using the [`POST /task`](https://developer.ticktick.com/docs/index.html#/openapi?id=create-task)
@@ -589,7 +589,7 @@ class Client(Settings):
             }
             ```
         Args:
-            data (Union[CreateTaskV1, dict[str, Any]]): Data to create the task.
+            data (CreateTaskV1 | dict[str, Any]): Data to create the task.
 
         Returns:
             TaskRespV1: Created task object.
@@ -602,7 +602,7 @@ class Client(Settings):
     def update_task_v1(
         self,
         task_id: str,
-        data: Union[UpdateTaskV1, dict[str, Any]],
+        data: UpdateTaskV1 | dict[str, Any],
     ) -> TaskRespV1:
         """Update a task in the V1 API.
 
@@ -658,7 +658,7 @@ class Client(Settings):
 
         Args:
             task_id (str): Identifier of the task to update.
-            data (Union[UpdateTaskV1, dict[str, Any]]): Data to update the task.
+            data (UpdateTaskV1 | dict[str, Any]): Data to update the task.
 
         Returns:
             TaskRespV1: Updated task.
@@ -1012,7 +1012,7 @@ class Client(Settings):
 
     def get_project_all_closed_v2(
         self,
-        data: Union[GetClosedV2, dict[str, Any]],
+        data: GetClosedV2 | dict[str, Any],
     ) -> ClosedRespV2:
         """Get all completed or abandoned tasks from the V2 API.
 
@@ -1130,7 +1130,7 @@ class Client(Settings):
             You will notice that the `status` field is set to `-1` for abandoned tasks.
 
         Args:
-            data (Union[GetClosedV2, dict[str, Any]]): Data to get the completed /
+            data (GetClosedV2 | dict[str, Any]): Data to get the completed /
                 abandoned tasks.
 
         Returns:
@@ -1220,7 +1220,7 @@ class Client(Settings):
 
     def post_project_v2(
         self,
-        data: Union[PostBatchProjectV2, dict[str, Any]],
+        data: PostBatchProjectV2 | dict[str, Any],
     ) -> BatchRespV2:
         """Create, update, or delete projects in bulk against the V2 API.
 
@@ -1310,7 +1310,7 @@ class Client(Settings):
             ```
 
         Args:
-            data (Union[PostBatchProjectV2, dict[str, Any]]): Data to create, update,
+            data (PostBatchProjectV2 | dict[str, Any]): Data to create, update,
                 or delete projects.
 
         Returns:
@@ -1324,7 +1324,7 @@ class Client(Settings):
             update_model_config(BatchRespV2, extra="allow")
         return BatchRespV2.model_validate(resp)
 
-    def post_task_v2(self, data: Union[PostBatchTaskV2, dict[str, Any]]) -> BatchRespV2:
+    def post_task_v2(self, data: PostBatchTaskV2 | dict[str, Any]) -> BatchRespV2:
         """Create, update, or delete tasks in bulk against the V2 API.
 
         This method creates, updates, and deletes tasks in bulk using the
@@ -1438,7 +1438,7 @@ class Client(Settings):
             ```
 
         Args:
-            data (Union[PostBatchTaskV2, dict[str, Any]]): Data to create, update,
+            data (PostBatchTaskV2 | dict[str, Any]): Data to create, update,
                 or delete tasks.
 
         Returns:
@@ -1454,7 +1454,7 @@ class Client(Settings):
 
     def post_project_group_v2(
         self,
-        data: Union[PostBatchProjectGroupV2, dict[str, Any]],
+        data: PostBatchProjectGroupV2 | dict[str, Any],
     ) -> BatchRespV2:
         """Create, update, or delete project groups in bulk against the V2 API.
 
@@ -1543,7 +1543,7 @@ class Client(Settings):
             ```
 
         Args:
-            data (Union[PostBatchProjectGroupV2, dict[str, Any]]): Data to create,
+            data (PostBatchProjectGroupV2 | dict[str, Any]): Data to create,
                 update, or delete project groups.
 
         Returns:
@@ -1559,7 +1559,7 @@ class Client(Settings):
 
     def post_task_parent_v2(
         self,
-        data: Union[PostBatchTaskParentV2, list[Any]],
+        data: PostBatchTaskParentV2 | list[Any],
     ) -> BatchTaskParentRespV2:
         """Set or unset a task parent in bulk against the V2 API.
 
@@ -1635,7 +1635,7 @@ class Client(Settings):
             ```
 
         Args:
-            data (Union[PostBatchTaskParentV2, list[Any]]): Data to set or unset task
+            data (PostBatchTaskParentV2 | list[Any]): Data to set or unset task
                 parents.
 
         Returns:
@@ -1651,7 +1651,7 @@ class Client(Settings):
 
     def post_tag_v2(
         self,
-        data: Union[PostBatchTagV2, dict[str, Any]],
+        data: PostBatchTagV2 | dict[str, Any],
     ) -> BatchTagRespV2:
         """Create or update tags in bulk against the V2 API.
 
@@ -1757,7 +1757,7 @@ class Client(Settings):
             ```
 
         Args:
-            data (Union[PostBatchTagV2, dict[str, Any]]): Data to create or update tags.
+            data (PostBatchTagV2 | dict[str, Any]): Data to create or update tags.
 
         Returns:
             BatchTagRespV2: Response from the API after creating or updating the tags.
@@ -1769,7 +1769,7 @@ class Client(Settings):
             update_model_config(BatchTagRespV2, extra="allow")
         return BatchTagRespV2.model_validate(resp)
 
-    def put_rename_tag_v2(self, data: Union[RenameTagV2, dict[str, Any]]) -> None:
+    def put_rename_tag_v2(self, data: RenameTagV2 | dict[str, Any]) -> None:
         """Rename a tag in the V2 API.
 
         Update a tag name using the `PUT /tag/rename` V2 endpoint. This endpoint allows
@@ -1793,7 +1793,7 @@ class Client(Settings):
             if the rename is _unsuccessful_, the API probably won't return an error.
 
         Args:
-            data (Union[RenameTagV2, dict[str, Any]]): Data to rename the tag.
+            data (RenameTagV2 | dict[str, Any]): Data to rename the tag.
 
         Raises:
             ValueError: The response had an error HTTP status of `4xx` or `5xx`.
@@ -1817,7 +1817,7 @@ class Client(Settings):
             logger.error(msg)
             raise ValueError(msg)  # noqa: B904
 
-    def delete_tag_v2(self, data: Union[DeleteTagV2, dict[str, Any]]) -> None:
+    def delete_tag_v2(self, data: DeleteTagV2 | dict[str, Any]) -> None:
         """Delete a tag in the V2 API.
 
         Delete a tag using the `DELETE /tag` V2 endpoint.
@@ -1837,7 +1837,7 @@ class Client(Settings):
             error.
 
         Args:
-            data (Union[DeleteTagV2, dict[str, Any]]): Data to delete a tag.
+            data (DeleteTagV2 | dict[str, Any]): Data to delete a tag.
         """
         if isinstance(data, dict):
             data = DeleteTagV2.model_validate(data)

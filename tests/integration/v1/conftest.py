@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Union
 
 import httpx
 import pytest
@@ -98,8 +97,8 @@ def helper_create_or_recreate_projects(
     helper_delete_project,
 ):
     def _create_or_recreate_projects(
-        project_names: Union[str, list[str]],
-    ) -> Union[dict, list[dict]]:
+        project_names: str | list[str],
+    ) -> dict | list[dict]:
         if isinstance(project_names, str):
             project_names = [project_names]
 
@@ -122,7 +121,7 @@ def helper_create_or_recreate_projects(
 
 @pytest.fixture()
 def helper_delete_projects_if_exists(helper_get_projects, helper_delete_project):
-    def _delete_projects_if_exists(project_names: Union[str, list[str]]):
+    def _delete_projects_if_exists(project_names: str | list[str]):
         if isinstance(project_names, str):
             project_names = [project_names]
 

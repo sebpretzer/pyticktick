@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Union
+from typing import Literal
 
 from pydantic import Field
 
@@ -74,7 +74,7 @@ class UpdateProjectV2(BaseModelV2):
         default=None,
         description="color of project, eg. '#F18181'",
     )
-    group_id: Union[Literal["NONE"], None, ObjectId] = Field(
+    group_id: Literal["NONE"] | None | ObjectId = Field(
         default=None,
         description='ID of the project group to move the project to, `"NONE"` to actively be ungrouped, `None` to be set to the group it was in before',
         serialization_alias="groupId",

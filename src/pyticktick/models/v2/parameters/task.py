@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Union
+from typing import Any
 
 from pydantic import Field, model_validator
 
@@ -100,7 +100,7 @@ class CreateTaskV2(BaseModelV2):
     """
 
     # required fields
-    project_id: Union[InboxId, ObjectId] = Field(
+    project_id: InboxId | ObjectId = Field(
         serialization_alias="projectId",
         description="Task project id. (Note: This is missing in the API docs)",
     )
@@ -279,7 +279,7 @@ class UpdateTaskV2(BaseModelV2):
 
     # required fields
     id: ObjectId = Field(description="Task id")
-    project_id: Union[InboxId, ObjectId] = Field(
+    project_id: InboxId | ObjectId = Field(
         serialization_alias="projectId",
         description="Task project id",
     )
@@ -393,7 +393,7 @@ class DeleteTaskV2(BaseModelV2):
     """
 
     # required fields
-    project_id: Union[InboxId, ObjectId] = Field(
+    project_id: InboxId | ObjectId = Field(
         description="ID of the project the task belongs to",
         serialization_alias="projectId",
     )

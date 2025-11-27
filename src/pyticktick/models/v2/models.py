@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Literal, Union
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -115,7 +115,7 @@ class ProjectV2(BaseModelV2):
         validation_alias="groupId",
         description="ID of the project group the project is in",
     )
-    id: Union[InboxId, ObjectId] = Field(description="ID of the project")
+    id: InboxId | ObjectId = Field(description="ID of the project")
     in_all: bool = Field(
         validation_alias="inAll",
         description="Whether or not to show in Smart Lists. If False, tasks within this list won't be shown in 'All', 'Today', 'Tomorrow', 'Next 7 Days', or other smart lists, but you will still receive reminders.",
@@ -346,7 +346,7 @@ class TaskV2(BaseModelV2):
         default=None,
         description="Progress of a `CHECKLIST` task, should be a number between 0 and 100",
     )
-    project_id: Union[InboxId, ObjectId] = Field(
+    project_id: InboxId | ObjectId = Field(
         validation_alias="projectId",
         description="ID of the project the task is in",
     )
