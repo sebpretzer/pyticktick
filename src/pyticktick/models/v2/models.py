@@ -140,6 +140,7 @@ class ProjectV2(BaseModelV2):
     )
 
     # unknown fields
+    background: None
     barcode_need_audit: bool = Field(validation_alias="barcodeNeedAudit")
     is_owner: bool = Field(validation_alias="isOwner")
     sort_order: int = Field(validation_alias="sortOrder")
@@ -182,6 +183,7 @@ class ProjectGroupV2(BaseModelV2):
     )
 
     # unknown fields
+    background: None
     deleted: int
     show_all: bool = Field(validation_alias="showAll")
     sort_order: int = Field(validation_alias="sortOrder")
