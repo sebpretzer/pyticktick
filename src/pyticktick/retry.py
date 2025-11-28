@@ -19,7 +19,7 @@ known as of now, but this can be expanded in the future.
 from __future__ import annotations
 
 import logging
-from typing import Callable
+from typing import TYPE_CHECKING
 
 from tenacity import (
     WrappedFn,
@@ -32,6 +32,9 @@ from tenacity import (
 )
 
 from pyticktick.logger import _logger
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 def retry_api_v1(
