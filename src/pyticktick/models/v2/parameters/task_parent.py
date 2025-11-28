@@ -7,8 +7,6 @@
 
 from __future__ import annotations
 
-from typing import Union
-
 from pydantic import Field, RootModel
 
 from pyticktick.models.v2.models import BaseModelV2
@@ -60,7 +58,7 @@ class UnSetTaskParentV2(BaseModelV2):
     )
 
 
-class PostBatchTaskParentV2(RootModel[list[Union[SetTaskParentV2, UnSetTaskParentV2]]]):
+class PostBatchTaskParentV2(RootModel[list[SetTaskParentV2 | UnSetTaskParentV2]]):
     """Model for setting and unsetting parent tasks via the V2 API.
 
     This model is used to set and unset parent tasks via the V2 API. This is not
@@ -71,6 +69,6 @@ class PostBatchTaskParentV2(RootModel[list[Union[SetTaskParentV2, UnSetTaskParen
     """
 
     # required fields
-    root: list[Union[SetTaskParentV2, UnSetTaskParentV2]] = Field(
+    root: list[SetTaskParentV2 | UnSetTaskParentV2] = Field(
         description="List of task parent operations",
     )

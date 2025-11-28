@@ -38,5 +38,6 @@
       "matchUpdateTypes": ["minor", "patch", "pin"],
       "enabled": false
     }
-  ]
+  ],
+  "ignoreDeps": ["python"]
 }

@@ -9,7 +9,7 @@
 from __future__ import annotations
 
 import types
-from sys import version_info
+from inspect import isclass
 from typing import Any, Union, get_origin
 
 from pydantic import BaseModel, ConfigDict
@@ -17,9 +17,17 @@ from pydantic import BaseModel, ConfigDict
 
 # https://discuss.python.org/t/how-to-check-if-a-type-annotation-represents-an-union/77692
 def _is_union(annotation: type[Any]) -> bool:
-    if version_info >= (3, 10):
-        return get_origin(annotation) in {Union, types.UnionType}  # pyright: ignore[reportAttributeAccessIssue]
-    return get_origin(annotation) == Union
+    return get_origin(annotation) in {Union, types.UnionType}  # pyright: ignore[reportAttributeAccessIssue]
+
+
+def _issubclass_safe(
+    cls: Any,  # noqa: ANN401
+    class_or_tuple: type[Any] | tuple[type[Any], ...],
+) -> bool:
+    try:
+        return isclass(cls) and issubclass(cls, class_or_tuple)
+    except TypeError:
+        return False
 
 
 def _check_field_for_submodel(
@@ -46,14 +54,14 @@ def _check_field_for_submodel(
     if isinstance(annotation, types.GenericAlias):
         _origin = annotation.__origin__
         _args = annotation.__args__
-        if _origin is list and issubclass(_args[0], BaseModel):
+        if _origin is list and _issubclass_safe(_args[0], BaseModel):
             update_model_config(_args[0], **config_kwargs)
-        elif _origin is dict and issubclass(_args[1], BaseModel):
+        elif _origin is dict and _issubclass_safe(_args[1], BaseModel):
             update_model_config(_args[1], **config_kwargs)
     elif _is_union(annotation):
         for _arg in annotation.__args__:
             _check_field_for_submodel(_arg, **config_kwargs)
-    elif issubclass(annotation, BaseModel):
+    elif _issubclass_safe(annotation, BaseModel):
         update_model_config(annotation, **config_kwargs)
 
 
