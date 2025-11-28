@@ -109,7 +109,7 @@ jobs:
       - name: Run integration tests
         run: make test-integration
         env:
-          COVERAGE_FILE: coverage/.coverage.integration-3.13
+          COVERAGE_FILE: coverage/.coverage.integration-3.14
           PYTICKTICK_V1_CLIENT_ID: ${{ secrets.PYTICKTICK_V1_CLIENT_ID }}
           PYTICKTICK_V1_CLIENT_SECRET: ${{ secrets.PYTICKTICK_V1_CLIENT_SECRET }}
           PYTICKTICK_V1_TOKEN_VALUE: ${{ secrets.PYTICKTICK_V1_TOKEN_VALUE }}
@@ -119,7 +119,7 @@ jobs:
       - name: Store coverage files
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
-          name: coverage-integration-3.13
+          name: coverage-integration-3.14
           path: coverage
           include-hidden-files: true
 
