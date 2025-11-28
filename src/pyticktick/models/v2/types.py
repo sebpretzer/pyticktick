@@ -21,7 +21,7 @@ from __future__ import annotations
 import re
 from datetime import timedelta
 from textwrap import dedent
-from typing import Annotated, Literal, Optional
+from typing import Annotated, Literal
 
 from bson import ObjectId as BsonObjectId
 from dateutil.rrule import rrulestr
@@ -279,7 +279,7 @@ whitespace and must be lowercase.
 
 
 TimeZoneName = Annotated[
-    Optional[PydanticTimeZoneName],
+    PydanticTimeZoneName | None,
     BeforeValidator(lambda x: None if isinstance(x, str) and len(x) == 0 else x),
 ]
 """Pydantic type for a TickTick time zone name.

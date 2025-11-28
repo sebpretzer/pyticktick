@@ -17,6 +17,7 @@ from urllib.parse import parse_qsl, urlparse
 
 import click
 import httpx
+from bson import ObjectId as BsonObjectId
 from loguru import logger
 from pydantic import (
     UUID4,
@@ -544,18 +545,12 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             dict[str, str]: The headers dictionary for the V2 API.
         """
         return {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0",  # noqa: E501
+            "User-Agent": "Mozilla/5.0 (rv:145.0) Firefox/145.0",
             "X-Device": json.dumps(
                 {
                     "platform": "web",
-                    "os": "Windows 10",
-                    "device": "Firefox 117.0",
-                    "name": "",
-                    "version": 4576,
-                    "id": "64fc9b22cbb2c305b2df7ad6",
-                    "channel": "website",
-                    "campaign": "",
-                    "websocket": "6500a8a3bf02224e648ef8bd",
+                    "version": 6430,
+                    "id": str(BsonObjectId()),
                 },
             ),
         }
