@@ -1,0 +1,29 @@
+name: integration monitoring
+on:
+  schedule:
+    - cron: 0 15 * * 6
+  workflow_dispatch:
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - name: Install uv, python, and dependencies
+        run: make install-all
+
+      - name: Run integration tests
+        run: make test-integration
+        env:
+          PYTICKTICK_V1_CLIENT_ID: ${{ secrets.PYTICKTICK_V1_CLIENT_ID }}
+          PYTICKTICK_V1_CLIENT_SECRET: ${{ secrets.PYTICKTICK_V1_CLIENT_SECRET }}
+          PYTICKTICK_V1_TOKEN_VALUE: ${{ secrets.PYTICKTICK_V1_TOKEN_VALUE }}
+          PYTICKTICK_V1_TOKEN_EXPIRATION: ${{ secrets.PYTICKTICK_V1_TOKEN_EXPIRATION }}
+          PYTICKTICK_V2_USERNAME: ${{ secrets.PYTICKTICK_V2_USERNAME }}
+          PYTICKTICK_V2_PASSWORD: ${{ secrets.PYTICKTICK_V2_PASSWORD }}
