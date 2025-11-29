@@ -1,7 +1,7 @@
 name: integration monitoring
 on:
   schedule:
-    - cron: 0 15 * * 6
+    - cron: "0 15 * * 6"
   workflow_dispatch:
 permissions:
   contents: read
