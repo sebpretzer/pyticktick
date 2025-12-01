@@ -17,7 +17,7 @@ make test-integration
 
 ### Log output
 
-See logs in linked Github Action [here](<https://github.com/sebpretzer/pyticktick/actions/runs/{{> env.GITHUB_ACTION_RUN_ID }}).
+See logs in linked GitHub Action [here](<https://github.com/sebpretzer/pyticktick/actions/runs/{{> env.GITHUB_ACTION_RUN_ID }}).
 
 ### Issue description
 
