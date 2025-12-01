@@ -1,10 +1,12 @@
-name: integration monitoring
+name: integration-monitoring
 on:
   schedule:
     - cron: "0 15 * * 6"
   workflow_dispatch:
+
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -27,3 +29,19 @@ jobs:
           PYTICKTICK_V1_TOKEN_EXPIRATION: ${{ secrets.PYTICKTICK_V1_TOKEN_EXPIRATION }}
           PYTICKTICK_V2_USERNAME: ${{ secrets.PYTICKTICK_V2_USERNAME }}
           PYTICKTICK_V2_PASSWORD: ${{ secrets.PYTICKTICK_V2_PASSWORD }}
+
+      - name: Open an issue
+        id: create-issue
+        # if: failure() TODO: change back to failure once the tests are stable
+        if: success()
+        uses: JasonEtco/create-an-issue@v2.9.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTION_NAME: ${{ github.workflow }}
+          GITHUB_ACTION_RUN_ID: ${{ github.run_id }}
+          GITHUB_ACTION_RUN_NUMBER: ${{ github.run_number }}
+        with:
+          filename: .github/workflows/integration_monitoring_template.md
+          update_existing: true
+      - run: "echo Created issue number ${{ steps.create-issue.outputs.number }}"
+      - run: "echo Created ${{ steps.create-issue.outputs.url }}"
