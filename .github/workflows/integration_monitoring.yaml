@@ -32,8 +32,7 @@ jobs:
 
       - name: Open an issue
         id: create-issue
-        # if: failure()
-        if: success() # temporarily create issue on success for testing
+        if: failure()
         uses: JasonEtco/create-an-issue@v2.9.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
