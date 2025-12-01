@@ -1,7 +1,7 @@
 name: integration-monitoring
 on:
   schedule:
-    - cron: "0 15 * * 6"
+    - cron: "0 15 * * 6" # At 15:00 UTC on Saturdays
   workflow_dispatch:
 
 permissions:
@@ -32,8 +32,7 @@ jobs:
 
       - name: Open an issue
         id: create-issue
-        # if: failure() TODO: change back to failure once the tests are stable
-        if: success()
+        if: failure()
         uses: JasonEtco/create-an-issue@v2.9.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -43,5 +42,3 @@ jobs:
         with:
           filename: .github/workflows/integration_monitoring_template.md
           update_existing: true
-      - run: "echo Created issue number ${{ steps.create-issue.outputs.number }}"
-      - run: "echo Created ${{ steps.create-issue.outputs.url }}"
