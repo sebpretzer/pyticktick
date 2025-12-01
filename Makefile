@@ -11,7 +11,7 @@ install-python:
 install-all: install-uv install-python install
 
 lint:
-	uv run pre-commit run --all-files
+	uv run pre-commit run --all-files --verbose
 
 test-unit:
 	rm -rf htmlcov
