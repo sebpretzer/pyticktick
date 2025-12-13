@@ -86,7 +86,7 @@ jobs:
         env:
           COVERAGE_FILE: coverage/.coverage.unit-${{ matrix.python-version }}
       - name: Store coverage files
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-unit-${{ matrix.python-version }}
           path: coverage
@@ -117,7 +117,7 @@ jobs:
           PYTICKTICK_V2_USERNAME: ${{ secrets.PYTICKTICK_V2_USERNAME }}
           PYTICKTICK_V2_PASSWORD: ${{ secrets.PYTICKTICK_V2_PASSWORD }}
       - name: Store coverage files
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-integration-3.14
           path: coverage
@@ -133,7 +133,7 @@ jobs:
         run: make install-all
 
       - name: Download coverage files
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           merge-multiple: true
           pattern: coverage-*
@@ -143,13 +143,13 @@ jobs:
       - run: uvx coverage html --show-contexts --title "Coverage report for ${{ github.sha }}"
 
       - name: Store coverage data
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-data
           path: .coverage
           include-hidden-files: true
       - name: Store coverage HTML
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-html
           path: htmlcov
@@ -168,7 +168,7 @@ jobs:
         run: make install-all
 
       - name: Download coverage data
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: coverage-data
 
