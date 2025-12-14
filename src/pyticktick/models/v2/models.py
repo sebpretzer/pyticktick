@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Literal, Self
+from typing import Any, Literal
 
 from pydantic import (
     BaseModel,
@@ -88,8 +88,8 @@ class BaseModelV2(BaseModel):
     def extra_fields_validator(
         cls,
         data: Any,
-        handler: ModelWrapValidatorHandler[Self],
-    ) -> Self:
+        handler: ModelWrapValidatorHandler[BaseModelV2],
+    ) -> BaseModelV2:
         """Provide a better error message for extra fields.
 
         The TickTick V2 API is unofficial and may change without notice. As such, the
@@ -100,14 +100,14 @@ class BaseModelV2(BaseModel):
 
         Args:
             data (Any): The input data to validate.
-            handler (ModelWrapValidatorHandler[Self]): The handler to call the next
-                validator in the chain.
+            handler (ModelWrapValidatorHandler[BaseModelV2]): The handler to call the
+                next validator in the chain.
 
         Raises:
             ValidationError: If the pydantic model fails validation for any reason.
 
         Returns:
-            Self: The validated model instance.
+            BaseModelV2: The validated model instance.
         """  # noqa: DOC501, DOC502 # ruff thinks `from_exception_data` should be raised instead of `ValidationError`
         try:
             return handler(data)
