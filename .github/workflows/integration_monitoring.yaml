@@ -16,7 +16,7 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Install uv, python, and dependencies
         run: make install-all
 
@@ -33,7 +33,7 @@ jobs:
       - name: Open an issue
         id: create-issue
         if: failure()
-        uses: JasonEtco/create-an-issue@v2.9.2
+        uses: JasonEtco/create-an-issue@1b14a70e4d8dc185e5cc76d3bec9eab20257b2c5 # v2.9.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTION_NAME: ${{ github.workflow }}

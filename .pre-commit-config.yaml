@@ -27,7 +27,7 @@ repos:
           - mdformat-mkdocs
           - mdformat-footnote
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.46.0
+    rev: v0.47.0
     hooks:
       - id: markdownlint-fix
         exclude: |
@@ -46,12 +46,12 @@ repos:
     hooks:
       - id: validate-pyproject
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.13
+    rev: 0.9.17
     hooks:
       - id: uv-lock
         args: [--upgrade]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.7
+    rev: v0.14.9
     hooks:
       - id: ruff
         name: ruff-lint

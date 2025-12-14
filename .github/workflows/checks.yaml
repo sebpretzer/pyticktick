@@ -44,7 +44,7 @@ jobs:
     if: ${{ needs.changes.outputs.lint == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Install uv, python, and dependencies
         run: make install-all
 
@@ -55,11 +55,13 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor != 'renovate[bot]'}}
         with:
+          ref: ${{ github.head_ref }}
           commit_message: "lint auto-fixes"
       - name: commit lint auto-fixes for renovate[bot]
         uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor == 'renovate[bot]'}}
         with:
+          ref: ${{ github.head_ref }}
           commit_message: "lint auto-fixes"
           commit_user_name: "renovate[bot]"
           commit_user_email: "29139614+renovate[bot]@users.noreply.github.com"
@@ -73,7 +75,7 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: install uv
         run: make install-uv
       - name: install python
@@ -86,7 +88,7 @@ jobs:
         env:
           COVERAGE_FILE: coverage/.coverage.unit-${{ matrix.python-version }}
       - name: Store coverage files
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-unit-${{ matrix.python-version }}
           path: coverage
@@ -102,7 +104,7 @@ jobs:
       group: integration-test
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Install uv, python, and dependencies
         run: make install-all
 
@@ -117,7 +119,7 @@ jobs:
           PYTICKTICK_V2_USERNAME: ${{ secrets.PYTICKTICK_V2_USERNAME }}
           PYTICKTICK_V2_PASSWORD: ${{ secrets.PYTICKTICK_V2_PASSWORD }}
       - name: Store coverage files
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-integration-3.14
           path: coverage
@@ -128,12 +130,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: [unit-test, integration-test]
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Install uv, python, and dependencies
         run: make install-all
 
       - name: Download coverage files
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           merge-multiple: true
           pattern: coverage-*
@@ -143,13 +145,13 @@ jobs:
       - run: uvx coverage html --show-contexts --title "Coverage report for ${{ github.sha }}"
 
       - name: Store coverage data
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-data
           path: .coverage
           include-hidden-files: true
       - name: Store coverage HTML
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: coverage-html
           path: htmlcov
@@ -163,17 +165,17 @@ jobs:
       pull-requests: write
     if: github.event_name == 'pull_request'
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Install uv, python, and dependencies
         run: make install-all
 
       - name: Download coverage data
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: coverage-data
 
       - name: Generate coverage comment
         id: coverage-comment
-        uses: py-cov-action/python-coverage-comment-action@14efb884fd6f322dca843a946ce2125a55c12e1d # v3
+        uses: py-cov-action/python-coverage-comment-action@1ac153f97397005ebcbec0c3caefa58f56ae5a26 # v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
