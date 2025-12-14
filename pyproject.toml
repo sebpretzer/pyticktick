@@ -88,6 +88,7 @@ extend-select = [
     "DOC502",
 ]
 external = ["DOC"]
+ignore = ["COM812"]
 
 [tool.ruff.lint.pycodestyle]
 max-doc-length = 88
