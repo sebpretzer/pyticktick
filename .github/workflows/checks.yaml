@@ -55,11 +55,13 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor != 'renovate[bot]'}}
         with:
+          ref: ${{ github.head_ref }}
           commit_message: "lint auto-fixes"
       - name: commit lint auto-fixes for renovate[bot]
         uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor == 'renovate[bot]'}}
         with:
+          ref: ${{ github.head_ref }}
           commit_message: "lint auto-fixes"
           commit_user_name: "renovate[bot]"
           commit_user_email: "29139614+renovate[bot]@users.noreply.github.com"
