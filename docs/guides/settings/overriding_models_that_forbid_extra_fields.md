@@ -5,7 +5,7 @@ When getting back response data from an API call, if you get an `extra_forbidden
 ```bash
 pydantic_core._pydantic_core.ValidationError: 1 validation error for RespModel
 extra_field
-    Extra inputs are not permitted [type=extra_forbidden, input_value='extra_value', input_type=str]
+    Extra inputs are not permitted by default. Please set `override_forbid_extra` to `True` if you believe the TickTick API has diverged from the model. See https://pyticktick.pretzer.io/guides/settings/overriding_models_that_forbid_extra_fields/ for more information. [type=extra_forbidden, input_value='extra_value', input_type=str]
 ```
 
 it may be due to the TickTick API adding new fields that are not yet supported by the response model (`RespModel`).

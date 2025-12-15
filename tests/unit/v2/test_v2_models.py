@@ -32,7 +32,7 @@ def test_base_model_empty_str_to_none(input_, expected):
     assert BaseModelV2.empty_str_to_none(input_) == expected
 
 
-def test_extra_fields_validator():
+def test_override_forbid_extra_message_injector():
     class CustomModel(BaseModelV2):
         field1: str
         field2: int

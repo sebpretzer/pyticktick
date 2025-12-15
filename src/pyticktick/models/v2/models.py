@@ -85,7 +85,7 @@ class BaseModelV2(BaseModel):
 
     @model_validator(mode="wrap")
     @classmethod
-    def extra_fields_validator(
+    def override_forbid_extra_message_injector(
         cls,
         data: Any,
         handler: ModelWrapValidatorHandler[BaseModelV2],
@@ -95,8 +95,8 @@ class BaseModelV2(BaseModel):
         The TickTick V2 API is unofficial and may change without notice. As such, the
         models may not always be up to date with the API. This validator catches the
         `extra_forbidden` errors and provides a more informative error message,
-        including a link to the documentation on how to override the `forbid` behavior
-        if needed.
+        including a link to the documentation on how to override the `extra_forbidden`
+        behavior if needed.
 
         Args:
             data (Any): The input data to validate.
