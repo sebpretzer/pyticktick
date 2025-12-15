@@ -10,7 +10,16 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ModelWrapValidatorHandler,
+    ValidationError,
+    field_validator,
+    model_validator,
+)
+from pydantic_core import InitErrorDetails, PydanticCustomError
 
 from pyticktick.models.pydantic import Color
 from pyticktick.models.v2.types import (
@@ -73,6 +82,61 @@ class BaseModelV2(BaseModel):
         if isinstance(v, str) and len(v) == 0:
             return None
         return v
+
+    @model_validator(mode="wrap")
+    @classmethod
+    def override_forbid_extra_message_injector(
+        cls,
+        data: Any,
+        handler: ModelWrapValidatorHandler[BaseModelV2],
+    ) -> BaseModelV2:
+        """Provide a better error message for extra fields.
+
+        The TickTick V2 API is unofficial and may change without notice. As such, the
+        models may not always be up to date with the API. This validator catches the
+        `extra_forbidden` errors and provides a more informative error message,
+        including a link to the documentation on how to override the `extra_forbidden`
+        behavior if needed.
+
+        Args:
+            data (Any): The input data to validate.
+            handler (ModelWrapValidatorHandler[BaseModelV2]): The handler to call the
+                next validator in the chain.
+
+        Raises:
+            ValidationError: If the pydantic model fails validation for any reason.
+
+        Returns:
+            BaseModelV2: The validated model instance.
+        """  # noqa: DOC501, DOC502 # ruff thinks `from_exception_data` should be raised instead of `ValidationError`
+        try:
+            return handler(data)
+        except ValidationError as e:
+            errors = []
+            for error_dict in e.errors():
+                if error_dict.get("type") in (
+                    "extra_forbidden",
+                    "custom_pyticktick_extra_forbidden",
+                ):
+                    _type: str | PydanticCustomError = PydanticCustomError(
+                        "custom_pyticktick_extra_forbidden",
+                        "Extra inputs are not permitted by default. Please set `override_forbid_extra` to `True` if you believe the TickTick API has diverged from the model. See https://pyticktick.pretzer.io/guides/settings/overriding_models_that_forbid_extra_fields/ for more information.",
+                    )
+                else:
+                    _type = error_dict["type"]
+
+                init_error_details: InitErrorDetails = {
+                    "type": _type,
+                    "input": error_dict["input"],
+                }
+                if "loc" in error_dict:
+                    init_error_details["loc"] = error_dict["loc"]
+                if "ctx" in error_dict:
+                    init_error_details["ctx"] = error_dict["ctx"]
+
+                errors.append(init_error_details)
+
+            raise ValidationError.from_exception_data(e.title, errors) from e
 
 
 class SortOptionV2(BaseModelV2):

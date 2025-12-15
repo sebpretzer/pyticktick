@@ -30,3 +30,19 @@ def test_inherited_models_are_strict():
 )
 def test_base_model_empty_str_to_none(input_, expected):
     assert BaseModelV2.empty_str_to_none(input_) == expected
+
+
+def test_override_forbid_extra_message_injector():
+    class CustomModel(BaseModelV2):
+        field1: str
+        field2: int
+
+    valid_data = {"field1": "value", "field2": 10}
+    model = CustomModel.model_validate(valid_data)
+    assert model.field1 == "value"
+    assert model.field2 == 10
+
+    invalid_data = {**valid_data, "extra_field": "not allowed"}
+    match_ = r"Extra inputs are not permitted by default. Please set `override_forbid_extra` to `True`"  # noqa: E501
+    with pytest.raises(ValidationError, match=match_):
+        CustomModel.model_validate(invalid_data)
