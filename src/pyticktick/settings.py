@@ -186,6 +186,12 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         v2_token (Optional[str]): The cookie token for the V2 API.
         v2_base_url (HttpUrl): The base URL for the V2 API. Defaults to
             `https://api.ticktick.com/api/v2/`.
+        v2_user_agent (str): The User-Agent header for the V2 API, used to mimic a web
+            browser request. Defaults to
+            `Mozilla/5.0 (rv:145.0) Firefox/145.0`.
+        v2_x_device (str): The X-Device header for the V2 API, used to mimic a web
+            browser request. Defaults to a JSON string with platform `web`, version
+            `6430`, and a random UUID4 string as the ID.
         override_forbid_extra (bool): Whether to override forbidding extra fields.
     """
 
