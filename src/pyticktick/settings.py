@@ -237,6 +237,16 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         default=HttpUrl("https://api.ticktick.com/api/v2/"),
         description="The base URL for the V2 API.",
     )
+    v2_user_agent: str = Field(
+        default="Mozilla/5.0 (rv:145.0) Firefox/145.0",
+        description="The User-Agent header for the V2 API, used to mimic a web browser request.",  # noqa: E501
+    )
+    v2_x_device: str = Field(
+        default=json.dumps(
+            {"platform": "web", "version": 6430, "id": str(BsonObjectId())},
+        ),
+        description="The X-Device header for the V2 API, used to mimic a web browser request.",  # noqa: E501
+    )
 
     override_forbid_extra: bool = Field(
         default=False,
@@ -544,16 +554,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         Returns:
             dict[str, str]: The headers dictionary for the V2 API.
         """
-        return {
-            "User-Agent": "Mozilla/5.0 (rv:145.0) Firefox/145.0",
-            "X-Device": json.dumps(
-                {
-                    "platform": "web",
-                    "version": 6430,
-                    "id": str(BsonObjectId()),
-                },
-            ),
-        }
+        return {"User-Agent": self.v2_user_agent, "X-Device": self.v2_x_device}
 
     @property
     def v2_cookies(self) -> dict[str, str]:
