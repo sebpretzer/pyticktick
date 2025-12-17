@@ -8,7 +8,6 @@ is an undocumented one. The settings are expected to be used in conjunction with
 
 from __future__ import annotations
 
-import json
 import warnings
 import webbrowser
 from time import time
@@ -67,6 +66,28 @@ class TokenV1(BaseModel):  # noqa: DOC601, DOC603
             logger.warning(msg)
             warnings.warn(msg, UserWarning, stacklevel=1)
         return v
+
+
+class V2XDevice(BaseModel):  # noqa: DOC601, DOC603
+    """Model for the V2 API X-Device header.
+
+    The X-Device header is used to mimic a web browser request. It requires a
+    `platform`, `version`, and `id`. The `id` is a randomly generated MongoDB
+    ObjectId() string.
+
+    You are able to pass in extra fields, as the X-Device header may change over time,
+    but these three fields are the only known required ones, as found via trial and
+    error.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    platform: str = Field(default="web", description="The platform of the device.")
+    version: int = Field(default=6430, description="The version of the device.")
+    id: str = Field(
+        default_factory=lambda: str(BsonObjectId()),
+        description="Randomly generated id, should be a MongoDB ObjectId().",
+    )
 
 
 class Settings(BaseSettings):  # noqa: DOC601, DOC603
@@ -189,7 +210,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         v2_user_agent (str): The User-Agent header for the V2 API, used to mimic a web
             browser request. Defaults to
             `Mozilla/5.0 (rv:145.0) Firefox/145.0`.
-        v2_x_device (str): The X-Device header for the V2 API, used to mimic a web
+        v2_x_device (V2XDevice): The X-Device header for the V2 API, used to mimic a web
             browser request. Defaults to a JSON string with platform `web`, version
             `6430`, and a random UUID4 string as the ID.
         override_forbid_extra (bool): Whether to override forbidding extra fields.
@@ -249,10 +270,8 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         default="Mozilla/5.0 (rv:145.0) Firefox/145.0",
         description="The User-Agent header for the V2 API, used to mimic a web browser request.",  # noqa: E501
     )
-    v2_x_device: str = Field(
-        default=json.dumps(
-            {"platform": "web", "version": 6430, "id": str(BsonObjectId())},
-        ),
+    v2_x_device: V2XDevice = Field(
+        default=V2XDevice(),
         description="The X-Device header for the V2 API, used to mimic a web browser request.",  # noqa: E501
     )
 
@@ -566,7 +585,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         Returns:
             dict[str, str]: The headers dictionary for the V2 API.
         """
-        return {"User-Agent": self.v2_user_agent, "X-Device": self.v2_x_device}
+        return {
+            "User-Agent": self.v2_user_agent,
+            "X-Device": self.v2_x_device.model_dump_json(),
+        }
 
     @property
     def v2_cookies(self) -> dict[str, str]:

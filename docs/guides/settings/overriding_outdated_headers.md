@@ -1,6 +1,6 @@
 # Overriding Outdated Headers
 
-You may sometimes encounter issues where the TickTick API returns a 429 like in [sebpretzer/pyticktick#226](https://github.com/sebpretzer/pyticktick/issues/226) or [lazeroffmichael/ticktick-py#53](https://github.com/lazeroffmichael/ticktick-py/issues/53). The standard use case is that you are being [rate limited](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429), but in some cases, the API may return a 429 due to outdated headers that are no longer valid.
+You may sometimes encounter issues where the TickTick API returns a 429, similar to [sebpretzer/pyticktick#226](https://github.com/sebpretzer/pyticktick/issues/226) or [lazeroffmichael/ticktick-py#53](https://github.com/lazeroffmichael/ticktick-py/issues/53). The standard use case for 429 codes is that you are being [rate limited](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429). But TickTick also returns a 429 due to outdated headers that are no longer valid.
 
 To work around this, you can override the headers sent by setting the `v2_user_agent` and `v2_x_device` settings. For example:
 
@@ -9,7 +9,7 @@ from pyticktick import Client
 
 client = Client(
     v2_user_agent="TickTick/6.3.6 (iPhone; iOS 15.5; Scale/3.00)",
-    v2_x_device='{"platform":"web", "version":8000, "id":"694241d132d12fcc26e7a4d8"}'
+    v2_x_device={"platform":"web", "version":8000, "id":"694241d132d12fcc26e7a4d8"}
 )
 ```
 
