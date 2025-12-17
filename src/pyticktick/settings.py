@@ -369,7 +369,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             else:
                 content = _content
             if e.response.status_code == TICKTICK_INCORRECT_HEADER_CODE:
-                msg = "This may be related to you request headers, for more information, see: https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/"  # noqa: E501
+                msg = "This may be related to your request headers, for more information, see: https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/"  # noqa: E501
                 logger.warning(msg)
 
             msg = f"Response [{e.response.status_code}]:\n{content}"
