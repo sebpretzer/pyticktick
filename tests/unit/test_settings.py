@@ -6,7 +6,7 @@ import pytest
 from pydantic import SecretStr, ValidationError
 
 from pyticktick import Settings
-from pyticktick.settings import TokenV1
+from pyticktick.settings import TokenV1, V2XDevice
 
 pytestmark = pytest.mark.filterwarnings("ignore:Unable to initialize")
 
@@ -180,6 +180,58 @@ def test_v2_settings_initialize(
     assert isinstance(settings.v2_password, SecretStr)
     assert settings.v2_password.get_secret_value() == test_v2_password
     assert settings.v2_token == test_v2_token
+
+
+@pytest.mark.filterwarnings("ignore:Cannot signon to v1")
+@pytest.mark.parametrize("from_env", [True, False])
+@pytest.mark.parametrize("user_agent", ["Mozilla/5.0 (rv:145.0) Firefox/145.0"])
+@pytest.mark.parametrize(
+    "v2_x_device",
+    [{"platform": "web", "version": 1000, "id": "69436d1b5890154a76755e9d"}],
+)
+def test_v2_settings_v2_headers(
+    monkeypatch,
+    test_v2_username,
+    test_v2_password,
+    test_v2_token,
+    from_env,
+    user_agent,
+    v2_x_device,
+):
+    if from_env:
+        monkeypatch.setenv("PYTICKTICK_V2_USERNAME", test_v2_username)
+        monkeypatch.setenv("PYTICKTICK_V2_PASSWORD", test_v2_password)
+        monkeypatch.setenv("PYTICKTICK_V2_TOKEN", test_v2_token)
+
+        monkeypatch.setenv("PYTICKTICK_V2_USER_AGENT", user_agent)
+        monkeypatch.setenv("PYTICKTICK_V2_X_DEVICE_PLATFORM", v2_x_device["platform"])
+        monkeypatch.setenv(
+            "PYTICKTICK_V2_X_DEVICE_VERSION", str(v2_x_device["version"])
+        )
+        monkeypatch.setenv("PYTICKTICK_V2_X_DEVICE_ID", v2_x_device["id"])
+        settings = Settings()
+
+    else:
+        settings = Settings.model_validate(
+            {
+                "v2_username": test_v2_username,
+                "v2_password": test_v2_password,
+                "v2_token": test_v2_token,
+                "v2_user_agent": user_agent,
+                "v2_x_device": v2_x_device,
+            },
+        )
+
+    assert settings.v2_user_agent == user_agent
+
+    assert isinstance(settings.v2_x_device, V2XDevice)
+    assert settings.v2_x_device.platform == v2_x_device["platform"]
+    assert settings.v2_x_device.version == v2_x_device["version"]
+    assert settings.v2_x_device.id == v2_x_device["id"]
+
+    assert isinstance(settings.v2_headers, dict)
+    assert settings.v2_headers.get("User-Agent") == user_agent
+    assert json.loads(settings.v2_headers.get("X-Device", "{}")) == v2_x_device
 
 
 @pytest.mark.filterwarnings("ignore:Cannot signon to v1")

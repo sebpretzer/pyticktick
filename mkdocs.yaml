@@ -4,6 +4,7 @@ nav:
       - Installation: guides/installation.md
       - Settings:
           - Overriding Models That Forbid Extra Fields: guides/settings/overriding_models_that_forbid_extra_fields.md
+          - Overriding Outdated Headers: guides/settings/overriding_outdated_headers.md
       - The TickTick API:
           - Register a V1 App: guides/ticktick_api/register_v1_app.md
           - Generate a V1 Token: guides/ticktick_api/generate_v1_token.md

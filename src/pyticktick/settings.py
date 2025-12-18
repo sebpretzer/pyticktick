@@ -8,7 +8,6 @@ is an undocumented one. The settings are expected to be used in conjunction with
 
 from __future__ import annotations
 
-import json
 import warnings
 import webbrowser
 from time import time
@@ -38,6 +37,8 @@ from pyticktick.models.v1.parameters.oauth import OAuthAuthorizeURLV1, OAuthToke
 from pyticktick.models.v1.responses.oauth import OAuthTokenV1
 from pyticktick.models.v2.responses.user import UserSignOnV2, UserSignOnWithTOTPV2
 
+TICKTICK_INCORRECT_HEADER_CODE = 429
+
 
 class TokenV1(BaseModel):  # noqa: DOC601, DOC603
     """Model for the V1 API token.
@@ -65,6 +66,28 @@ class TokenV1(BaseModel):  # noqa: DOC601, DOC603
             logger.warning(msg)
             warnings.warn(msg, UserWarning, stacklevel=1)
         return v
+
+
+class V2XDevice(BaseModel):  # noqa: DOC601, DOC603
+    """Model for the V2 API X-Device header.
+
+    The X-Device header is used to mimic a web browser request. It requires a
+    `platform`, `version`, and `id`. The `id` is a randomly generated MongoDB
+    ObjectId() string.
+
+    You are able to pass in extra fields, as the X-Device header may change over time,
+    but these three fields are the only known required ones, as found via trial and
+    error.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    platform: str = Field(default="web", description="The platform of the device.")
+    version: int = Field(default=6430, description="The version of the device.")
+    id: str = Field(
+        default_factory=lambda: str(BsonObjectId()),
+        description="Randomly generated id, should be a MongoDB ObjectId().",
+    )
 
 
 class Settings(BaseSettings):  # noqa: DOC601, DOC603
@@ -184,6 +207,12 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         v2_token (Optional[str]): The cookie token for the V2 API.
         v2_base_url (HttpUrl): The base URL for the V2 API. Defaults to
             `https://api.ticktick.com/api/v2/`.
+        v2_user_agent (str): The User-Agent header for the V2 API, used to mimic a web
+            browser request. Defaults to
+            `Mozilla/5.0 (rv:145.0) Firefox/145.0`.
+        v2_x_device (V2XDevice): The X-Device header for the V2 API, used to mimic a web
+            browser request. Defaults to a JSON string with platform `web`, version
+            `6430`, and a random MongoDB ObjectId string as the ID.
         override_forbid_extra (bool): Whether to override forbidding extra fields.
     """
 
@@ -236,6 +265,14 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
     v2_base_url: HttpUrl = Field(
         default=HttpUrl("https://api.ticktick.com/api/v2/"),
         description="The base URL for the V2 API.",
+    )
+    v2_user_agent: str = Field(
+        default="Mozilla/5.0 (rv:145.0) Firefox/145.0",
+        description="The User-Agent header for the V2 API, used to mimic a web browser request.",  # noqa: E501
+    )
+    v2_x_device: V2XDevice = Field(
+        default=V2XDevice(),
+        description="The X-Device header for the V2 API, used to mimic a web browser request.",  # noqa: E501
     )
 
     override_forbid_extra: bool = Field(
@@ -356,6 +393,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
                 content = _content.decode()
             else:
                 content = _content
+            if e.response.status_code == TICKTICK_INCORRECT_HEADER_CODE:
+                msg = "This may be related to your request headers, for more information, see: https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/"  # noqa: E501
+                logger.warning(msg)
+
             msg = f"Response [{e.response.status_code}]:\n{content}"
             logger.error(msg)
             raise ValueError(msg) from e
@@ -545,14 +586,8 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             dict[str, str]: The headers dictionary for the V2 API.
         """
         return {
-            "User-Agent": "Mozilla/5.0 (rv:145.0) Firefox/145.0",
-            "X-Device": json.dumps(
-                {
-                    "platform": "web",
-                    "version": 6430,
-                    "id": str(BsonObjectId()),
-                },
-            ),
+            "User-Agent": self.v2_user_agent,
+            "X-Device": self.v2_x_device.model_dump_json(),
         }
 
     @property
