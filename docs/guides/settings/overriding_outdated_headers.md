@@ -9,7 +9,11 @@ from pyticktick import Client
 
 client = Client(
     v2_user_agent="TickTick/6.3.6 (iPhone; iOS 15.5; Scale/3.00)",
-    v2_x_device={"platform":"web", "version":8000, "id":"694241d132d12fcc26e7a4d8"}
+    v2_x_device={
+        "platform": "web",
+        "version": 8000,
+        "id": "694241d132d12fcc26e7a4d8",
+    },
 )
 ```
 
