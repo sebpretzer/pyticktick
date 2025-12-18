@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- Improve error messages for broken v2 headers; allow overriding headers [#227](https://github.com/sebpretzer/pyticktick/pull/227)
+- Improve error messages for extra fields in models [#223](https://github.com/sebpretzer/pyticktick/pull/223)
+- Add support for Python 3.14 and remove support for Python 3.9; fix broken v2 headers [#201](https://github.com/sebpretzer/pyticktick/pull/201)
+- Add `background` field to `pyticktick.models.v2.ProjectV2` [#200](https://github.com/sebpretzer/pyticktick/pull/200)
+
 ## 0.2.0
 
 - Add missing fields to `pyticktick.models.v2.TaskV2` [#86](https://github.com/sebpretzer/pyticktick/pull/86)
