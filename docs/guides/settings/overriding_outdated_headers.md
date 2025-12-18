@@ -8,7 +8,7 @@ To work around this, you can override the headers sent by setting the `v2_user_a
 from pyticktick import Client
 
 client = Client(
-    v2_user_agent="TickTick/6.3.6 (iPhone; iOS 15.5; Scale/3.00)",
+    v2_user_agent="Mozilla/5.0 (rv:145.0) Firefox/145.0",
     v2_x_device={
         "platform": "web",
         "version": 8000,
@@ -23,5 +23,5 @@ client = Client(
 
     Not all values that are specified in your browser's request are required. The following is usually sufficient:
 
-    - `User-Agent`: The app version, device type, OS version, and scale factor (e.g., `TickTick/6.3.6 (iPhone; iOS 15.5; Scale/3.00)`)
+    - `User-Agent`: A string that identifies the browser version (e.g., `Mozilla/5.0 (rv:145.0) Firefox/145.0`).
     - `X-Device`: A JSON string with at least the `platform`, `version`, and `id` fields (e.g., `{"platform":"web", "version":8000, "id":"694241d132d12fcc26e7a4d8"}`), where `id` is a [MongoDB ObjectId-like string](https://www.mongodb.com/docs/manual/reference/method/ObjectId/).
