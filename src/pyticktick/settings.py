@@ -212,7 +212,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             `Mozilla/5.0 (rv:145.0) Firefox/145.0`.
         v2_x_device (V2XDevice): The X-Device header for the V2 API, used to mimic a web
             browser request. Defaults to a JSON string with platform `web`, version
-            `6430`, and a random UUID4 string as the ID.
+            `6430`, and a random MongoDB ObjectId string as the ID.
         override_forbid_extra (bool): Whether to override forbidding extra fields.
     """
 
