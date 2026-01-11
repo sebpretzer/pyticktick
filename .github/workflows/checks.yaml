@@ -45,6 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        with:
+          token: ${{ secrets.GA_AUTO_COMMIT_PAT }}
       - name: Install uv, python, and dependencies
         run: make install-all
 
@@ -55,13 +57,11 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor != 'renovate[bot]'}}
         with:
-          ref: ${{ github.head_ref }}
           commit_message: "lint auto-fixes"
       - name: commit lint auto-fixes for renovate[bot]
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor == 'renovate[bot]'}}
         with:
-          ref: ${{ github.head_ref }}
           commit_message: "lint auto-fixes"
           commit_user_name: "renovate[bot]"
           commit_user_email: "29139614+renovate[bot]@users.noreply.github.com"
