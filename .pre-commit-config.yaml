@@ -73,6 +73,15 @@ repos:
       - id: pyright
   - repo: local
     hooks:
+      # Remove this once ty has proper pre-commit support
+      # https://github.com/astral-sh/ty/issues/269
+      - id: ty
+        name: ty
+        entry: uv run ty check
+        language: system
+        types: [python]
+        require_serial: true
+        pass_filenames: false
       - id: mypy
         name: mypy
         entry: uv run --no-active mypy
