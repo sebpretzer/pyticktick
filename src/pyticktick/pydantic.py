@@ -94,5 +94,7 @@ def update_model_config(model: type[BaseModel], **config_kwargs: Any) -> None:  
     for field in model.__pydantic_fields__.values():
         _check_field_for_submodel(field.annotation, **config_kwargs)
 
-    model.model_config.update(ConfigDict(**config_kwargs))  # type: ignore[typeddict-item]
+    model.model_config.update(
+        ConfigDict(**config_kwargs)  # type: ignore[typeddict-item] # ty: ignore[unused-ignore-comment]
+    )
     model.model_rebuild(force=True)
