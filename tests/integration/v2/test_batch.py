@@ -328,7 +328,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         assert data["title"] == t.title
         assert data["project_id"] == t.project_id
         if "tags" in data:
-            assert set(data["tags"]) == set(t.tags)
+            assert set(data["tags"]) == set(t.tags)  # ty: ignore[invalid-argument-type]
         if "desc" in data:
             assert data["desc"] == t.desc
         if "content" in data:
@@ -360,34 +360,34 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
         if "kind" in data:
             assert data["kind"] == t.kind
         if "items" in data:
-            assert len(data["items"]) == len(t.items)
-            for item_data in data["items"]:
+            assert len(data["items"]) == len(t.items)  # ty: ignore[invalid-argument-type]
+            for item_data in data["items"]:  # ty: ignore[not-iterable]
                 i = None
-                assert any(item_data["id"] == i.id for i in t.items)
+                assert any(item_data["id"] == i.id for i in t.items)  # ty: ignore[invalid-argument-type]
                 for i in t.items:
-                    if i.id == item_data["id"]:
+                    if i.id == item_data["id"]:  # ty: ignore[invalid-argument-type]
                         break
                 assert isinstance(i, ItemV2)
-                assert item_data["id"] == i.id
-                assert item_data["title"] == i.title
+                assert item_data["id"] == i.id  # ty: ignore[invalid-argument-type]
+                assert item_data["title"] == i.title  # ty: ignore[invalid-argument-type]
                 if "is_all_day" in item_data and data["is_all_day"] is None:
-                    assert item_data["is_all_day"] == i.is_all_day
+                    assert item_data["is_all_day"] == i.is_all_day  # ty: ignore[invalid-argument-type]
                 if "time_zone" in item_data and data["time_zone"] is None:
-                    assert item_data["time_zone"] == i.time_zone
+                    assert item_data["time_zone"] == i.time_zone  # ty: ignore[invalid-argument-type]
                 if "status" in item_data:
-                    assert item_data["status"] == i.status
+                    assert item_data["status"] == i.status  # ty: ignore[invalid-argument-type]
         if "reminders" in data:
             assert isinstance(t.reminders, list)
-            assert len(data["reminders"]) == len(t.reminders)
-            for reminder_data in data["reminders"]:
+            assert len(data["reminders"]) == len(t.reminders)  # ty: ignore[invalid-argument-type]
+            for reminder_data in data["reminders"]:  # ty: ignore[not-iterable]
                 r = None
-                assert any(reminder_data["id"] == r.id for r in t.reminders)
+                assert any(reminder_data["id"] == r.id for r in t.reminders)  # ty: ignore[invalid-argument-type]
                 for r in t.reminders:
-                    if r.id == reminder_data["id"]:
+                    if r.id == reminder_data["id"]:  # ty: ignore[invalid-argument-type]
                         break
                 assert isinstance(r, TaskReminderV2)
-                assert reminder_data["id"] == r.id
-                assert reminder_data["trigger"] == r.trigger
+                assert reminder_data["id"] == r.id  # ty: ignore[invalid-argument-type]
+                assert reminder_data["trigger"] == r.trigger  # ty: ignore[invalid-argument-type]
 
             if t.reminder is not None:
                 assert any(t.reminder == r.trigger for r in t.reminders)

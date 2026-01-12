@@ -80,7 +80,7 @@ def test_v1_token_initialize_invalid(
         test_expiration = None
 
     with pytest.raises(ValidationError):
-        TokenV1(value=test_value, expiration=test_expiration)  # pyright: ignore[reportArgumentType]
+        TokenV1(value=test_value, expiration=test_expiration)  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
 
 
 def test_v1_token_expiration():

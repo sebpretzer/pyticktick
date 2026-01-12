@@ -40,7 +40,7 @@ class InterceptHandler(logging.Handler):  # noqa: D101
         # Find caller from where originated the logged message.
         frame, depth = sys._getframe(6), 6  # noqa: SLF001
         while frame and frame.f_code.co_filename == logging.__file__:
-            frame = frame.f_back  # type: ignore[assignment]
+            frame = frame.f_back  # type: ignore[assignment] # ty: ignore[unused-ignore-comment]
             depth += 1
 
         logger.opt(depth=depth, exception=record.exc_info).log(

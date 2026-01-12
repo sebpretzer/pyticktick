@@ -8,10 +8,22 @@ More specifically, there should not be any pre-release or post-release versions.
 """
 
 import argparse
+import platform
+import sys
 from pathlib import Path
 
-import tomllib
 from packaging.version import InvalidVersion, parse
+
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    msg = (
+        "This script relies on the standard-library 'tomllib' module, which is only "
+        f"available starting with Python 3.11 (current: {platform.python_version()}). "
+        "Please run this script with Python 3.11 or newer (for example via a Python "
+        "3.11+ virtual environment or by configuring your tooling to use Python 3.11+)."
+    )
+    raise ImportError(msg)
 
 
 def parse_args() -> argparse.Namespace:
