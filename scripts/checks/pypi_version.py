@@ -17,7 +17,12 @@ from packaging.version import InvalidVersion, parse
 if sys.version_info >= (3, 11):
     import tomllib
 else:
-    msg = f"tomllib is not available in Python {platform.python_version()}, please use Python 3.11 or higher."  # noqa: E501
+    msg = (
+        "This script relies on the standard-library 'tomllib' module, which is only "
+        f"available starting with Python 3.11 (current: {platform.python_version()}). "
+        "Please run this script with Python 3.11 or newer (for example via a Python "
+        "3.11+ virtual environment or by configuring your tooling to use Python 3.11+)."
+    )
     raise ImportError(msg)
 
 
