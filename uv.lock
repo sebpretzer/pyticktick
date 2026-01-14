@@ -391,14 +391,14 @@ wheels = [
 
 [[package]]
 name = "griffe-pydantic"
-version = "1.1.8"
+version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "griffe" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/52/b05f582287f887f58a1738183d6dd0e799842b83f6f60d65c77ba90cee31/griffe_pydantic-1.1.8.tar.gz", hash = "sha256:72cde69c74c70f3dc0385a7a5243c736cd6bf6fcf8a41cae497383defe107041", size = 43425, upload-time = "2025-10-14T09:12:37.693Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/81/ef/045c7cfbd7c42dc99c5ae5da438f0ceeb3506937560f08c7511b375ee813/griffe_pydantic-1.2.0.tar.gz", hash = "sha256:e9a9b885daceaf164b3e25308217180f4f1fd99af4fa0a46882bfd8f66aae819", size = 34534, upload-time = "2026-01-13T14:11:35.857Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/78/e3/94b2e39d841a1c07b586903177d3ee802c8ae87567449a541d14028eb657/griffe_pydantic-1.1.8-py3-none-any.whl", hash = "sha256:22212c94216e03bf43d30ff3bc79cd53fb973ae2fe81d8b7510242232a1e6764", size = 12852, upload-time = "2025-10-14T09:12:36.23Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/af/109722a073c0abf02794e67429c0d834ca397e23f8bdd5d8322c3f3c9663/griffe_pydantic-1.2.0-py3-none-any.whl", hash = "sha256:9f287a883decbb76cccfdfbe72a659d8d97a46c95b008691c9c9cf9595068d4f", size = 13157, upload-time = "2026-01-13T14:11:34.295Z" },
 ]
 
 [[package]]
@@ -453,11 +453,11 @@ wheels = [
 
 [[package]]
 name = "identify"
-version = "2.6.15"
+version = "2.6.16"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ff/e7/685de97986c916a6d93b3876139e00eef26ad5bbbd61925d670ae8013449/identify-2.6.15.tar.gz", hash = "sha256:e4f4864b96c6557ef2a1e1c951771838f4edc9df3a72ec7118b338801b11c7bf", size = 99311, upload-time = "2025-10-02T17:43:40.631Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5b/8d/e8b97e6bd3fb6fb271346f7981362f1e04d6a7463abd0de79e1fda17c067/identify-2.6.16.tar.gz", hash = "sha256:846857203b5511bbe94d5a352a48ef2359532bc8f6727b5544077a0dcfb24980", size = 99360, upload-time = "2026-01-12T18:58:58.201Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0f/1c/e5fd8f973d4f375adb21565739498e2e9a1e54c858a97b9a8ccfdc81da9b/identify-2.6.15-py2.py3-none-any.whl", hash = "sha256:1181ef7608e00704db228516541eb83a88a9f94433a8c80bb9b5bd54b1d81757", size = 99183, upload-time = "2025-10-02T17:43:39.137Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/58/40fbbcefeda82364720eba5cf2270f98496bdfa19ea75b4cccae79c698e6/identify-2.6.16-py2.py3-none-any.whl", hash = "sha256:391ee4d77741d994189522896270b787aed8670389bfd60f326d677d64a6dfb0", size = 99202, upload-time = "2026-01-12T18:58:56.627Z" },
 ]
 
 [[package]]
