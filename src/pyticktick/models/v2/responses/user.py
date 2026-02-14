@@ -51,6 +51,10 @@ class UserSignOnV2(BaseModelV2):
         validation_alias="inboxId",
         description="The user's inbox ID.",
     )
+    register_date: datetime = Field(
+        validation_alias="registerDate",
+        description="The date when the user registered for TickTick, in seconds since the epoch.",
+    )
     token: str = Field(
         description="The user's authentication token that is used for short-term authentication.",
     )
@@ -129,6 +133,10 @@ class UserStatusV2(BaseModelV2):
     pro_end_date: str = Field(
         validation_alias="proEndDate",
         description="The date when the user's premium subscription is slated to end.",
+    )
+    register_date: datetime = Field(
+        validation_alias="registerDate",
+        description="The date when the user registered for TickTick, in seconds since the epoch.",
     )
     subscribe_type: str | None = Field(
         default=None,
