@@ -35,23 +35,23 @@ repos:
             \.github/.*\.md
           )$
   - repo: https://github.com/crate-ci/typos
-    rev: v1.42.3
+    rev: v1.43.4
     hooks:
       - id: typos
         args: [--force-exclude]
 
   # python checks
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.24.1
+    rev: v0.25
     hooks:
       - id: validate-pyproject
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.28
+    rev: 0.10.2
     hooks:
       - id: uv-lock
         args: [--upgrade]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.14
+    rev: v0.15.1
     hooks:
       - id: ruff
         name: ruff-lint

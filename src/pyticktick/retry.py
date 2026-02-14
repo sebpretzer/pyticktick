@@ -63,5 +63,5 @@ def retry_api_v1(
         ),
         stop=stop_after_attempt(attempts),
         wait=wait_exponential(multiplier=1, min=min_wait, max=max_wait),
-        before_sleep=before_sleep_log(_logger, logging.INFO),
+        before_sleep=before_sleep_log(_logger, logging.INFO),  # ty: ignore[invalid-argument-type]
     )

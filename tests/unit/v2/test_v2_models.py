@@ -43,6 +43,6 @@ def test_override_forbid_extra_message_injector():
     assert model.field2 == 10
 
     invalid_data = {**valid_data, "extra_field": "not allowed"}
-    match_ = r"Extra inputs are not permitted by default. Please set `override_forbid_extra` to `True`"  # noqa: E501
+    match_ = r"Extra inputs are not permitted by default for `CustomModel`. Please set `override_forbid_extra` to `True` if you believe the TickTick API has diverged from the model."  # noqa: E501
     with pytest.raises(ValidationError, match=match_):
         CustomModel.model_validate(invalid_data)
