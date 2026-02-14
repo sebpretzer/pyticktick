@@ -120,7 +120,7 @@ class BaseModelV2(BaseModel):
                 ):
                     _type: str | PydanticCustomError = PydanticCustomError(
                         "custom_pyticktick_extra_forbidden",
-                        "Extra inputs are not permitted by default. Please set `override_forbid_extra` to `True` if you believe the TickTick API has diverged from the model. See https://pyticktick.pretzer.io/guides/settings/overriding_models_that_forbid_extra_fields/ for more information.",
+                        f"Extra inputs are not permitted by default for `{cls.__name__}`. Please set `override_forbid_extra` to `True` if you believe the TickTick API has diverged from the model. See https://pyticktick.pretzer.io/guides/settings/overriding_models_that_forbid_extra_fields/ for more information.",  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
                     )
                 else:
                     _type = error_dict["type"]

@@ -19,7 +19,7 @@ _retry = retry(
     retry=(retry_if_exception_type(ValueError)),
     stop=stop_after_attempt(10),
     wait=wait_exponential(multiplier=1, min=5, max=30),
-    before_sleep=before_sleep_log(_logger, logging.INFO),
+    before_sleep=before_sleep_log(_logger, logging.INFO),  # ty: ignore[invalid-argument-type]
 )
 
 
