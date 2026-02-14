@@ -72,5 +72,6 @@ def test_v2_usersignonv2(test_v2_username, test_v2_token) -> UserSignOnV2:
             "gracePeriod": False,
             "pro": False,
             "ds": False,
+            "registerDate": "2000-01-01T01:01:01.000+0000",
         },
     )
