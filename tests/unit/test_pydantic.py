@@ -51,7 +51,7 @@ def test_update_model_config_nested():
     assert isinstance(data, PostBatchTaskV2)
     assert data.extra_field == "value"  # pyright: ignore[reportAttributeAccessIssue] # ty: ignore[unresolved-attribute]
     assert data.add[0].extra_nested_field == "value"  # pyright: ignore[reportAttributeAccessIssue] # ty: ignore[unresolved-attribute]
-    assert data.add[0].items[0].extra_nested_nested_field == "value"  # pyright: ignore[reportOptionalSubscript,reportAttributeAccessIssue] # ty: ignore[possibly-missing-attribute, not-subscriptable]
+    assert data.add[0].items[0].extra_nested_nested_field == "value"  # pyright: ignore[reportOptionalSubscript,reportAttributeAccessIssue] # ty: ignore[not-subscriptable, unresolved-attribute]
     assert data.update[0].extra_nested_field == "value"  # pyright: ignore[reportAttributeAccessIssue] # ty: ignore[unresolved-attribute]
-    assert data.update[0].reminders[0].extra_extra_nested_field == "value"  # pyright: ignore[reportOptionalSubscript,reportAttributeAccessIssue] # ty: ignore[possibly-missing-attribute, not-subscriptable]
+    assert data.update[0].reminders[0].extra_extra_nested_field == "value"  # pyright: ignore[reportOptionalSubscript,reportAttributeAccessIssue] # ty: ignore[not-subscriptable, unresolved-attribute]
     assert data.delete[0].extra_nested_field == "value"  # pyright: ignore[reportAttributeAccessIssue] # ty: ignore[unresolved-attribute]
