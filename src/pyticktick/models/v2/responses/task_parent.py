@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+from datetime import datetime
+
 from pydantic import Field
 
 from pyticktick.models.v2.models import BaseModelV2
@@ -23,6 +25,7 @@ class BatchTaskParentRespValueV2(BaseModelV2):
         validation_alias="childIds",
     )
     etag: ETag
+    modified_time: datetime = Field(validation_alias="modifiedTime")
 
 
 class BatchTaskParentRespV2(BaseModelV2):
