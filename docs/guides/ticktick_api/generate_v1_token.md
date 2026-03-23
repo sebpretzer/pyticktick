@@ -77,6 +77,8 @@ Then follow any additional prompts to complete the process.
 The actual code required to generate a V1 token is quite simple:
 
 ```python
+from time import time
+
 from pyticktick import Settings
 
 client_id = "YOUR_CLIENT_ID"
