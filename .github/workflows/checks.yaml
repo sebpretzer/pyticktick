@@ -54,12 +54,12 @@ jobs:
         run: make lint
         id: lint
       - name: commit lint auto-fixes
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor != 'renovate[bot]'}}
         with:
           commit_message: "lint auto-fixes"
       - name: commit lint auto-fixes for renovate[bot]
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7
         if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor == 'renovate[bot]'}}
         with:
           commit_message: "lint auto-fixes"
