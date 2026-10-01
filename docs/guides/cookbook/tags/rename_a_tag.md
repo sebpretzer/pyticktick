@@ -17,7 +17,9 @@ This is what the `pyticktick` equivalent would look like:
     from pyticktick import Client
 
     client = Client()
-    resp = client.put_rename_tag_v2(data={"name": "test_tag", "new_name": "updated_test_tag"})
+    resp = client.put_rename_tag_v2(
+        data={"name": "test_tag", "new_name": "updated_test_tag"}
+    )
     ```
 
     will not return anything if successful.
