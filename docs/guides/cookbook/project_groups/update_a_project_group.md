@@ -20,7 +20,11 @@ This is what the `pyticktick` equivalent would look like:
 
     client = Client()
     resp = client.post_project_group_v2(
-        data={"update": [{"id": "6821f8618f08de9a850d65ce", "name": "Updated Test Project Group"}]}
+        data={
+            "update": [
+                {"id": "6821f8618f08de9a850d65ce", "name": "Updated Test Project Group"}
+            ]
+        }
     )
     print(json.dumps(resp.model_dump(mode="json"), indent=4))
     ```
