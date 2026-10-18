@@ -19,10 +19,9 @@ known as of now, but this can be expanded in the future.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ParamSpec, TypeVar
 
 from tenacity import (
-    WrappedFn,
     before_sleep_log,
     retry,
     retry_if_exception_message,
@@ -36,12 +35,15 @@ from pyticktick.logger import _logger
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+P = ParamSpec("P")
+R = TypeVar("R")
+
 
 def retry_api_v1(
     attempts: int = 10,
     min_wait: float = 4,
     max_wait: float = 20,
-) -> Callable[[WrappedFn], WrappedFn]:
+) -> Callable[[Callable[P, R]], Callable[P, R]]:
     """Retry decorator for the V1 API.
 
     This decorator retries the function if the error message is `exceed_query_limit`.
@@ -54,7 +56,7 @@ def retry_api_v1(
         max_wait (float): The maximum wait time between attempts. Defaults to 20.
 
     Returns:
-        Callable[[WrappedFn], WrappedFn]: The tenacity retry decorator.
+        Callable[[Callable[P, R]], Callable[P, R]]: The tenacity retry decorator.
     """
     return retry(
         retry=(
@@ -63,5 +65,5 @@ def retry_api_v1(
         ),
         stop=stop_after_attempt(attempts),
         wait=wait_exponential(multiplier=1, min=min_wait, max=max_wait),
-        before_sleep=before_sleep_log(_logger, logging.INFO),  # ty: ignore[invalid-argument-type]
+        before_sleep=before_sleep_log(_logger, logging.INFO),
     )

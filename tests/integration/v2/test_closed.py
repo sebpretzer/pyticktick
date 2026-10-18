@@ -173,7 +173,7 @@ def test_get_project_all_completed_v2(generate_object_id, delete_projects, clien
             assert data["content"] == t.content
         if "time_zone" in data:
             assert (
-                TypeAdapter(TimeZoneName).validate_python(data["time_zone"])
+                TypeAdapter(TimeZoneName).validate_python(data["time_zone"])  # pyright: ignore[reportArgumentType]
                 == t.time_zone
             )
         if "start_date" in data:
