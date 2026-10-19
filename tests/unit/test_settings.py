@@ -1,7 +1,9 @@
 import json
+import re
 from time import time
 from uuid import UUID, uuid4
 
+import httpx
 import pytest
 from pydantic import SecretStr, ValidationError
 
@@ -341,3 +343,33 @@ def test_other_settings_initialize(
         assert settings.override_forbid_extra == test_forbid_extra
     else:
         assert not settings.override_forbid_extra
+
+
+@pytest.mark.parametrize(
+    ("status_code", "content", "headers", "expected_message"),
+    [
+        (429, b"", {}, "headers are outdated"),
+        (429, b"", {"Retry-After": "30"}, "Response [429]"),
+        (429, b"slow down", {}, "Response [429]"),
+        (403, b"", {}, "Response [403]"),
+    ],
+)
+def test_v2_signon_error_message(
+    monkeypatch,
+    status_code,
+    content,
+    headers,
+    expected_message,
+):
+    def _post(url, **_kwargs):
+        return httpx.Response(
+            status_code,
+            content=content,
+            headers=headers,
+            request=httpx.Request("POST", url),
+        )
+
+    monkeypatch.setattr("pyticktick.settings.httpx.post", _post)
+
+    with pytest.raises(ValueError, match=re.escape(expected_message)):
+        Settings._v2_signon("username", "password", "https://example.com", {})
