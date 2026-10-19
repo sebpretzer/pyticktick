@@ -1,5 +1,5 @@
 version = 1
-revision = 4
+revision = 5
 requires-python = ">=3.10, <3.15"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -1751,6 +1751,7 @@ wheels = [
 name = "pyticktick"
 version = "0.3.0"
 source = { editable = "." }
+default-groups = "all"
 dependencies = [
     { name = "click" },
     { name = "httpx" },
