@@ -1,6 +1,6 @@
 install:
 	uv sync --all-extras
-	uv run pre-commit install
+	uv run prek install
 
 install-uv:
 	curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -11,7 +11,7 @@ install-python:
 install-all: install-uv install-python install
 
 lint:
-	uv run pre-commit run --all-files --verbose
+	uv run prek run --all-files --verbose
 
 test-unit:
 	rm -rf htmlcov

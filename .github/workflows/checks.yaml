@@ -50,7 +50,7 @@ jobs:
       - name: Install uv, python, and dependencies
         run: make install-all
 
-      - name: Run linting via pre-commit
+      - name: Run linting via prek
         run: make lint
         id: lint
       - name: commit lint auto-fixes
