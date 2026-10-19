@@ -403,7 +403,11 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
                     )
                     logger.error(msg)
                     raise ValueError(msg) from e
-                msg = "This may be related to your request headers. See https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/ for more information."  # noqa: E501
+                msg = (
+                    "This may be related to your request headers. See "
+                    "https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/"
+                    " for more information."
+                )
                 logger.warning(msg)
 
             msg = f"Response [{e.response.status_code}]:\n{content}"
