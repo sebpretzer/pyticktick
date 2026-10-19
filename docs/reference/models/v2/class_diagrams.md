@@ -51,6 +51,7 @@ classDiagram
         external_id: Any
         phone_without_country_code: Any
         display_name: str
+        desensitized_phone: Any
     }
 
     class UpdateItemV2 {

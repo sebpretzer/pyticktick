@@ -16,7 +16,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 # https://discuss.python.org/t/how-to-check-if-a-type-annotation-represents-an-union/77692
-def _is_union(annotation: type[Any]) -> bool:
+def _is_union(annotation: Any) -> bool:  # noqa: ANN401
     return get_origin(annotation) in {Union, types.UnionType}  # pyright: ignore[reportAttributeAccessIssue]
 
 
@@ -31,7 +31,7 @@ def _issubclass_safe(
 
 
 def _check_field_for_submodel(
-    annotation: type[Any] | None,
+    annotation: Any,  # noqa: ANN401
     **config_kwargs: Any,  # noqa: ANN401
 ) -> None:
     """Check if a field is a Pydantic model and attempt to update its config if it is.
@@ -44,7 +44,7 @@ def _check_field_for_submodel(
     have the same config as the top-level model.
 
     Args:
-        annotation (Optional[type[Any]]): The [Pydantic.FieldInfo](https://docs.pydantic.dev/latest/api/fields/#pydantic.fields.FieldInfo)
+        annotation (Any): The [Pydantic.FieldInfo](https://docs.pydantic.dev/latest/api/fields/#pydantic.fields.FieldInfo)
             annotation to check.
         **config_kwargs (Any): The key-value pairs to update the model config with,
             should be only values found in [`pydantic.ConfigDict`](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict).
@@ -95,6 +95,6 @@ def update_model_config(model: type[BaseModel], **config_kwargs: Any) -> None:  
         _check_field_for_submodel(field.annotation, **config_kwargs)
 
     model.model_config.update(
-        ConfigDict(**config_kwargs)  # type: ignore[typeddict-item] # ty: ignore[unused-ignore-comment]
+        ConfigDict(**config_kwargs)  # type: ignore[typeddict-item]
     )
     model.model_rebuild(force=True)

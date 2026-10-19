@@ -28,7 +28,7 @@ from pyticktick.models.v2 import ICalTrigger, TimeZoneName, TTRRule
     ],
 )
 def test_ical_trigger(trigger):
-    ta = TypeAdapter(ICalTrigger)
+    ta = TypeAdapter(ICalTrigger)  # pyright: ignore[reportArgumentType]
     assert ta.validate_python(trigger) == trigger
 
 
@@ -66,7 +66,7 @@ def test_ical_trigger(trigger):
     ],
 )
 def test_tt_rule(repeat_flag):
-    ta = TypeAdapter(TTRRule)
+    ta = TypeAdapter(TTRRule)  # pyright: ignore[reportArgumentType]
     assert ta.validate_python(repeat_flag) == repeat_flag
 
 
@@ -83,7 +83,7 @@ def test_tt_rule(repeat_flag):
     ],
 )
 def test_time_zone_name(time_zone):
-    ta = TypeAdapter(TimeZoneName)
+    ta = TypeAdapter(TimeZoneName)  # pyright: ignore[reportArgumentType]
 
     if isinstance(time_zone, str) and len(time_zone) == 0:
         _time_zone = None

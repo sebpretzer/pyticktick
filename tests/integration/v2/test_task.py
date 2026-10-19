@@ -163,14 +163,14 @@ def test_create_task_v2(generate_object_id, delete_projects, client, get_batch):
 
     expected_task_0_items = [
         {
-            "id": item["id"],  # ty: ignore[invalid-argument-type]
-            "title": item["title"],  # ty: ignore[invalid-argument-type]
-            "sortOrder": item["sort_order"],  # ty: ignore[invalid-argument-type]
-            "isAllDay": item["is_all_day"],  # ty: ignore[invalid-argument-type]
-            "timeZone": item["time_zone"],  # ty: ignore[invalid-argument-type]
-            "status": item["status"],  # ty: ignore[invalid-argument-type]
+            "id": item["id"],
+            "title": item["title"],
+            "sortOrder": item["sort_order"],
+            "isAllDay": item["is_all_day"],
+            "timeZone": item["time_zone"],
+            "status": item["status"],
         }
-        for item in data[0]["items"]  # ty: ignore[not-iterable]
+        for item in data[0]["items"]
     ]
     for task in batch_tasks:
         if task["title"] == data[0]["title"]:
@@ -180,12 +180,12 @@ def test_create_task_v2(generate_object_id, delete_projects, client, get_batch):
                 )
 
     expected_task_1_reminders = [
-        {"id": reminder["id"], "trigger": reminder["trigger"]}  # ty: ignore[invalid-argument-type]
-        for reminder in data[1]["reminders"]  # ty: ignore[not-iterable]
+        {"id": reminder["id"], "trigger": reminder["trigger"]}
+        for reminder in data[1]["reminders"]
     ]
     expected_task_2_reminders = [
-        {"id": reminder["id"], "trigger": reminder["trigger"]}  # ty: ignore[invalid-argument-type]
-        for reminder in data[2]["reminders"]  # ty: ignore[not-iterable]
+        {"id": reminder["id"], "trigger": reminder["trigger"]}
+        for reminder in data[2]["reminders"]
     ]
     for task in batch_tasks:
         if task["title"] == data[1]["title"]:
@@ -407,7 +407,7 @@ def test_complete_and_wont_do_v2(
             "id": d["id"],
             "projectId": project_data["id"],
             "title": d["title"],
-            "status": d["status"],
+            "status": 2 if d["status"] == 1 else d["status"],
         }
         for d in updated_data
     ]

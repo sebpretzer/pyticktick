@@ -83,7 +83,7 @@ class V2XDevice(BaseModel):  # noqa: DOC601, DOC603
     model_config = ConfigDict(extra="allow")
 
     platform: str = Field(default="web", description="The platform of the device.")
-    version: int = Field(default=6430, description="The version of the device.")
+    version: int = Field(default=8226, description="The version of the device.")
     id: str = Field(
         default_factory=lambda: str(BsonObjectId()),
         description="Randomly generated id, should be a MongoDB ObjectId().",
@@ -209,10 +209,10 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             `https://api.ticktick.com/api/v2/`.
         v2_user_agent (str): The User-Agent header for the V2 API, used to mimic a web
             browser request. Defaults to
-            `Mozilla/5.0 (rv:145.0) Firefox/145.0`.
+            `Mozilla/5.0 (rv:156.0) Firefox/156.0`.
         v2_x_device (V2XDevice): The X-Device header for the V2 API, used to mimic a web
             browser request. Defaults to a JSON string with platform `web`, version
-            `6430`, and a random MongoDB ObjectId string as the ID.
+            `8226`, and a random MongoDB ObjectId string as the ID.
         override_forbid_extra (bool): Whether to override forbidding extra fields.
     """
 
@@ -267,7 +267,7 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
         description="The base URL for the V2 API.",
     )
     v2_user_agent: str = Field(
-        default="Mozilla/5.0 (rv:145.0) Firefox/145.0",
+        default="Mozilla/5.0 (rv:156.0) Firefox/156.0",
         description="The User-Agent header for the V2 API, used to mimic a web browser request.",  # noqa: E501
     )
     v2_x_device: V2XDevice = Field(

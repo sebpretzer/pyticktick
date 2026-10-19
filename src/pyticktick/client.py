@@ -850,7 +850,8 @@ class Client(Settings):
                 "ver_key": null,
                 "external_id": null,
                 "phone_without_country_code": null,
-                "display_name": "username@username.com"
+                "display_name": "username@username.com",
+                "desensitized_phone": null
             }
             ```
 

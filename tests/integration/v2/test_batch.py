@@ -335,7 +335,7 @@ def test_get_batch_v2(  # noqa: PLR0912, PLR0915
             assert data["content"] == t.content
         if "time_zone" in data:
             assert (
-                TypeAdapter(TimeZoneName).validate_python(data["time_zone"])
+                TypeAdapter(TimeZoneName).validate_python(data["time_zone"])  # pyright: ignore[reportArgumentType]
                 == t.time_zone
             )
         if "start_date" in data:
