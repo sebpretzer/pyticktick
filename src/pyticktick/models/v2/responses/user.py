@@ -112,6 +112,7 @@ class UserProfileV2(BaseModelV2):
     external_id: Any = Field(validation_alias="externalId")
     phone_without_country_code: Any = Field(validation_alias="phoneWithoutCountryCode")
     display_name: str = Field(validation_alias="displayName")
+    desensitized_phone: Any = Field(validation_alias="desensitizedPhone")
 
 
 class UserStatusV2(BaseModelV2):

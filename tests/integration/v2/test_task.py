@@ -407,7 +407,7 @@ def test_complete_and_wont_do_v2(
             "id": d["id"],
             "projectId": project_data["id"],
             "title": d["title"],
-            "status": d["status"],
+            "status": 2 if d["status"] == 1 else d["status"],
         }
         for d in updated_data
     ]
