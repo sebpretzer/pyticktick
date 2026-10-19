@@ -86,7 +86,7 @@ extend-select = [
     "DOC502",
 ]
 external = ["DOC"]
-ignore = ["COM812"]
+ignore = ["COM812", "CPY001"]
 
 [tool.ruff.lint.pycodestyle]
 max-doc-length = 88
@@ -110,7 +110,7 @@ docstring-code-format = true
 [tool.ruff.lint.per-file-ignores]
 "**/__init__.py" = ["D104"]
 "src/pyticktick/models/*" = ["ANN401", "E501"]
-"tests/*" = ["ANN", "D", "INP", "C901", "PLR0913", "PLR2004", "S101", "SLF001"]
+"tests/*" = ["ANN", "D", "INP", "C901", "PLR0913", "PLR0917", "PLR2004", "S101", "SLF001"]
 
 # Remove this after rules are added to ruff
 # https://github.com/astral-sh/ruff/issues/12434
