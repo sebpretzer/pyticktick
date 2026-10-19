@@ -348,7 +348,7 @@ def test_other_settings_initialize(
 @pytest.mark.parametrize(
     ("status_code", "content", "headers", "expected_message"),
     [
-        (429, b"", {}, "headers are outdated"),
+        (429, b"", {}, "Empty 429 on sign on"),
         (429, b"", {"Retry-After": "30"}, "Response [429]"),
         (429, b"slow down", {}, "Response [429]"),
         (403, b"", {}, "Response [403]"),

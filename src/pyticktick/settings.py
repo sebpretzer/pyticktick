@@ -396,16 +396,14 @@ class Settings(BaseSettings):  # noqa: DOC601, DOC603
             if e.response.status_code == TICKTICK_INCORRECT_HEADER_CODE:
                 if not content and "Retry-After" not in e.response.headers:
                     msg = (
-                        "TickTick rejected the sign on with an empty 429 response. "
-                        "This most likely means the `v2_user_agent` or "
-                        "`v2_x_device` headers are outdated. If they match what "
-                        "the TickTick web app currently sends, you may be rate "
-                        "limited instead. For more information, see: "
+                        "Empty 429 on sign on, likely from outdated `v2_user_agent` "
+                        "or `v2_x_device` headers. See "
                         "https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/"
+                        " for more information."
                     )
                     logger.error(msg)
                     raise ValueError(msg) from e
-                msg = "This may be related to your request headers, for more information, see: https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/"  # noqa: E501
+                msg = "This may be related to your request headers. See https://pyticktick.pretzer.io/guides/settings/overriding_outdated_headers/ for more information."  # noqa: E501
                 logger.warning(msg)
 
             msg = f"Response [{e.response.status_code}]:\n{content}"
