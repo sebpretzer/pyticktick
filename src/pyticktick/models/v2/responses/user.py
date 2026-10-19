@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from typing import Any
 
 from pydantic import (
@@ -177,7 +177,7 @@ def _cast_task_count_keys(root: dict[str, Any]) -> dict[date, Any]:
         if not isinstance(k, str):
             msg = "keys must be strings"
             raise TypeError(msg)
-        data[datetime.strptime(k, "%Y%m%d").replace(tzinfo=timezone.utc).date()] = v
+        data[datetime.strptime(k, "%Y%m%d").replace(tzinfo=UTC).date()] = v
     return data
 
 

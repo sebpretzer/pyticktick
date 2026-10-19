@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.11", "3.12", "3.13", "3.14", "3.15"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: install uv
@@ -111,7 +111,7 @@ jobs:
       - name: Run integration tests
         run: make test-integration
         env:
-          COVERAGE_FILE: coverage/.coverage.integration-3.14
+          COVERAGE_FILE: coverage/.coverage.integration-3.15
           PYTICKTICK_V1_CLIENT_ID: ${{ secrets.PYTICKTICK_V1_CLIENT_ID }}
           PYTICKTICK_V1_CLIENT_SECRET: ${{ secrets.PYTICKTICK_V1_CLIENT_SECRET }}
           PYTICKTICK_V1_TOKEN_VALUE: ${{ secrets.PYTICKTICK_V1_TOKEN_VALUE }}
@@ -121,7 +121,7 @@ jobs:
       - name: Store coverage files
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: coverage-integration-3.14
+          name: coverage-integration-3.15
           path: coverage
           include-hidden-files: true
 
