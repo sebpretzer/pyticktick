@@ -2,6 +2,10 @@
 
 `pyticktick` is the modern (unofficial) Python library for interacting with [TickTick](https://ticktick.com/home). `pyticktick` supports both the official and unofficial APIs, provides elegant retry logic, and catches data errors early with [`pydantic`](https://docs.pydantic.dev/latest/).
 
+!!! note "Try the official TickTick MCP first"
+
+    TickTick now offers an [official MCP server](https://help.ticktick.com/articles/7438129581631995904). The goal behind this project was primarily to improve programmatic interaction with TickTick. Since that MCP server supports most use cases, you should look there first. This repo will stay around primarily as an education tool, and for more deterministic access patterns if you so desire.
+
 ______________________________________________________________________
 
 Make sure you have `pyticktick` [installed](./guides/installation.md), then you can get all your projects and tasks:
