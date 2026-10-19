@@ -44,14 +44,11 @@ publish:
 publish-test:
 	uv run --with pyticktick --no-project -- python -c "import pyticktick"
 
-mkdocs-dev:
-	uv run mkdocs serve
+zensical-dev:
+	uv run zensical serve --strict
 
-mkdocs-check:
-	uv run mkdocs build --clean --strict
-
-mkdocs-publish:
-	uv run mkdocs gh-deploy --clean --force
+zensical-check:
+	uv run zensical build --clean --strict
 
 generate-model-mermaid-diagrams:
 	uv run pydantic-mermaid \
