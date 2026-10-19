@@ -1,6 +1,6 @@
 # Kinds of Tasks
 
-There are three kinds of tasks in TickTick, which are encapsulated in the [`pyticktick.models.v2.Kind`](./../../../reference/models/v2/types/#pyticktick.models.v2.types.Kind) type:
+There are three kinds of tasks in TickTick, which are encapsulated in the [`pyticktick.models.v2.Kind`](../../reference/models/v2/types.md#pyticktick.models.v2.types.Kind) type:
 
 ```python
 Kind = Literal["TEXT", "NOTE", "CHECKLIST"]

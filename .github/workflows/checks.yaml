@@ -29,7 +29,7 @@ jobs:
               - '.pre-commit-config.yaml'
               - 'Makefile'
               - 'README.md'
-              - 'mkdocs.yaml'
+              - 'zensical.toml'
               - 'pyproject.toml'
               - 'uv.lock'
             test:

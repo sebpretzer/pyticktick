@@ -1,37 +1,57 @@
-name: mkdocs
+name: docs
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
     paths:
       - "docs/**"
       - "src/pyticktick/**"
-      - "mkdocs.yml"
+      - "zensical.toml"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/docs.yaml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "src/pyticktick/**"
+      - "zensical.toml"
+      - "pyproject.toml"
+      - "uv.lock"
       - ".github/workflows/docs.yaml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  mkdocs:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          fetch-depth: 0
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
       - name: Install uv, python, and dependencies
         run: make install-all
       - name: Build the site
-        if: github.ref != 'refs/heads/main'
-        run: make mkdocs-check
+        run: make zensical-check
+      - name: Upload the site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
-        if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' }}
-        run: make mkdocs-publish
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
