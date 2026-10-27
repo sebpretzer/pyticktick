@@ -61,6 +61,7 @@ build-backend = "uv_build"
 [tool.uv]
 default-groups = "all"
 preview = true
+exclude-newer = "14 days"
 
 [[tool.uv.index]]
 name = "testpypi"
