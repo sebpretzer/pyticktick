@@ -14,6 +14,10 @@
   "timezone": "America/Chicago",
   "schedule": ["* 0-5 * * *"],
   "minimumReleaseAge": "14 days",
+  "internalChecksFilter": "strict",
+  "prCreation": "not-pending",
+  "internalChecksAsSuccess": true,
+  "dependencyDashboard": true,
   "assignees": ["sebpretzer"],
   "labels": ["renovate"],
   "lockFileMaintenance": {
@@ -33,6 +37,11 @@
     "automerge": true
   },
   "packageRules": [
+    {
+      "description": "TODO: remove when this is resolved: https://github.com/renovatebot/renovate/issues/45236",
+      "matchUpdateTypes": ["digest", "pinDigest", "lockFileMaintenance"],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
     {
       "description": "Only allow major standard upgrades for renovatebot/pre-commit-hooks",
       "matchDepNames": ["renovatebot/pre-commit-hooks"],
