@@ -4,7 +4,7 @@
     "config:best-practices",
     "customManagers:githubActionsVersions",
     ":automergeDigest",
-    ":automergePatch",
+    ":automergeMinor",
     ":automergePr",
     ":automergeRequireAllStatusChecks",
     ":prHourlyLimitNone",
@@ -12,7 +12,13 @@
     ":rebaseStalePrs"
   ],
   "timezone": "America/Chicago",
-  "schedule": ["* 0-5 * * *"],
+  "schedule": ["* * * * 0,5,6"],
+  "automergeSchedule": ["* * * * 0,5,6"],
+  "updateNotScheduled": false,
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "automerge": false
+  },
   "minimumReleaseAge": "14 days",
   "internalChecksFilter": "strict",
   "prCreation": "not-pending",
@@ -22,7 +28,8 @@
   "labels": ["renovate"],
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
+    "automerge": true,
+    "schedule": ["* 0-5 * * 5"]
   },
   "pep621": {
     "enabled": true,
@@ -47,6 +54,24 @@
       "matchDepNames": ["renovatebot/pre-commit-hooks"],
       "matchUpdateTypes": ["minor", "patch", "pin"],
       "enabled": false
+    },
+    {
+      "description": "Group pre-commit hook updates into one PR",
+      "matchManagers": ["pre-commit"],
+      "matchUpdateTypes": ["major", "minor", "patch", "digest", "pin", "pinDigest"],
+      "groupName": "pre-commit hooks"
+    },
+    {
+      "description": "Group GitHub Actions updates into one PR",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major", "minor", "patch", "digest", "pin", "pinDigest"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "Group Python dependency updates into one PR",
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["major", "minor", "patch", "digest", "pin", "pinDigest"],
+      "groupName": "Python dependencies"
     }
   ],
   "ignoreDeps": ["python"]
