@@ -24,4 +24,4 @@ make install
 
 This will install all the dependencies needed to run the code, scripts, tests, and build the documentation.
 
-It will also install [prek](https://prek.j178.dev/) hooks to ensure code quality. These hooks will run automatically as part of CI, so if you do not want to use them during development, you can disable them by running `--no-verify` during commit.
+It will also install [prek](https://prek.j178.dev/) hooks to ensure code quality. CI runs the same hooks but does not push fixes, so if you skip them with `--no-verify` during commit, run `make lint` and commit its fixes before opening a pull request.

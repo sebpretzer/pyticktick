@@ -11,6 +11,7 @@
     ":prConcurrentLimitNone",
     ":rebaseStalePrs"
   ],
+  "ignorePresets": ["security:minimumReleaseAgePypi"],
   "timezone": "America/Chicago",
   "schedule": ["* * * * 0,5,6"],
   "automergeSchedule": ["* * * * 0,5,6"],

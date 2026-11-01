@@ -46,26 +46,12 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          token: ${{ secrets.GA_AUTO_COMMIT_PAT }}
+          persist-credentials: false
       - name: Install uv, python, and dependencies
         run: make install-all
 
       - name: Run linting via prek
         run: make lint
-        id: lint
-      - name: commit lint auto-fixes
-        uses: stefanzweifel/git-auto-commit-action@d0b01107b5db882071f96de5dd4b54961ea93f4c # v7
-        if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor != 'renovate[bot]'}}
-        with:
-          commit_message: "lint auto-fixes"
-      - name: commit lint auto-fixes for renovate[bot]
-        uses: stefanzweifel/git-auto-commit-action@d0b01107b5db882071f96de5dd4b54961ea93f4c # v7
-        if: ${{ failure() && steps.lint.outcome == 'failure' && github.actor == 'renovate[bot]'}}
-        with:
-          commit_message: "lint auto-fixes"
-          commit_user_name: "renovate[bot]"
-          commit_user_email: "29139614+renovate[bot]@users.noreply.github.com"
-          commit_author: "renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>"
 
   unit-test:
     needs: [changes, lint]
