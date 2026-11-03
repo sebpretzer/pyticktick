@@ -5,7 +5,7 @@
 - Fix sign-in rejected with a 429 by updating the default V2 `X-Device` version (`8226`) and `User-Agent` (Firefox 156) [#359](https://github.com/sebpretzer/pyticktick/pull/359)
 - Explain likely outdated V2 headers when sign-on gets an empty 429 [#361](https://github.com/sebpretzer/pyticktick/pull/361)
 - Add `register_date` to `pyticktick.models.v2.UserSignOnV2` and `UserStatusV2`, and `desensitized_phone` to `UserProfileV2`, to match current API responses [#359](https://github.com/sebpretzer/pyticktick/pull/359)
-- Add `modified_time` to `pyticktick.models.v2.BatchTaskParentRespValueV2` [#287](https://github.com/sebpretzer/pyticktick/pull/287)
+- Add `modified_time` to `pyticktick.models.v2.responses.task_parent.BatchTaskParentRespValueV2` [#287](https://github.com/sebpretzer/pyticktick/pull/287)
 - Fix type-check errors from upgraded dependencies [#359](https://github.com/sebpretzer/pyticktick/pull/359)
 - Add support for Python 3.15 and remove support for Python 3.10 [#360](https://github.com/sebpretzer/pyticktick/pull/360)
 
