@@ -22,8 +22,8 @@
   "vulnerabilityAlerts": {
     "automerge": false,
     "groupName": "security updates",
-    // Weeknights: 6pm to 6am, Sunday night through Thursday night, Chicago time
-    "schedule": ["* 18-23 * * 0-4", "* 0-5 * * 1-5"]
+    // Weeknights (6pm to 6am, Sunday night through Thursday night) and weekends (Friday 6am to Sunday 6pm), Chicago time
+    "schedule": ["* 18-23 * * 0-4", "* 0-5 * * 1-5", "* 6-23 * * 5", "* * * * 6", "* 0-17 * * 0"]
   },
   "minimumReleaseAge": "14 days",
   "internalChecksFilter": "strict",
