@@ -18,7 +18,8 @@
   "updateNotScheduled": false,
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
-    "automerge": false
+    "automerge": false,
+    "groupName": "security updates"
   },
   "minimumReleaseAge": "14 days",
   "internalChecksFilter": "strict",
