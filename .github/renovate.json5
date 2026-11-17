@@ -1,85 +1,146 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
-    "customManagers:githubActionsVersions",
-    ":automergeDigest",
-    ":automergeMinor",
-    ":automergePr",
-    ":automergeRequireAllStatusChecks",
-    ":prHourlyLimitNone",
-    ":prConcurrentLimitNone",
-    ":rebaseStalePrs"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:best-practices',
+    'customManagers:githubActionsVersions',
+    ':automergeDigest',
+    ':automergeMinor',
+    ':automergePr',
+    ':automergeRequireAllStatusChecks',
+    ':prHourlyLimitNone',
+    ':prConcurrentLimitNone',
+    ':rebaseStalePrs',
   ],
-  "ignorePresets": ["security:minimumReleaseAgePypi"],
-  "timezone": "America/Chicago",
-  // Weekends: Friday 6am to Sunday 6pm, Chicago time
-  "schedule": ["* 6-23 * * 5", "* * * * 6", "* 0-17 * * 0"],
-  // Weekends: Friday 6am to Sunday 6pm, Chicago time
-  "automergeSchedule": ["* 6-23 * * 5", "* * * * 6", "* 0-17 * * 0"],
-  "updateNotScheduled": false,
-  "osvVulnerabilityAlerts": true,
-  "vulnerabilityAlerts": {
-    "automerge": false,
-    "groupName": "security updates",
-    // Weeknights (6pm to 6am, Sunday night through Thursday night) and weekends (Friday 6am to Sunday 6pm), Chicago time
-    "schedule": ["* 18-23 * * 0-4", "* 0-5 * * 1-5", "* 6-23 * * 5", "* * * * 6", "* 0-17 * * 0"]
-  },
-  "minimumReleaseAge": "14 days",
-  "internalChecksFilter": "strict",
-  "prCreation": "not-pending",
-  "internalChecksAsSuccess": true,
-  "dependencyDashboard": true,
-  "assignees": ["sebpretzer"],
-  "labels": ["renovate"],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true,
-    // Weekends: Friday 6am to Sunday 6pm, Chicago time
-    "schedule": ["* 6-23 * * 5", "* * * * 6", "* 0-17 * * 0"]
-  },
-  "pep621": {
-    "enabled": true,
-    "automerge": true
-  },
-  "github-actions": {
-    "enabled": true,
-    "automerge": true
-  },
-  "pre-commit": {
-    "enabled": true,
-    "automerge": true
-  },
-  "packageRules": [
-    {
-      "description": "TODO: remove when this is resolved: https://github.com/renovatebot/renovate/issues/45236",
-      "matchUpdateTypes": ["digest", "pinDigest", "lockFileMaintenance"],
-      "minimumReleaseAgeBehaviour": "timestamp-optional"
-    },
-    {
-      "description": "Only allow major standard upgrades for renovatebot/pre-commit-hooks",
-      "matchDepNames": ["renovatebot/pre-commit-hooks"],
-      "matchUpdateTypes": ["minor", "patch", "pin"],
-      "enabled": false
-    },
-    {
-      "description": "Group pre-commit hook updates into one PR",
-      "matchManagers": ["pre-commit"],
-      "matchUpdateTypes": ["major", "minor", "patch", "digest", "pin", "pinDigest"],
-      "groupName": "pre-commit hooks"
-    },
-    {
-      "description": "Group GitHub Actions updates into one PR",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["major", "minor", "patch", "digest", "pin", "pinDigest"],
-      "groupName": "GitHub Actions"
-    },
-    {
-      "description": "Group Python dependency updates into one PR",
-      "matchManagers": ["pep621"],
-      "matchUpdateTypes": ["major", "minor", "patch", "digest", "pin", "pinDigest"],
-      "groupName": "Python dependencies"
-    }
+  ignorePresets: [
+    'security:minimumReleaseAgePypi',
   ],
-  "ignoreDeps": ["python"]
+  timezone: 'America/Chicago',
+  schedule: [
+    '* 6-23 * * 5',
+    '* * * * 6',
+    '* 0-17 * * 0',
+  ],
+  automergeSchedule: [
+    '* 6-23 * * 5',
+    '* * * * 6',
+    '* 0-17 * * 0',
+  ],
+  updateNotScheduled: false,
+  osvVulnerabilityAlerts: true,
+  vulnerabilityAlerts: {
+    automerge: false,
+    groupName: 'security updates',
+    schedule: [
+      '* 18-23 * * 0-4',
+      '* 0-5 * * 1-5',
+      '* 6-23 * * 5',
+      '* * * * 6',
+      '* 0-17 * * 0',
+    ],
+  },
+  minimumReleaseAge: '14 days',
+  internalChecksFilter: 'strict',
+  prCreation: 'not-pending',
+  internalChecksAsSuccess: true,
+  dependencyDashboard: {
+    enabled: true,
+  },
+  assignees: [
+    'sebpretzer',
+  ],
+  labels: [
+    'renovate',
+  ],
+  lockFileMaintenance: {
+    enabled: true,
+    automerge: true,
+    schedule: [
+      '* 6-23 * * 5',
+      '* * * * 6',
+      '* 0-17 * * 0',
+    ],
+  },
+  pep621: {
+    enabled: true,
+    automerge: true,
+  },
+  'github-actions': {
+    enabled: true,
+    automerge: true,
+  },
+  'pre-commit': {
+    enabled: true,
+    automerge: true,
+  },
+  packageRules: [
+    {
+      description: 'TODO: remove when this is resolved: https://github.com/renovatebot/renovate/issues/45236',
+      matchUpdateTypes: [
+        'digest',
+        'pinDigest',
+        'lockFileMaintenance',
+      ],
+      minimumReleaseAgeBehaviour: 'timestamp-optional',
+    },
+    {
+      description: 'Only allow major standard upgrades for renovatebot/pre-commit-hooks',
+      matchDepNames: [
+        'renovatebot/pre-commit-hooks',
+      ],
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+        'pin',
+      ],
+      enabled: false,
+    },
+    {
+      description: 'Group pre-commit hook updates into one PR',
+      matchManagers: [
+        'pre-commit',
+      ],
+      matchUpdateTypes: [
+        'major',
+        'minor',
+        'patch',
+        'digest',
+        'pin',
+        'pinDigest',
+      ],
+      groupName: 'pre-commit hooks',
+    },
+    {
+      description: 'Group GitHub Actions updates into one PR',
+      matchManagers: [
+        'github-actions',
+      ],
+      matchUpdateTypes: [
+        'major',
+        'minor',
+        'patch',
+        'digest',
+        'pin',
+        'pinDigest',
+      ],
+      groupName: 'GitHub Actions',
+    },
+    {
+      description: 'Group Python dependency updates into one PR',
+      matchManagers: [
+        'pep621',
+      ],
+      matchUpdateTypes: [
+        'major',
+        'minor',
+        'patch',
+        'digest',
+        'pin',
+        'pinDigest',
+      ],
+      groupName: 'Python dependencies',
+    },
+  ],
+  ignoreDeps: [
+    'python',
+  ],
 }
